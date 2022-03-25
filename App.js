@@ -8,7 +8,7 @@ import {
   Icon,
   MaterialIcons,
 } from 'native-base';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
   SafeAreaView,
@@ -65,6 +65,8 @@ const DismissKeyboard = ({children}) => {
 const InputBoxes = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+  const [KullanıcıAdı, setKullanıcıAdı] = useState("Kullanıcı adı");
+  const [Şifre, setŞifre] = useState("Şifre");
 
   return (
     <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
@@ -125,12 +127,13 @@ const App = ({navigation}) => {
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
           <KeyboardAvoidingView style={{flex: 1}}>
             <InputBoxes />
-            <Box alignItems="center" marginTop={'1%'}>
+            <Box alignItems="center" marginTop={'3%'}>
               <Button
                 style={{
                   borderRadius: 25,
                   width: '50%',
-                  minHeight: '7%',
+                  height: 50,
+                  minHeight: '8%',
                   maxHeight: '100%',
                 }}
                 onPress={() =>
