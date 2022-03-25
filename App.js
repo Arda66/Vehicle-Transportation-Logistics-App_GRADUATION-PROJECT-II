@@ -7,7 +7,7 @@ import {
   Box,
   Icon,
   MaterialIcons,
-} from 'native-base'; /* AUTOFİLL EKLENCEK KEYBOARD DİSMİSS ÇALIŞMIYOR VE GİRİŞ YAPA BASINCA İÇERİSİNDEKİ TEXTLER NULL OLMALI Altında kırmızı bir uyarı yazısı çıkmalı */
+} from 'native-base'; /* AUTOFİLL EKLENCEK  VE GİRİŞ YAPA BASINCA İÇERİSİNDEKİ TEXTLER NULL OLMALI. Eğer kullanıcı adı şifre api ile uyuşmazsa Altında kırmızı bir uyarı yazısı çıkmalı */
 import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
@@ -58,41 +58,9 @@ const Section = ({children, title}) => {
 
 const HideKeyboard = ({children}) => {
   return (
-    <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       {children}
     </TouchableWithoutFeedback>
-  );
-};
-
-const InputBoxes = () => {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
-  /*  const [KullanıcıAdı, setKullanıcıAdı] = useState('Kullanıcı adı');
-  const [Şifre, setŞifre] = useState('Şifre'); */
-
-  return (
-    <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
-      <Input size="lg" placeholder="Kullanıcı adı" />
-      <Input
-        importantForAutofill="yes"
-        passwordRules="required: upper"
-        size="lg"
-        type={show ? 'text' : 'password'}
-        width="100%"
-        py="0"
-        InputRightElement={
-          <Button
-            size="lg"
-            rounded="none"
-            w="30%"
-            h="full"
-            onPress={handleClick}>
-            {show ? 'Gizle' : 'Göster'}
-          </Button>
-        }
-        placeholder="Şifre"
-      />
-    </Stack>
   );
 };
 
@@ -104,7 +72,7 @@ const StackNavigator = () => {
       <StackNavigate.Navigator initialRouteName="LoginScreen">
         <StackNavigate.Screen
           name="LoginScreen"
-          component={App}
+          component={GirişYap}
           options={{title: 'Giriş Ekranı'}}
         />
         <StackNavigate.Screen
@@ -132,33 +100,72 @@ const StackNavigator = () => {
   );
 };
 
-const App = ({navigation}) => {
+const GirişYap = ({navigation}) => {
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  const NavigateToMainScreen = () => {
+
+  const InputBoxes = () => {
+    const [KullanıcıAdı, setKullanıcıAdı] = useState('');
+    const [Şifre, setŞifre] = useState('');
+    const [show, setShow] = useState(false);
+    const handleClick = () => setShow(!show);
+
+    return (
+      <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
+        <Input
+          value={KullanıcıAdı}
+          onChangeText={text => setKullanıcıAdı(text)}
+          size="lg"
+          placeholder="Kullanıcı adı"
+        />
+        <Input
+          onChangeText={text => setŞifre(text)}
+          value={Şifre}
+          size="lg"
+          type={show ? 'text' : 'password'}
+          width="100%"
+          py="0"
+          InputRightElement={
+            <Button
+              size="lg"
+              rounded="none"
+              w="30%"
+              h="full"
+              onPress={handleClick}>
+              {show ? 'Gizle' : 'Göster'}
+            </Button>
+          }
+          placeholder="Şifre"
+        />
+      </Stack>
+    );
+  };
+
+  const GirişYapPressed = () => {
     navigation.navigate('Ana Menü Ekranı');
+    /*   setKullanıcıAdı('');
+    setŞifre(''); */
     // ANA EKRANA GEÇERKEN KULLANICI ADI VE ŞİFRE TEXTLERİ NULL OLACAK O BUTONA BASILDIĞINDA
   };
   return (
     <NativeBaseProvider>
-      <HideKeyboard style={{flex:1}}>
-      <SafeAreaView style={[backgroundStyle, styles.sectionContainer]}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <KeyboardAvoidingView style={{flex: 1}}>
-          <InputBoxes />
+      <HideKeyboard>
+        <SafeAreaView style={[backgroundStyle, styles.sectionContainer]}>
+          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <KeyboardAvoidingView style={{flex: 1}}>
+            <InputBoxes />
             <Box alignItems="center" marginTop={'3%'}>
-              <Button
-                style={styles.button}
-                onPress={() => NavigateToMainScreen()}>
+              <Button style={styles.button} onPress={() => GirişYapPressed()}>
                 Giriş Yap
               </Button>
             </Box>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </HideKeyboard>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
+      </HideKeyboard>
     </NativeBaseProvider>
   );
 };
