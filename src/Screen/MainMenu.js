@@ -28,9 +28,7 @@ const MainMenu = ({navigation}) => {
             <Text style={styles.text}>Boşalta Bekleyen Araç Listesi</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Yeni kayıt veya düzenle Ekranı')
-            }
+            onPress={() => navigation.navigate('GirişListesi')}
             style={styles.touchable}>
             <Text style={styles.text}>Giriş Listesi</Text>
           </TouchableOpacity>

@@ -7,7 +7,7 @@ import {
   Box,
   Icon,
   MaterialIcons,
-} from 'native-base'; /* AUTOFİLL EKLENCEK KEYBOARD DİSMİSS ÇALIŞMIYOR VE GİRİŞ YAPA BASINCA İÇERİSİNDEKİ TEXTLER NULL OLMALI */
+} from 'native-base'; /* AUTOFİLL EKLENCEK KEYBOARD DİSMİSS ÇALIŞMIYOR VE GİRİŞ YAPA BASINCA İÇERİSİNDEKİ TEXTLER NULL OLMALI Altında kırmızı bir uyarı yazısı çıkmalı */
 import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
@@ -28,7 +28,8 @@ import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import Boşaltma_Bekleyen_Araç from './src/Screen/Boşaltma_Bekleyen_Araç';
 import MainMenu from './src/Screen/MainMenu';
 import Yeni_kayıt_veya_düzenle from './src/Screen/Yeni_kayıt_veya_düzenle';
-
+import GirişListesi from './src/Screen/GirişListesi';
+/* 
 const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -53,11 +54,11 @@ const Section = ({children, title}) => {
       </Text>
     </View>
   );
-};
+}; */
 
-const DismissKeyboard = ({children}) => {
+const HideKeyboard = ({children}) => {
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback  onPress={() => Keyboard.dismiss()}>
       {children}
     </TouchableWithoutFeedback>
   );
@@ -66,13 +67,15 @@ const DismissKeyboard = ({children}) => {
 const InputBoxes = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
-  const [KullanıcıAdı, setKullanıcıAdı] = useState('Kullanıcı adı');
-  const [Şifre, setŞifre] = useState('Şifre');
+  /*  const [KullanıcıAdı, setKullanıcıAdı] = useState('Kullanıcı adı');
+  const [Şifre, setŞifre] = useState('Şifre'); */
 
   return (
     <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
       <Input size="lg" placeholder="Kullanıcı adı" />
       <Input
+        importantForAutofill="yes"
+        passwordRules="required: upper"
         size="lg"
         type={show ? 'text' : 'password'}
         width="100%"
@@ -119,6 +122,11 @@ const StackNavigator = () => {
           component={Yeni_kayıt_veya_düzenle}
           options={{title: 'Yeni Kayıt veya Düzenle'}}
         />
+        <StackNavigate.Screen
+          name="GirişListesi"
+          component={GirişListesi}
+          options={{title: 'Giriş Listesi'}}
+        />
       </StackNavigate.Navigator>
     </NavigationContainer>
   );
@@ -136,11 +144,11 @@ const App = ({navigation}) => {
   };
   return (
     <NativeBaseProvider>
+      <HideKeyboard style={{flex:1}}>
       <SafeAreaView style={[backgroundStyle, styles.sectionContainer]}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <KeyboardAvoidingView style={{flex: 1}}>
           <InputBoxes />
-          <DismissKeyboard>
             <Box alignItems="center" marginTop={'3%'}>
               <Button
                 style={styles.button}
@@ -148,9 +156,9 @@ const App = ({navigation}) => {
                 Giriş Yap
               </Button>
             </Box>
-          </DismissKeyboard>
         </KeyboardAvoidingView>
       </SafeAreaView>
+    </HideKeyboard>
     </NativeBaseProvider>
   );
 };
