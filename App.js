@@ -7,7 +7,7 @@ import {
   Box,
   Icon,
   MaterialIcons,
-} from 'native-base';
+} from 'native-base'; /* AUTOFİLL EKLENCEK KEYBOARD DİSMİSS ÇALIŞMIYOR VE GİRİŞ YAPA BASINCA İÇERİSİNDEKİ TEXTLER NULL OLMALI */
 import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
@@ -25,8 +25,9 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
-
+import Boşaltma_Bekleyen_Araç from './src/Screen/Boşaltma_Bekleyen_Araç';
 import MainMenu from './src/Screen/MainMenu';
+import Yeni_kayıt_veya_düzenle from './src/Screen/Yeni_kayıt_veya_düzenle';
 
 const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -65,8 +66,8 @@ const DismissKeyboard = ({children}) => {
 const InputBoxes = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
-  const [KullanıcıAdı, setKullanıcıAdı] = useState("Kullanıcı adı");
-  const [Şifre, setŞifre] = useState("Şifre");
+  const [KullanıcıAdı, setKullanıcıAdı] = useState('Kullanıcı adı');
+  const [Şifre, setŞifre] = useState('Şifre');
 
   return (
     <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
@@ -104,9 +105,19 @@ const StackNavigator = () => {
           options={{title: 'Giriş Ekranı'}}
         />
         <StackNavigate.Screen
-          name="MainMenuScreen"
+          name="Ana Menü Ekranı"
           component={MainMenu}
           options={{title: 'Ana Menü'}}
+        />
+        <StackNavigate.Screen
+          name="Boşaltma Bekleyen Araç Ekranı"
+          component={Boşaltma_Bekleyen_Araç}
+          options={{title: 'Boşaltma Bekleyen Araç Listesi'}}
+        />
+        <StackNavigate.Screen
+          name="Yeni kayıt veya düzenle Ekranı"
+          component={Yeni_kayıt_veya_düzenle}
+          options={{title: 'Yeni Kayıt veya Düzenle'}}
         />
       </StackNavigate.Navigator>
     </NavigationContainer>
@@ -119,33 +130,28 @@ const App = ({navigation}) => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
+  const NavigateToMainScreen = () => {
+    navigation.navigate('Ana Menü Ekranı');
+    // ANA EKRANA GEÇERKEN KULLANICI ADI VE ŞİFRE TEXTLERİ NULL OLACAK O BUTONA BASILDIĞINDA
+  };
   return (
-    <DismissKeyboard>
-      <NativeBaseProvider>
-        <SafeAreaView style={[backgroundStyle, styles.sectionContainer]}>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <KeyboardAvoidingView style={{flex: 1}}>
-            <InputBoxes />
+    <NativeBaseProvider>
+      <SafeAreaView style={[backgroundStyle, styles.sectionContainer]}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <KeyboardAvoidingView style={{flex: 1}}>
+          <InputBoxes />
+          <DismissKeyboard>
             <Box alignItems="center" marginTop={'3%'}>
               <Button
-                style={{
-                  borderRadius: 25,
-                  width: '50%',
-                  height: 50,
-                  minHeight: '8%',
-                  maxHeight: '100%',
-                }}
-                onPress={() =>
-                  navigation.navigate('MainMenuScreen')
-                }>
+                style={styles.button}
+                onPress={() => NavigateToMainScreen()}>
                 Giriş Yap
               </Button>
             </Box>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
-      </NativeBaseProvider>
-    </DismissKeyboard>
+          </DismissKeyboard>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </NativeBaseProvider>
   );
 };
 
@@ -154,6 +160,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  button: {
+    borderRadius: 25,
+    width: '50%',
+    height: 50,
+    minHeight: '8%',
+    maxHeight: '100%',
   },
 });
 
