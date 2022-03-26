@@ -7,6 +7,7 @@ import {
   Box,
   Icon,
   MaterialIcons,
+  Toast,
 } from 'native-base'; /* AUTOFİLL EKLENCEK  VE GİRİŞ YAPA BASINCA İÇERİSİNDEKİ TEXTLER NULL OLMALI. Eğer kullanıcı adı şifre api ile uyuşmazsa Altında kırmızı bir uyarı yazısı çıkmalı */
 import React, {useState} from 'react';
 import {
@@ -20,6 +21,8 @@ import {
   View,
   Keyboard,
   TouchableWithoutFeedback,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -113,13 +116,25 @@ const GirişYap = ({navigation}) => {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
 
+    const notifyMessage = msg => {
+      if (Platform.OS === 'android') {
+        ToastAndroid.show(msg, ToastAndroid.SHORT);
+      } else {
+        AlertIOS.alert(msg);
+      }
+    };
+
     const GirişYapPressed = () => {
-      console.log(KullanıcıAdı);
-      console.log(Şifre);
-      navigation.navigate('Ana Menü Ekranı');
-      setKullanıcıAdı('');
-      setŞifre('');
-      // ANA EKRANA GEÇERKEN KULLANICI ADI VE ŞİFRE TEXTLERİ NULL OLACAK O BUTONA BASILDIĞINDA
+      // API geldiğinde BUrada kıyaslama yapacaksın eğer girdiği kullanıcı adı && şifre eşitmi şeklinde if else kullanarak eğer eşitse navigate etçek eğer değilse alert şeklinde ekranda hata vercek tekrar deneyin diye!
+      if (KullanıcıAdı == 'naber' && Şifre == 'deneme') {
+        notifyMessage('Giriş Başarılı!');
+        navigation.navigate('Ana Menü Ekranı');
+        setKullanıcıAdı('');
+        setŞifre('');
+      } else
+        notifyMessage(
+          'Kullanıcı adı veya şifre yanlış! Lütfen Tekrar Deneyiniz.',
+        );
     };
 
     return (
