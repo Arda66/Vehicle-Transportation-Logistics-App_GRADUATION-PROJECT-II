@@ -101,7 +101,6 @@ const StackNavigator = () => {
 };
 
 const GirişYap = ({navigation}) => {
-
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -113,6 +112,15 @@ const GirişYap = ({navigation}) => {
     const [Şifre, setŞifre] = useState('');
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
+
+    const GirişYapPressed = () => {
+      console.log(KullanıcıAdı);
+      console.log(Şifre);
+      navigation.navigate('Ana Menü Ekranı');
+      setKullanıcıAdı('');
+      setŞifre('');
+      // ANA EKRANA GEÇERKEN KULLANICI ADI VE ŞİFRE TEXTLERİ NULL OLACAK O BUTONA BASILDIĞINDA
+    };
 
     return (
       <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
@@ -141,16 +149,15 @@ const GirişYap = ({navigation}) => {
           }
           placeholder="Şifre"
         />
+        <Box alignItems="center" marginTop={'3%'}>
+          <Button style={styles.button} onPress={() => GirişYapPressed()}>
+            Giriş Yap
+          </Button>
+        </Box>
       </Stack>
     );
   };
 
-  const GirişYapPressed = () => {
-    navigation.navigate('Ana Menü Ekranı');
-    /*   setKullanıcıAdı('');
-    setŞifre(''); */
-    // ANA EKRANA GEÇERKEN KULLANICI ADI VE ŞİFRE TEXTLERİ NULL OLACAK O BUTONA BASILDIĞINDA
-  };
   return (
     <NativeBaseProvider>
       <HideKeyboard>
@@ -158,11 +165,6 @@ const GirişYap = ({navigation}) => {
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
           <KeyboardAvoidingView style={{flex: 1}}>
             <InputBoxes />
-            <Box alignItems="center" marginTop={'3%'}>
-              <Button style={styles.button} onPress={() => GirişYapPressed()}>
-                Giriş Yap
-              </Button>
-            </Box>
           </KeyboardAvoidingView>
         </SafeAreaView>
       </HideKeyboard>
