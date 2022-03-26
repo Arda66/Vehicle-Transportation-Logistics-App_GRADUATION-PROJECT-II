@@ -126,14 +126,17 @@ const GirişYap = ({navigation}) => {
 
     const GirişYapPressed = () => {
       // API geldiğinde BUrada kıyaslama yapacaksın eğer girdiği kullanıcı adı && şifre eşitmi şeklinde if else kullanarak eğer eşitse navigate etçek eğer değilse alert şeklinde ekranda hata vercek tekrar deneyin diye!
-      if (KullanıcıAdı == 'naber' && Şifre == 'deneme') {
+      if (KullanıcıAdı == '1' && Şifre == '2') {
         notifyMessage('Giriş Başarılı!');
         navigation.navigate('Ana Menü Ekranı');
         setKullanıcıAdı('');
         setŞifre('');
-      } else
-        notifyMessage(
-          'Kullanıcı adı veya şifre yanlış! Lütfen Tekrar Deneyiniz.',
+      } else if (KullanıcıAdı == '' || Şifre == '')
+        notifyMessage('Kullanıcı adı veya şifre boş olamaz!');
+      else
+        Alert.alert(
+          'Kullanıcı adı veya şifre yanlış!',
+          'Lütfen Tekrar Deneyiniz.',
         );
     };
 
