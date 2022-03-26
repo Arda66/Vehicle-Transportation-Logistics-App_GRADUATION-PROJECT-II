@@ -32,6 +32,8 @@ import Boşaltma_Bekleyen_Araç from './src/Screen/Boşaltma_Bekleyen_Araç';
 import MainMenu from './src/Screen/MainMenu';
 import Yeni_kayıt_veya_düzenle from './src/Screen/Yeni_kayıt_veya_düzenle';
 import GirişListesi from './src/Screen/GirişListesi';
+import Resimler from './src/Screen/Resimler';
+
 /* 
 const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -70,11 +72,36 @@ const HideKeyboard = ({children}) => {
 const StackNavigate = createNativeStackNavigator();
 
 const StackNavigator = () => {
+  // const ÇıkmakIstediğineEminMisinPopUP = () => {
+  //   Alert.alert(
+  //     'Çıkmak istediğinize emin misiniz?',
+  //     'Kaydetmediğiniz değişiklikler var. Giriş ekranına dönmek istediğinize emin misiniz?',
+  //     [
+  //       {
+  //         text: 'Çıkış yap.',
+  //         style: 'destructive',
+  //         // If the user confirmed, then we dispatch the action we blocked earlier
+  //         // This will continue the action that had triggered the removal of the screen
+  //         onPress: () => {
+  //           navigation.navigate('Giriş Ekranı');
+  //         },
+  //       },
+  //       {
+  //         text: 'Vazgeçtim.',
+  //         style: 'cancel',
+  //         onPress: () => {
+  //           navigation.navigate('Ana Menü Ekranı');
+  //         },
+  //       },
+  //     ],
+  //   );
+  // }
+
   return (
     <NavigationContainer>
-      <StackNavigate.Navigator initialRouteName="LoginScreen">
+      <StackNavigate.Navigator initialRouteName="Giriş Ekranı">
         <StackNavigate.Screen
-          name="LoginScreen"
+          name="Giriş Ekranı"
           component={GirişYap}
           options={{title: 'Giriş Ekranı'}}
         />
@@ -94,9 +121,14 @@ const StackNavigator = () => {
           options={{title: 'Yeni Kayıt veya Düzenle'}}
         />
         <StackNavigate.Screen
-          name="GirişListesi"
+          name="GirişListesi Ekranı"
           component={GirişListesi}
           options={{title: 'Giriş Listesi'}}
+        />
+        <StackNavigate.Screen
+          name="Resimler Ekranı"
+          component={Resimler}
+          options={{title: 'Resim Ekle'}}
         />
       </StackNavigate.Navigator>
     </NavigationContainer>
