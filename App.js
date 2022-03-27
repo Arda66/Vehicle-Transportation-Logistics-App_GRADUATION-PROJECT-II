@@ -9,7 +9,7 @@ import {
   MaterialIcons,
   Toast,
 } from 'native-base'; /* AUTOFİLL EKLENCEK  VE GİRİŞ YAPA BASINCA İÇERİSİNDEKİ TEXTLER NULL OLMALI. Eğer kullanıcı adı şifre api ile uyuşmazsa Altında kırmızı bir uyarı yazısı çıkmalı */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   KeyboardAvoidingView,
   SafeAreaView,
@@ -23,7 +23,9 @@ import {
   TouchableWithoutFeedback,
   Alert,
   ToastAndroid,
+  BackHandler,
 } from 'react-native';
+import { HeaderBackButton } from '@react-navigation/stack';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -72,31 +74,6 @@ const HideKeyboard = ({children}) => {
 const StackNavigate = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  // const ÇıkmakIstediğineEminMisinPopUP = () => {
-  //   Alert.alert(
-  //     'Çıkmak istediğinize emin misiniz?',
-  //     'Kaydetmediğiniz değişiklikler var. Giriş ekranına dönmek istediğinize emin misiniz?',
-  //     [
-  //       {
-  //         text: 'Çıkış yap.',
-  //         style: 'destructive',
-  //         // If the user confirmed, then we dispatch the action we blocked earlier
-  //         // This will continue the action that had triggered the removal of the screen
-  //         onPress: () => {
-  //           navigation.navigate('Giriş Ekranı');
-  //         },
-  //       },
-  //       {
-  //         text: 'Vazgeçtim.',
-  //         style: 'cancel',
-  //         onPress: () => {
-  //           navigation.navigate('Ana Menü Ekranı');
-  //         },
-  //       },
-  //     ],
-  //   );
-  // }
-
   return (
     <NavigationContainer>
       <StackNavigate.Navigator initialRouteName="Giriş Ekranı">
@@ -108,7 +85,19 @@ const StackNavigator = () => {
         <StackNavigate.Screen
           name="Ana Menü Ekranı"
           component={MainMenu}
-          options={{title: 'Ana Menü'}}
+          options={{title: 'Ana Menü'/* ,headerLeft: ()=>{
+            <HeaderBackButton onPress={()=>{ 
+              Alert.alert('Hesabınızdan çıkış yapılacaktır.', 'Giriş Ekranına dönmek istediğinize emin misiniz?', [
+                {
+                  text: 'Hayır',
+                  onPress: () => {},
+                  style: 'cancel',
+                },
+                {text: 'Evet', onPress: () => navigation.navigate('Giriş Ekranı')},
+              ]);
+            }}/>
+
+          } */}}
         />
         <StackNavigate.Screen
           name="Boşaltma Bekleyen Araç Ekranı"
@@ -136,6 +125,27 @@ const StackNavigator = () => {
 };
 
 const GirişYap = ({navigation}) => {
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Uygulamadan çıkış yapılacaktır!', 'Çıkış yapmak istediğinize emin misiniz?', [
+        {
+          text: 'Hayır',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'Evet', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
