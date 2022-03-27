@@ -5,20 +5,52 @@ import {
   TouchableOpacity,
   Alert,
   BackHandler,
+  Image
 } from 'react-native';
 import React, {useEffect} from 'react';
 
 const MainMenu = ({navigation}) => {
-  useEffect(() => {
+
+
+  useEffect(() => {    // SOL ALTTAKİ GERİ ÇIKMA TUŞUNA BASINCA NE YAPSIN !
+    navigation.setOptions({    // SOL ÜSTTEKİ GERİ TUŞUNA BASINCA NE YAPSIN!                  
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() =>
+            Alert.alert(
+              'Hesabınızdan çıkış yapılacaktır.',
+              'Giriş Ekranına dönmek istediğinize emin misiniz?',
+              [
+                {
+                  text: 'Hayır',
+                  onPress: () => null,
+                  style: 'cancel',
+                },
+                {
+                  text: 'Evet',
+                  onPress: () => navigation.navigate('Giriş Ekranı'),
+                },
+              ],
+            )
+          }
+        >
+          <Image style={{width:25,height:20,marginRight:15}}source={require('../Resim/left_arrow.png')}/>
+        </TouchableOpacity>
+      ),
+    });
     const backAction = () => {
-      Alert.alert('Hesabınızdan çıkış yapılacaktır.', 'Giriş Ekranına dönmek istediğinize emin misiniz?', [
-        {
-          text: 'Hayır',
-          onPress: () => null,
-          style: 'cancel',
-        },
-        {text: 'Evet', onPress: () => navigation.navigate('Giriş Ekranı')},
-      ]);
+      Alert.alert(
+        'Hesabınızdan çıkış yapılacaktır.',
+        'Giriş Ekranına dönmek istediğinize emin misiniz?',
+        [
+          {
+            text: 'Hayır',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'Evet', onPress: () => navigation.navigate('Giriş Ekranı')},
+        ],
+      );
       return true;
     };
 

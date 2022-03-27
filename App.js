@@ -24,8 +24,9 @@ import {
   Alert,
   ToastAndroid,
   BackHandler,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
-import { HeaderBackButton } from '@react-navigation/stack';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -43,7 +44,7 @@ const Section = ({children, title}) => {
     <View style={styles.sectionContainer}>
       <Text
         style={[
-          styles.sectionTitle,
+          styles.sectionTitle,f
           {
             color: isDarkMode ? Colors.white : Colors.black,
           },
@@ -85,19 +86,9 @@ const StackNavigator = () => {
         <StackNavigate.Screen
           name="Ana Menü Ekranı"
           component={MainMenu}
-          options={{title: 'Ana Menü'/* ,headerLeft: ()=>{
-            <HeaderBackButton onPress={()=>{ 
-              Alert.alert('Hesabınızdan çıkış yapılacaktır.', 'Giriş Ekranına dönmek istediğinize emin misiniz?', [
-                {
-                  text: 'Hayır',
-                  onPress: () => {},
-                  style: 'cancel',
-                },
-                {text: 'Evet', onPress: () => navigation.navigate('Giriş Ekranı')},
-              ]);
-            }}/>
-
-          } */}}
+          options={{
+            title: 'Ana Menü',
+          }}
         />
         <StackNavigate.Screen
           name="Boşaltma Bekleyen Araç Ekranı"
@@ -127,14 +118,18 @@ const StackNavigator = () => {
 const GirişYap = ({navigation}) => {
   useEffect(() => {
     const backAction = () => {
-      Alert.alert('Uygulamadan çıkış yapılacaktır!', 'Çıkış yapmak istediğinize emin misiniz?', [
-        {
-          text: 'Hayır',
-          onPress: () => null,
-          style: 'cancel',
-        },
-        {text: 'Evet', onPress: () => BackHandler.exitApp()},
-      ]);
+      Alert.alert(
+        'Uygulamadan çıkış yapılacaktır!',
+        'Çıkış yapmak istediğinize emin misiniz?',
+        [
+          {
+            text: 'Hayır',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {text: 'Evet', onPress: () => BackHandler.exitApp()},
+        ],
+      );
       return true;
     };
 
