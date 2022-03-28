@@ -14,22 +14,22 @@ const MainMenu = ({navigation}) => {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
 
-  const getData = () => {
-    try {
-      AsyncStorage.getItem('UserData').then(value => {
-        if (value != null) {
-          let user = JSON.parse(value);
-          setUsername(user.Username);
-          setPassword(user.Password);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)
+  //   try {
+  //     AsyncStorage.getItem('UserData').then(value => {
+  //       if (value != null) {
+  //         let user = JSON.parse(value);
+  //         setUsername(user.Username);
+  //         setPassword(user.Password);
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
-    getData();
+    // getData();
     // const headerleffunction = () => {
     //   // SOL ÜSTTEKİ GERİ TUŞUNA BASINCA NE YAPSIN!
     //   navigation.setOptions({
@@ -121,16 +121,26 @@ const MainMenu = ({navigation}) => {
           }}>
           Ana Menü
         </Text>
+        {/* <Text // BUNLAR SONRADAN SİLİNCEK DENEME AMAÇLI TEST İÇİN KOYDUM
+          style={{
+            fontWeight: 'bold',
+            color: 'black',
+            fontSize: 40,
+            bottom: '83%',
+            position: 'absolute',
+          }}>
+          Kullanıcı adı : {Username}
+        </Text>
         <Text
           style={{
             fontWeight: 'bold',
             color: 'black',
             fontSize: 40,
-            bottom: '80%',
+            bottom: '75%',
             position: 'absolute',
           }}>
-          {Username} ve {Password}
-        </Text>
+          Şifre: {Password}
+        </Text> */}
         <View
           style={{
             flex: 1,
