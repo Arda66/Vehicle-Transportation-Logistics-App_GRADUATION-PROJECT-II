@@ -82,13 +82,13 @@ const StackNavigator = () => {
           name="Login Screen"
           component={GirişYap}
           options={{title: 'Giriş Ekranı'}}
-          
         />
         <StackNavigate.Screen
           name="Main Menu Screen"
           component={MainMenu}
           options={{
             title: 'Ana Menü',
+            headerShown: false,
           }}
         />
         <StackNavigate.Screen
@@ -169,7 +169,7 @@ const GirişYap = ({navigation}) => {
         navigation.navigate('Main Menu Screen');
         setUsername('');
         setPassword('');
-      } else if (Username == '' || Password == '')
+      } else if (Username.length == 0 || Password.length == 0)
         notifyMessage('Kullanıcı adı veya şifre boş olamaz!');
       else
         Alert.alert(
