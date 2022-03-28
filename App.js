@@ -36,6 +36,7 @@ import MainMenu from './src/screen/MainMenu';
 import NewRecordModify from './src/screen/NewRecordModify';
 import LoginList from './src/screen/LoginList';
 import Pictures from './src/screen/Pictures';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /* 
 const Section = ({children, title}) => {
@@ -118,6 +119,15 @@ const StackNavigator = () => {
 
 const GirişYap = ({navigation}) => {
   useEffect(() => {
+
+    
+
+
+
+
+
+
+
     const backAction = () => {
       Alert.alert(
         'Uygulamadan çıkış yapılacaktır!',

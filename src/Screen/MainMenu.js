@@ -8,9 +8,13 @@ import {
   Image,
 } from 'react-native';
 import React, {useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MainMenu = ({navigation}) => {
   useEffect(() => {
+
+
+    
     // const headerleffunction = () => {
     //   // SOL ÜSTTEKİ GERİ TUŞUNA BASINCA NE YAPSIN!
     //   navigation.setOptions({
