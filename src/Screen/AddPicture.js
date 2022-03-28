@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-const Pictures = () => {
+const AddPicture = ({navigation}) => {
   return (
     <View>
       <Text>Resimler</Text>
@@ -9,4 +9,4 @@ const Pictures = () => {
   );
 };
 
-export default Pictures;
+export default AddPicture;

@@ -8,7 +8,7 @@ import {
   Icon,
   MaterialIcons,
   Toast,
-} from 'native-base'; /* AUTOFİLL EKLENCEK  VE GİRİŞ YAPA BASINCA İÇERİSİNDEKİ TEXTLER NULL OLMALI. Eğer kullanıcı adı şifre api ile uyuşmazsa Altında kırmızı bir uyarı yazısı çıkmalı */
+} from 'native-base';
 import React, {useState, useEffect} from 'react';
 import {
   KeyboardAvoidingView,
@@ -35,35 +35,8 @@ import Vehicle_Waiting_For_Unloading from './src/screen/VehicleWaitingForUnloadi
 import MainMenu from './src/screen/MainMenu';
 import NewRecordModify from './src/screen/NewRecordModify';
 import LoginList from './src/screen/LoginList';
-import Pictures from './src/screen/Pictures';
+import AddPicture from './src/screen/AddPicture';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-/* 
-const Section = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,f
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}; */
 
 const HideKeyboard = ({children}) => {
   return (
@@ -109,7 +82,7 @@ const StackNavigator = () => {
         />
         <StackNavigate.Screen
           name="Pictures Screen"
-          component={Pictures}
+          component={AddPicture}
           options={{title: 'Resim Ekle'}}
         />
       </StackNavigate.Navigator>

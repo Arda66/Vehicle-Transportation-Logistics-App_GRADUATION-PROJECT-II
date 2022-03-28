@@ -13,7 +13,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const MainMenu = ({navigation}) => {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
-
   // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)
   //   try {
   //     AsyncStorage.getItem('UserData').then(value => {
@@ -61,6 +60,7 @@ const MainMenu = ({navigation}) => {
     //   });
     // };
     const backAction = () => {
+      // SADECE BU SAYFADA GERİ YAPINCA UYARSIN HER SAYFADA UYARIYOR
       Alert.alert(
         'Hesabınızdan çıkış yapılacaktır.',
         'Giriş Ekranına dönmek istediğinize emin misiniz?',
@@ -77,7 +77,7 @@ const MainMenu = ({navigation}) => {
     };
 
     // headerleffunction();
-    const backHandler = BackHandler.addEventListener(
+    const backHandler = BackHandler.addEventListener( // Bu sadece Androidde geçerli
       'hardwareBackPress',
       backAction,
     );
@@ -162,7 +162,7 @@ const MainMenu = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => ExitwithAlertForButton()}
-            style={styles.touchable}>
+            style={[styles.touchable, styles.exitButton]}>
             <Text style={styles.text}>Çıkış Yap</Text>
           </TouchableOpacity>
         </View>
@@ -191,6 +191,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     top: '5%',
+  },
+  exitButton: {
+    top: '40%',
   },
 });
 
