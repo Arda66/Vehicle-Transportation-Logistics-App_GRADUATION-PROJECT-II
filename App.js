@@ -118,15 +118,20 @@ const StackNavigator = () => {
 };
 
 const GirişYap = ({navigation}) => {
+  const getData = () => {
+    try {
+      AsyncStorage.getItem('UserData').then(value => {
+        if (value != null) {
+          navigation.navigate('Main Menu Screen');
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-
-    
-
-
-
-
-
-
+    getData();
 
     const backAction = () => {
       Alert.alert(
@@ -172,10 +177,22 @@ const GirişYap = ({navigation}) => {
       }
     };
 
+    const setData = async () => {
+      try {
+        var user = {Username: Username, Password: Password};
+        await AsyncStorage.setItem('UserData', JSON.stringify(user));
+      } catch (error) {
+        console.log(error);
+      }
+    };
     const LoginPressed = () => {
       // API geldiğinde BUrada kıyaslama yapacaksın eğer girdiği kullanıcı adı && şifre eşitmi şeklinde if else kullanarak eğer eşitse navigate etçek eğer değilse alert şeklinde ekranda hata vercek tekrar deneyin diye!
-      if (Username == '1' && Password == '2') {
+      if (
+        (Username == 'arda' && Password == '123') ||
+        (Username == 'aslan' && Password == '45')
+      ) {
         notifyMessage('Giriş Başarılı!');
+        setData();
         navigation.navigate('Main Menu Screen');
         setUsername('');
         setPassword('');

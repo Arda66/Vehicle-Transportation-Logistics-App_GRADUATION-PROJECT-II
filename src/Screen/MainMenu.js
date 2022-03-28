@@ -7,14 +7,29 @@ import {
   BackHandler,
   Image,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MainMenu = ({navigation}) => {
+  const [Username, setUsername] = useState('');
+  const [Password, setPassword] = useState('');
+
+  const getData = () => {
+    try {
+      AsyncStorage.getItem('UserData').then(value => {
+        if (value != null) {
+          let user = JSON.parse(value);
+          setUsername(user.Username);
+          setPassword(user.Password);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-
-
-    
+    getData();
     // const headerleffunction = () => {
     //   // SOL ÜSTTEKİ GERİ TUŞUNA BASINCA NE YAPSIN!
     //   navigation.setOptions({
@@ -84,7 +99,10 @@ const MainMenu = ({navigation}) => {
         },
         {
           text: 'Evet',
-          onPress: () => navigation.navigate('Login Screen'),
+          onPress: () => {
+            AsyncStorage.removeItem('UserData');
+            navigation.navigate('Login Screen');
+          },
         },
       ],
     );
@@ -102,6 +120,16 @@ const MainMenu = ({navigation}) => {
             position: 'absolute',
           }}>
           Ana Menü
+        </Text>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            color: 'black',
+            fontSize: 40,
+            bottom: '80%',
+            position: 'absolute',
+          }}>
+          {Username} ve {Password}
         </Text>
         <View
           style={{
