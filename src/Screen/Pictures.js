@@ -1,12 +1,12 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-const GirişListesi = () => {
+const Pictures = () => {
   return (
     <View>
-      <Text>Giriş Listesi</Text>
+      <Text>Resimler</Text>
     </View>
   );
 };
 
-export default GirişListesi;
+export default Pictures;

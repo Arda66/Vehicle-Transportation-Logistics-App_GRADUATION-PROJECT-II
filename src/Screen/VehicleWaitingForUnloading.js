@@ -9,8 +9,8 @@ import {
 import React from 'react';
 
 
-  const Boşaltma_Bekleyen_Araç = ({navigation}) => {
-  const GirişListeItem = item => {
+  const Vehicle_Waiting_For_Unloading = ({navigation}) => {
+  const ListItem = item => {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
@@ -32,13 +32,13 @@ import React from 'react';
                 justifyContent: 'flex-end',
                 margin: 5,
               }}>
-              <TouchableOpacity onPress={()=> navigation.navigate('Yeni kayıt veya düzenle Ekranı')} style={styles.button}>
+              <TouchableOpacity onPress={()=> navigation.navigate('NewRecord or Modify Screen')} style={styles.button}>
                 <Text style={styles.text}>Düzelt</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={()=> navigation.navigate('Yeni kayıt veya düzenle Ekranı')} style={styles.button}>
+              <TouchableOpacity onPress={()=> navigation.navigate('NewRecord or Modify Screen')} style={styles.button}>
                 <Text style={styles.text}>Yeni Kayıt</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={()=> navigation.navigate('Resimler Ekranı')} style={styles.button}>
+              <TouchableOpacity onPress={()=> navigation.navigate('Pictures Screen')} style={styles.button}>
                 <Text style={styles.text}>Resim Ekle</Text>
               </TouchableOpacity>
             </View>
@@ -47,16 +47,17 @@ import React from 'react';
       </View>
     );
   };
-  return (
-    <ScrollView style={{flex: 1}}>
-      <GirişListeItem index={'1'} />
-      <GirişListeItem index={'2'} />
-      <GirişListeItem index={'3'} />
-      <GirişListeItem index={'4'} />
-      <GirişListeItem index={'5'} />
-      <GirişListeItem index={'6'} />
-      <GirişListeItem index={'7'} />
-      <GirişListeItem index={'8'} />
+  return ( // BU FLATLİST OLACAK DAHA SONRA .  AMA ŞUAN İÇİN ARRAY OLUŞTURMADIM. BU DENEMELİK
+    <ScrollView style={{flex: 1}}> 
+      <ListItem index={'1'} />
+      <ListItem index={'2'} />
+      <ListItem index={'3'} />
+      <ListItem index={'4'} />
+      <ListItem index={'5'} />
+      <ListItem index={'6'} />
+      <ListItem index={'7'} />
+      <ListItem index={'8'} />
+      <ListItem index={'9'} />
     </ScrollView>
   );
 };
@@ -86,4 +87,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Boşaltma_Bekleyen_Araç;
+export default Vehicle_Waiting_For_Unloading;

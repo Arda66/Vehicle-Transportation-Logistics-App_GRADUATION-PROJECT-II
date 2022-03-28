@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 
-const Yeni_kayıt_veya_düzenle = ({navigation}) => {
+const NewRecordModify = ({navigation}) => {
   return (
     <View>
       <Text>Yeni_kayıt_veya_düzenle</Text>
@@ -11,4 +11,4 @@ const Yeni_kayıt_veya_düzenle = ({navigation}) => {
 
 const styles = StyleSheet.create({});
 
-export default Yeni_kayıt_veya_düzenle;
+export default NewRecordModify;

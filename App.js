@@ -31,11 +31,11 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import Boşaltma_Bekleyen_Araç from './src/Screen/Boşaltma_Bekleyen_Araç';
-import MainMenu from './src/Screen/MainMenu';
-import Yeni_kayıt_veya_düzenle from './src/Screen/Yeni_kayıt_veya_düzenle';
-import GirişListesi from './src/Screen/GirişListesi';
-import Resimler from './src/Screen/Resimler';
+import Vehicle_Waiting_For_Unloading from './src/screen/VehicleWaitingForUnloading';
+import MainMenu from './src/screen/MainMenu';
+import NewRecordModify from './src/screen/NewRecordModify';
+import LoginList from './src/screen/LoginList';
+import Pictures from './src/screen/Pictures';
 
 /* 
 const Section = ({children, title}) => {
@@ -79,35 +79,36 @@ const StackNavigator = () => {
     <NavigationContainer>
       <StackNavigate.Navigator initialRouteName="Giriş Ekranı">
         <StackNavigate.Screen
-          name="Giriş Ekranı"
+          name="Login Screen"
           component={GirişYap}
           options={{title: 'Giriş Ekranı'}}
+          
         />
         <StackNavigate.Screen
-          name="Ana Menü Ekranı"
+          name="Main Menu Screen"
           component={MainMenu}
           options={{
             title: 'Ana Menü',
           }}
         />
         <StackNavigate.Screen
-          name="Boşaltma Bekleyen Araç Ekranı"
-          component={Boşaltma_Bekleyen_Araç}
+          name="Vehicle Waiting For Unloading Screen"
+          component={Vehicle_Waiting_For_Unloading}
           options={{title: 'Boşaltma Bekleyen Araç Listesi'}}
         />
         <StackNavigate.Screen
-          name="Yeni kayıt veya düzenle Ekranı"
-          component={Yeni_kayıt_veya_düzenle}
+          name="NewRecord or Modify Screen"
+          component={NewRecordModify}
           options={{title: 'Yeni Kayıt veya Düzenle'}}
         />
         <StackNavigate.Screen
-          name="GirişListesi Ekranı"
-          component={GirişListesi}
+          name="LoginList Screen"
+          component={LoginList}
           options={{title: 'Giriş Listesi'}}
         />
         <StackNavigate.Screen
-          name="Resimler Ekranı"
-          component={Resimler}
+          name="Pictures Screen"
+          component={Pictures}
           options={{title: 'Resim Ekle'}}
         />
       </StackNavigate.Navigator>
@@ -148,8 +149,8 @@ const GirişYap = ({navigation}) => {
   };
 
   const InputBoxes = () => {
-    const [KullanıcıAdı, setKullanıcıAdı] = useState('');
-    const [Şifre, setŞifre] = useState('');
+    const [Username, setUsername] = useState('');
+    const [Password, setPassword] = useState('');
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
 
@@ -161,14 +162,14 @@ const GirişYap = ({navigation}) => {
       }
     };
 
-    const GirişYapPressed = () => {
+    const LoginPressed = () => {
       // API geldiğinde BUrada kıyaslama yapacaksın eğer girdiği kullanıcı adı && şifre eşitmi şeklinde if else kullanarak eğer eşitse navigate etçek eğer değilse alert şeklinde ekranda hata vercek tekrar deneyin diye!
-      if (KullanıcıAdı == '1' && Şifre == '2') {
+      if (Username == '1' && Password == '2') {
         notifyMessage('Giriş Başarılı!');
-        navigation.navigate('Ana Menü Ekranı');
-        setKullanıcıAdı('');
-        setŞifre('');
-      } else if (KullanıcıAdı == '' || Şifre == '')
+        navigation.navigate('Main Menu Screen');
+        setUsername('');
+        setPassword('');
+      } else if (Username == '' || Password == '')
         notifyMessage('Kullanıcı adı veya şifre boş olamaz!');
       else
         Alert.alert(
@@ -180,14 +181,14 @@ const GirişYap = ({navigation}) => {
     return (
       <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
         <Input
-          value={KullanıcıAdı}
-          onChangeText={text => setKullanıcıAdı(text)}
+          value={Username}
+          onChangeText={text => setUsername(text)}
           size="lg"
           placeholder="Kullanıcı adı"
         />
         <Input
-          onChangeText={text => setŞifre(text)}
-          value={Şifre}
+          onChangeText={text => setPassword(text)}
+          value={Password}
           size="lg"
           type={show ? 'text' : 'password'}
           width="100%"
@@ -205,7 +206,7 @@ const GirişYap = ({navigation}) => {
           placeholder="Şifre"
         />
         <Box alignItems="center" marginTop={'3%'}>
-          <Button style={styles.button} onPress={() => GirişYapPressed()}>
+          <Button style={styles.button} onPress={() => LoginPressed()}>
             Giriş Yap
           </Button>
         </Box>
