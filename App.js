@@ -83,7 +83,7 @@ const StackNavigator = () => {
         <StackNavigate.Screen
           name="Pictures Screen"
           component={AddPicture}
-          options={{title: 'Resim Ekle'}}
+          options={{title: 'Resimler / Resim Ekle'}}
         />
       </StackNavigate.Navigator>
     </NavigationContainer>

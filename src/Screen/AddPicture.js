@@ -1,24 +1,29 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const AddPicture = ({navigation}) => {
-  const [image, setImage] = useState('');
-  const ImageList = [];  
+  // const [image, setImage] = useState('');
+  const ImageList = [];
 
-  
   const TakePhotoFromCamera = () => {
     ImagePicker.openCamera({
       compressImageMaxWidth: 300,
       compressImageMaxHeight: 300,
       cropping: true,
       compressImageQuality: 0.7,
-    }).then(image => {
-      console.log(image);
-      setImage(image.path);
-      ImageList.push(image);
-      // this.bs.current.snapTo(1);
-    });
+    })
+      .then(image => {
+        if (image != null) {
+          console.log(image);
+          // setImage(image.path);
+          ImageList.push(image.path);
+        }
+        // this.bs.current.snapTo(1);
+      })
+      .catch(err => {
+        console.log('TakePhotoFromCamera err catch ' + err.toString());
+      });
   };
   const ChoosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
@@ -26,16 +31,21 @@ const AddPicture = ({navigation}) => {
       width: 300,
       height: 300,
       cropping: true,
-      
-    }).then(image => {
-      console.log(image);
-      setImage(image.path);
-      ImageList.push(image);
-      // this.bs.current.snapTo(1);
-    });
+    })
+      .then(image => {
+        if (image != null) {
+          console.log(image);
+          // setImage(image.path);
+          ImageList.push(image.path);
+        }
+        // this.bs.current.snapTo(1);
+      })
+      .catch(err => {
+        console.log('ChoosePhotoFromLibrary err catch  ' + err.toString());
+      });
   };
 
-  const PopUpFromBottomMenu = () => {
+  const BottomAddPhotoMenu = () => {
     return (
       <View style={styles.panel}>
         <View style={{alignItems: 'center'}}>
@@ -59,9 +69,26 @@ const AddPicture = ({navigation}) => {
       </View>
     );
   };
+
+  const ImageListBox = () => {
+    // Fotoğrafları flatlist ile alt alta göstercez.
+    return (
+      <FlatList>
+        data={ImageList}
+        renderItem=
+        {({item}) => {
+          return <item></item>;
+        }}
+      </FlatList>
+    );
+  };
+
   return (
-    <View>
-      <PopUpFromBottomMenu></PopUpFromBottomMenu>
+    <View style={{flex: 1}}>
+      <ImageListBox />
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <BottomAddPhotoMenu></BottomAddPhotoMenu>
+      </View>
     </View>
   );
 };
@@ -80,12 +107,12 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FFFFFF',
     paddingTop: 20,
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
-    // shadowColor: '#000000',
-    // shadowOffset: {width: 0, height: 0},
-    // shadowRadius: 5,
-    // shadowOpacity: 0.4,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    shadowColor: '#000000',
+    shadowOffset: {width: 0, height: 0},
+    shadowRadius: 5,
+    shadowOpacity: 0.4,
   },
   header: {
     backgroundColor: '#FFFFFF',
