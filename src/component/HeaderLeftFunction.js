@@ -5,15 +5,15 @@ const HeaderLeftFunction = props => {  // BUNU NAVİGATİON.SETOPTİONS KISMI İ
   return (
     <TouchableOpacity
       onPress={() =>
-        Alert.alert(props.üstmesaj, props.altmesaj, [
+        Alert.alert(props.topmsg, props.bottommsg, [
           {
-            text: props.solbutontext,
-            onPress: props.solbutongörev,
+            text: props.leftbuttontext,
+            onPress: props.leftbuttontask,
             style: 'cancel',
           },
           {
-            text: props.sağbutontext,
-            onPress: props.sağbutongörev,
+            text: props.rightbuttontext,
+            onPress: props.rightbuttontask,
           },
         ])
       }>

@@ -54,7 +54,7 @@ const StackNavigator = () => {
       <StackNavigate.Navigator initialRouteName="Giriş Ekranı">
         <StackNavigate.Screen
           name="Login Screen"
-          component={GirişYap}
+          component={Login}
           options={{title: 'Giriş Ekranı'}}
         />
         <StackNavigate.Screen
@@ -90,7 +90,7 @@ const StackNavigator = () => {
   );
 };
 
-const GirişYap = ({navigation}) => {
+const Login = ({navigation}) => {
   const getData = () => {
     try {
       AsyncStorage.getItem('UserData').then(value => {
@@ -105,7 +105,6 @@ const GirişYap = ({navigation}) => {
 
   useEffect(() => {
     getData();
-
     const backAction = () => {
       Alert.alert(
         'Uygulamadan çıkış yapılacaktır!',
