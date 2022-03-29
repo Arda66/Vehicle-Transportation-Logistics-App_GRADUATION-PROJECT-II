@@ -35,6 +35,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription </key>
+	<string>Fotoğraf seçmek için galerinize erişim gerekiyor.</string>
+	<key>NSCameraUsageDescription </key>
+	<string>Fotoğraf çekmek için kameraya erişim gerekiyor.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>

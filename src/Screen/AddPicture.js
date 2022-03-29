@@ -1,25 +1,61 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const AddPicture = ({navigation}) => {
+  const [image, setImage] = useState('');
+  const ImageList = [];  
+
+  
+  const TakePhotoFromCamera = () => {
+    ImagePicker.openCamera({
+      compressImageMaxWidth: 300,
+      compressImageMaxHeight: 300,
+      cropping: true,
+      compressImageQuality: 0.7,
+    }).then(image => {
+      console.log(image);
+      setImage(image.path);
+      ImageList.push(image);
+      // this.bs.current.snapTo(1);
+    });
+  };
+  const ChoosePhotoFromLibrary = () => {
+    ImagePicker.openPicker({
+      mediaType: 'photo',
+      width: 300,
+      height: 300,
+      cropping: true,
+      
+    }).then(image => {
+      console.log(image);
+      setImage(image.path);
+      ImageList.push(image);
+      // this.bs.current.snapTo(1);
+    });
+  };
+
   const PopUpFromBottomMenu = () => {
     return (
       <View style={styles.panel}>
         <View style={{alignItems: 'center'}}>
           <Text style={styles.panelTitle}>Resim Yükle</Text>
         </View>
-        <TouchableOpacity style={styles.panelButton} onPress>
+        <TouchableOpacity
+          style={styles.panelButton}
+          onPress={TakePhotoFromCamera}>
           <Text style={styles.panelButtonTitle}>Fotoğraf Çek</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.panelButton} onPress>
-          <Text style={styles.panelButtonTitle}>Galeriden Seç</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.panelButton}
+          onPress={ChoosePhotoFromLibrary}>
+          <Text style={styles.panelButtonTitle}>Galeriden Seç</Text>
+        </TouchableOpacity>
+        {/* <TouchableOpacity
+          style={styles.panelButton}
           onPress={() => this.bs.current.snapTo(1)}>
           <Text style={styles.panelButtonTitle}>İptal</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   };
