@@ -11,12 +11,12 @@ import React, {useState} from 'react';
 
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [ListItems, setListItems] = useState([
-    {index: '1'},
-    {index: '2'},
-    {index: '3'},
-    {index: '4'},
-    {index: '5'},
-    {index: '6'},
+    {key: '1'},
+    {key: '2'},
+    {key: '3'},
+    {key: '4'},
+    {key: '5'},
+    {key: '6'},
   ]);
 
   const ListItem = item => {
@@ -58,7 +58,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               <TouchableOpacity
                 onPress={() => navigation.navigate('Pictures Screen')}
                 style={styles.button}>
-                <Text style={styles.text}>Resim Ekle</Text>
+                <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -70,7 +70,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     <FlatList
       data={ListItems}
       renderItem={({item}) => {
-        return <ListItem index={item.index} />;
+        return <ListItem index={item.key} />;
       }}
     />
   );
