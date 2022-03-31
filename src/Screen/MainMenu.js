@@ -77,7 +77,8 @@ const MainMenu = ({navigation}) => {
     };
 
     // headerleffunction();
-    const backHandler = BackHandler.addEventListener( // Bu sadece Androidde geçerli
+    const backHandler = BackHandler.addEventListener(
+      // Bu sadece Androidde geçerli
       'hardwareBackPress',
       backAction,
     );

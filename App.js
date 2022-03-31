@@ -27,7 +27,6 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
@@ -37,6 +36,7 @@ import NewRecordModify from './src/screen/NewRecordModify';
 import LoginList from './src/screen/LoginList';
 import AddPicture from './src/screen/AddPicture';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AccountService from './services/AccountService';
 
 const HideKeyboard = ({children}) => {
   return (

@@ -1,9 +1,16 @@
-import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Image,
+} from 'react-native';
 import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const AddPicture = ({navigation}) => {
-  // const [image, setImage] = useState('');
+  const [image, setImage] = useState(''); // TEST AMAÇLI
   const ImageList = [];
 
   const TakePhotoFromCamera = () => {
@@ -16,7 +23,7 @@ const AddPicture = ({navigation}) => {
       .then(image => {
         if (image != null) {
           console.log(image);
-          // setImage(image.path);
+          setImage(image.path); // TEST AMAÇLI
           ImageList.push(image.path);
         }
         // this.bs.current.snapTo(1);
@@ -35,7 +42,7 @@ const AddPicture = ({navigation}) => {
       .then(image => {
         if (image != null) {
           console.log(image);
-          // setImage(image.path);
+          setImage(image.path); // TEST AMAÇLI
           ImageList.push(image.path);
         }
         // this.bs.current.snapTo(1);
@@ -85,7 +92,8 @@ const AddPicture = ({navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      <ImageListBox />
+      {/* <ImageListBox /> */}
+      {/* <Image source={require('')}></Image> */}
       <View style={{flex: 1, justifyContent: 'flex-end'}}>
         <BottomAddPhotoMenu></BottomAddPhotoMenu>
       </View>
