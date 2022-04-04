@@ -4,6 +4,8 @@ import axios from 'axios';
 const baseUrl = 'https://jsonplaceholder.typicode.com';
 
 const LoginList = ({navigation}) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const fetchData = () => {
     axios
       .get(`${baseUrl}/posts`)
@@ -12,15 +14,14 @@ const LoginList = ({navigation}) => {
       })
       .catch(err => console.log('Fetch hata : ' + err));
   };
-  const SendData = (userId) =>{
-    axios.post(`${baseUrl}/posts`,{userId}).then(res =>{
+  const SendData = (username,password) =>{
+    axios.post(`${baseUrl}/posts`,{username : username,password: password}).then(res =>{
       console.log(res.data);
 
     }).catch(err => console.log('Update hata' + err));
   
   }
 
-  const [text, setText] = useState('');
   useEffect(() => {
     // Only render once! at the start
     fetchData();
@@ -29,18 +30,30 @@ const LoginList = ({navigation}) => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <TextInput
-        value={text}
-        onChangeText={text => {
-          setText(text);
+        value={username}
+        onChangeText={username => {
+          setUsername(username);
         }}
-        placeholder="isim değerini güncelle"
+        placeholder="Kullanıcı adı gir"
         style={{
           borderWidth: 1,
           width: 200,
           margin: 30,
           borderRadius: 10,
         }}></TextInput>
-      <Button onPress={() => SendData(text)} title="Update"></Button>
+      <TextInput
+        value={password}
+        onChangeText={password => {
+          setPassword(password);
+        }}
+        placeholder="Şifre gir"
+        style={{
+          borderWidth: 1,
+          width: 200,
+          borderRadius: 10,
+          marginBottom: 20
+        }}></TextInput>
+      <Button onPress={() => SendData(username,password)} title="Ekle"></Button>
     </View>
   );
 };
