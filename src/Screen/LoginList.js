@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 const baseUrl = 'https://jsonplaceholder.typicode.com';
 
-const LoginList = ({navigation}) => {
+const LoginList = ({navigation}) => { // BURASI DENEME AMAÇLI!
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const fetchData = () => {
@@ -14,13 +14,14 @@ const LoginList = ({navigation}) => {
       })
       .catch(err => console.log('Fetch hata : ' + err));
   };
-  const SendData = (username,password) =>{
-    axios.post(`${baseUrl}/posts`,{username : username,password: password}).then(res =>{
-      console.log(res.data);
-
-    }).catch(err => console.log('Update hata' + err));
-  
-  }
+  const SendData = (username, password) => {
+    axios
+      .post(`${baseUrl}/posts`, {username: username, password: password})
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log('Update hata' + err));
+  };
 
   useEffect(() => {
     // Only render once! at the start
@@ -51,9 +52,11 @@ const LoginList = ({navigation}) => {
           borderWidth: 1,
           width: 200,
           borderRadius: 10,
-          marginBottom: 20
+          marginBottom: 20,
         }}></TextInput>
-      <Button onPress={() => SendData(username,password)} title="Ekle"></Button>
+      <Button
+        onPress={() => SendData(username, password)}
+        title="Ekle"></Button>
     </View>
   );
 };

@@ -13,6 +13,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const MainMenu = ({navigation}) => {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
+
+  
   // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)
   //   try {
   //     AsyncStorage.getItem('UserData').then(value => {

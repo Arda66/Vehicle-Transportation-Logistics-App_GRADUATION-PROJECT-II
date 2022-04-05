@@ -10,14 +10,14 @@ import {
 import React, {useState} from 'react';
 
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
-  const [ListItems, setListItems] = useState([
+  const ListItems = [
     {key: '1'},
     {key: '2'},
     {key: '3'},
     {key: '4'},
     {key: '5'},
     {key: '6'},
-  ]);
+  ];
 
   const ListItem = item => {
     return (

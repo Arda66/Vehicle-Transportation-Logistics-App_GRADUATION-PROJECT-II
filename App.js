@@ -37,6 +37,7 @@ import LoginList from './src/screen/LoginList';
 import AddPicture from './src/screen/AddPicture';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AccountService from './services/AccountService';
+import RestService from './services/RestService';
 
 const HideKeyboard = ({children}) => {
   return (
@@ -91,6 +92,12 @@ const StackNavigator = () => {
 };
 
 const Login = ({navigation}) => {
+  const _Login = (userName,password) => { // Deniyorum birşeyler emin değilim
+    RestService.login(userName,password).then(res => {
+      console.log(res.data);
+    })
+  };
+
   const getData = () => {
     try {
       AsyncStorage.getItem('UserData').then(value => {
