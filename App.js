@@ -92,7 +92,7 @@ const StackNavigator = () => {
 };
 
 const Login = ({navigation}) => {
-  const [Token, SetToken] = useState(null);
+  // const [Token, SetToken] = useState(null);
   const [LoginSuccess, setLoginSuccess] = useState(false);
   const [LoginPressedCaller, setLoginPressedCaller] = useState(false); // 2 3 kere yanlış girerse her seferinde ekranda uyarsan useeffect çağırsın diye
 
@@ -107,12 +107,9 @@ const Login = ({navigation}) => {
     // BU TOKENLE AUTO LOGİN İÇİN ALCAK
     try {
       AsyncStorage.getItem('UserToken').then(value => {
-        console.log("GetToken Dönen DEĞER: ",value)
         if (value != null) {
           navigation.navigate('Main Menu Screen');
-        }
-        else if(value == null)
-          setLoginSuccess(false);
+        } else if (value == null) setLoginSuccess(false);
       });
     } catch (error) {
       console.log(error);
@@ -164,9 +161,8 @@ const Login = ({navigation}) => {
         // burası false olunca diğer kısımlardaki else kısmına gitmesin diye yaptık. Çıkış yaptan sonra token null ise false dedik bişey yapmasın yani.
       } else if (LoginSuccess == true) {
         setLoginSuccess(false);
-        console.log('Giriş Başarılı!');
         notifyMessage('Giriş Başarılı!');
-        console.log('Token Değerim : ', Token);
+        // console.log('Token Değerim : ', Token);
         // setToken();
         navigation.navigate('Main Menu Screen');
         setuserName('');
@@ -179,38 +175,36 @@ const Login = ({navigation}) => {
       //   );
     }, [LoginPressedCaller]);
 
-    const setTokenFunction = async (Token) => {
+    const setTokenFunction = async Token => {
       try {
-        if(Token != null)
-        await AsyncStorage.setItem('UserToken', Token);
+        if (Token != null) await AsyncStorage.setItem('UserToken', Token);
       } catch (error) {
-        console.log("SetTokenFunction ERROR : ",error);
+        console.log('SetTokenFunction ERROR : ', error);
       }
     };
     const LoginPressed = () => {
       // API ile buradan kıyaslama yapılacak
-       if (userName.length != 0 && password.length != 0) {
+      if (userName.length != 0 && password.length != 0) {
         AccountService.login(userName, password)
-        .then(response => {
-          console.log('Response data : ', response.data);
-          if (response.data.Success == true) {
-            setLoginSuccess(true); // Burası DiREKT OLARAK TRUE YAPMIYOR. Usestate anında gerçekleşmez render olduktan sonra useeffect kısmında olur Ve burası aynı zamanda useEFFECT TETİKLİYOR KONTROL İŞLEMLERİ ORADA OLACAK.
-            // SetToken(response.data.Token);
-             setTokenFunction(response.data.Token);
-          } else {
-            setLoginSuccess(false);
-            // SetToken(null);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      setLoginPressedCaller(!LoginPressedCaller);
-      }
-      else {
+          .then(response => {
+            console.log('Response data : ', response.data);
+            if (response.data.Success == true) {
+              setLoginSuccess(true); // Burası DiREKT OLARAK TRUE YAPMIYOR. Usestate anında gerçekleşmez render olduktan sonra useeffect kısmında olur Ve burası aynı zamanda useEFFECT TETİKLİYOR KONTROL İŞLEMLERİ ORADA OLACAK.
+              // SetToken(response.data.Token);
+              setTokenFunction(response.data.Token);
+            } else {
+              setLoginSuccess(false);
+              // SetToken(null);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        setLoginPressedCaller(!LoginPressedCaller);
+      } else {
         notifyMessage('Kullanıcı adı veya şifre boş olamaz!');
       }
-       // her yanlış girildiğinde sürekli çağırması için
+      // her yanlış girildiğinde sürekli çağırması için
 
       // Buradaki kıyaslama işlerini useeffect kısmında yaptık çünkü setloginsuccess render sonunda true dönüyor değer olarak
     };
