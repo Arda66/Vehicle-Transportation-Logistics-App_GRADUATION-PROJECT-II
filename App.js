@@ -103,23 +103,24 @@ const Login = ({navigation}) => {
       AlertIOS.alert(msg);
     }
   };
-  // const getToken = () => {
-  //   // BU TOKENLE AUTO LOGİN İÇİN ALCAK
-  //   try {
-  //     AsyncStorage.getItem('UserToken').then(value => {
-  //       if (value != null) {
-  //         navigation.navigate('Main Menu Screen');
-  //       }
-  //       else if(value == null)
-  //         setLoginSuccess(false);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getToken = () => {
+    // BU TOKENLE AUTO LOGİN İÇİN ALCAK
+    try {
+      AsyncStorage.getItem('UserToken').then(value => {
+        console.log("GetToken Dönen DEĞER: ",value)
+        if (value != null) {
+          navigation.navigate('Main Menu Screen');
+        }
+        else if(value == null)
+          setLoginSuccess(false);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    // getToken(); // BURAYA TOKEN ÇAĞRILARAK AUTO LOGİN YAPILCAK. Birde Eğer Token null ise lOGİN SUCCESS FALSE OLSUN. Gerçi zaten false ama genede kontrol etmekte fayda var
+    getToken(); // BURAYA TOKEN ÇAĞRILARAK AUTO LOGİN YAPILCAK. Birde Eğer Token null ise lOGİN SUCCESS FALSE OLSUN. Gerçi zaten false ama genede kontrol etmekte fayda var
     // setLoginSuccess(false); // Eğer olurda çıkış yaparsak default olarak false olsun bu değer
     const backAction = () => {
       Alert.alert(
@@ -178,15 +179,14 @@ const Login = ({navigation}) => {
       //   );
     }, [LoginPressedCaller]);
 
-    // const setToken = async () => {
-    //   try {
-    //
-    //     if(Token != null)
-    //     await AsyncStorage.setItem('UserToken', Token);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
+    const setTokenFunction = async (Token) => {
+      try {
+        if(Token != null)
+        await AsyncStorage.setItem('UserToken', Token);
+      } catch (error) {
+        console.log("SetTokenFunction ERROR : ",error);
+      }
+    };
     const LoginPressed = () => {
       // API ile buradan kıyaslama yapılacak
        if (userName.length != 0 && password.length != 0) {
@@ -195,10 +195,11 @@ const Login = ({navigation}) => {
           console.log('Response data : ', response.data);
           if (response.data.Success == true) {
             setLoginSuccess(true); // Burası DiREKT OLARAK TRUE YAPMIYOR. Usestate anında gerçekleşmez render olduktan sonra useeffect kısmında olur Ve burası aynı zamanda useEFFECT TETİKLİYOR KONTROL İŞLEMLERİ ORADA OLACAK.
-            SetToken(response.data.Token);
+            // SetToken(response.data.Token);
+             setTokenFunction(response.data.Token);
           } else {
             setLoginSuccess(false);
-            SetToken(null);
+            // SetToken(null);
           }
         })
         .catch(error => {

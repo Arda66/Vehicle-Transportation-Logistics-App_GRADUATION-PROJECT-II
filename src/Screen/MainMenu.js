@@ -104,9 +104,9 @@ const MainMenu = ({navigation, route}) => {
         },
         {
           text: 'Evet',
-          onPress: () => {
-            // AsyncStorage.removeItem('UserToken');
-            navigation.navigate('Login Screen'); //LOGİN SUCCESS DEĞERİ FALSE OLMALI
+          onPress: async() => {
+           await AsyncStorage.removeItem('UserToken');
+            navigation.navigate('Login Screen'); 
           },
         },
       ],
