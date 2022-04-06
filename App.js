@@ -207,7 +207,6 @@ const Login = ({navigation}) => {
       setLoginPressedCaller(!LoginPressedCaller);
       }
       else {
-        console.log('Kullanıcı adı veya şifre boş olamaz');
         notifyMessage('Kullanıcı adı veya şifre boş olamaz!');
       }
        // her yanlış girildiğinde sürekli çağırması için
