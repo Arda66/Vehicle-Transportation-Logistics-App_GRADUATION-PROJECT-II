@@ -7,17 +7,43 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import RestService from '../../services/RestService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
-  const ListItems = [
-    {key: '1'},
-    {key: '2'},
-    {key: '3'},
-    {key: '4'},
-    {key: '5'},
-    {key: '6'},
-  ];
+  var token = '';
+  var total_vehicle_number = '';
+  const ListItems = [{}];
+  const [FlatListRefresher, setFlatListRefresher] = useState(false);
+
+  useEffect(() => {
+    GetWaitingVehicles();
+  }, []);
+
+  const GetWaitingVehicles = () => {
+    AsyncStorage.getItem('UserToken').then(value => {
+      // Tokeni daha iyi çekebiliriz şuan için deneme amaçlı
+      if (value != null) {
+        token = value;
+        RestService.GetWaitingVehicles(token).then(response => {
+          //  ListItems =  JSON.parse(response.data);
+          // console.log(response.data.splice(0,5))
+          // obj = JSON.parse(response.data);
+          total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
+          for (let i = 0; i < total_vehicle_number; i++) {
+            // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
+            ListItems.push(response.data[i]);
+          }
+          // for (let i = 0; i < total_vehicle_number; i++) {
+          //   // 21 araç var 0-20 ikiside dahil
+          //   ListItems[i];
+          // }
+          // console.log(ListItems);
+        });
+      }
+    });
+  };
 
   const ListItem = item => {
     return (
@@ -32,7 +58,47 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 flex: 1,
                 left: 10,
               }}>
-              Giriş Listesi {item.index}. Item
+              Firma : {item.Firma}
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: 'black',
+                top: 10,
+                flex: 1,
+                left: 10,
+              }}>
+              Giriş zamanı : {item.GirisZamani}
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: 'black',
+                top: 10,
+                flex: 1,
+                left: 10,
+              }}>
+              Plaka : {item.Plaka}
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: 'black',
+                top: 10,
+                flex: 1,
+                left: 10,
+              }}>
+              Set3Deger : {item.Set3Deger}
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: 'black',
+                top: 10,
+                flex: 1,
+                left: 10,
+              }}>
+              Tartim No : {item.TartimNo}
             </Text>
             <View
               style={{
@@ -68,9 +134,18 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   };
   return (
     <FlatList
+       extraData={(FlatListRefresher)}
       data={ListItems}
       renderItem={({item}) => {
-        return <ListItem index={item.key} />;
+        return (
+          <ListItem
+            Firma={item.Firma}
+            GirisZamani={item.GirisZamani}
+            Plaka={item.Plaka}
+            Set3Deger={item.Set3Deger}
+            TartimNo={item.TartimNo}
+          />
+        );
       }}
     />
   );
@@ -91,12 +166,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   container: {
+    top: 5,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    width: '85%',
-    height: '80%',
-    marginVertical: '20%',
+    width: '87%',
+    height: '95%',
+    marginVertical: '25%',
   },
 });
 

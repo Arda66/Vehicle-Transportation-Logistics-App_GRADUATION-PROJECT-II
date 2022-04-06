@@ -14,8 +14,7 @@ export default {
   AddEntry(token, entry) {
     return axios.post(`${baseUrl}/AddEntry?token=${entry}`);
   },
-  GetEntry(token,entryId){
-      return axios.get(`${baseUrl}/GetEntry?token=${token}&entryId=${entryId}`);
+  GetEntry(token, entryId) {
+    return axios.get(`${baseUrl}/GetEntry?token=${token}&entryId=${entryId}`);
   },
-  
 };
