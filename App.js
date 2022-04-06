@@ -1,5 +1,4 @@
 import {
-  Input,
   Stack,
   Center,
   NativeBaseProvider,
@@ -38,7 +37,8 @@ import AddPicture from './src/screen/AddPicture';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AccountService from './services/AccountService';
 import RestService from './services/RestService';
-
+import {Formik} from 'formik';
+import {Input} from 'native-base';
 const HideKeyboard = ({children}) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -92,26 +92,35 @@ const StackNavigator = () => {
 };
 
 const Login = ({navigation}) => {
-  const _Login = (userName,password) => { // Deniyorum birşeyler emin değilim
-    RestService.login(userName,password).then(res => {
-      console.log(res.data);
-    })
-  };
+  const [Token, SetToken] = useState(null);
+  const [LoginSuccess, setLoginSuccess] = useState(false);
+  const [LoginPressedCaller, setLoginPressedCaller] = useState(false); // 2 3 kere yanlış girerse her seferinde ekranda uyarsan useeffect çağırsın diye
 
-  const getData = () => {
-    try {
-      AsyncStorage.getItem('UserData').then(value => {
-        if (value != null) {
-          navigation.navigate('Main Menu Screen');
-        }
-      });
-    } catch (error) {
-      console.log(error);
+  const notifyMessage = msg => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
     }
   };
+  // const getToken = () => {
+  //   // BU TOKENLE AUTO LOGİN İÇİN ALCAK
+  //   try {
+  //     AsyncStorage.getItem('UserToken').then(value => {
+  //       if (value != null) {
+  //         navigation.navigate('Main Menu Screen');
+  //       }
+  //       else if(value == null)
+  //         setLoginSuccess(false);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
-    getData();
+    // getToken(); // BURAYA TOKEN ÇAĞRILARAK AUTO LOGİN YAPILCAK. Birde Eğer Token null ise lOGİN SUCCESS FALSE OLSUN. Gerçi zaten false ama genede kontrol etmekte fayda var
+    // setLoginSuccess(false); // Eğer olurda çıkış yaparsak default olarak false olsun bu değer
     const backAction = () => {
       Alert.alert(
         'Uygulamadan çıkış yapılacaktır!',
@@ -143,58 +152,80 @@ const Login = ({navigation}) => {
   };
 
   const InputBoxes = () => {
-    const [Username, setUsername] = useState('');
-    const [Password, setPassword] = useState('');
+    const [userName, setuserName] = useState('');
+    const [password, setpassword] = useState('');
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
-
-    const notifyMessage = msg => {
-      if (Platform.OS === 'android') {
-        ToastAndroid.show(msg, ToastAndroid.SHORT);
-      } else {
-        AlertIOS.alert(msg);
-      }
-    };
-
-    const setData = async () => {
-      try {
-        var user = {Username: Username, Password: Password};
-        await AsyncStorage.setItem('UserData', JSON.stringify(user));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const LoginPressed = () => {
-      // API geldiğinde BUrada kıyaslama yapacaksın eğer girdiği kullanıcı adı && şifre eşitmi şeklinde if else kullanarak eğer eşitse navigate etçek eğer değilse alert şeklinde ekranda hata vercek tekrar deneyin diye!
-      if (
-        (Username == 'arda' && Password == '123') ||
-        (Username == 'aslan' && Password == '45')
-      ) {
+    useEffect(() => {
+      console.log('Selam LoginSuccess Değerim : ', LoginSuccess);
+      // TRUE OLARAK ATADIKTAN SONRA BURADA YAPACAZ DEĞİŞİKLİK useeffect tanımlanmadan sonra yapılır.
+      if (LoginSuccess == false) {
+        // burası false olunca diğer kısımlardaki else kısmına gitmesin diye yaptık. Çıkış yaptan sonra token null ise false dedik bişey yapmasın yani.
+      } else if (LoginSuccess == true) {
+        setLoginSuccess(false);
+        console.log('Giriş Başarılı!');
         notifyMessage('Giriş Başarılı!');
-        setData();
+        console.log('Token Değerim : ', Token);
+        // setToken();
         navigation.navigate('Main Menu Screen');
-        setUsername('');
-        setPassword('');
-      } else if (Username.length == 0 || Password.length == 0)
+        setuserName('');
+        setpassword('');
+      }
+      //  else
+      //   Alert.alert(
+      //     'Kullanıcı adı veya şifre yanlış!',
+      //     'Lütfen Tekrar Deneyiniz.',
+      //   );
+    }, [LoginPressedCaller]);
+
+    // const setToken = async () => {
+    //   try {
+    //
+    //     if(Token != null)
+    //     await AsyncStorage.setItem('UserToken', Token);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    const LoginPressed = () => {
+      // API ile buradan kıyaslama yapılacak
+       if (userName.length != 0 && password.length != 0) {
+        AccountService.login(userName, password)
+        .then(response => {
+          console.log('Response data : ', response.data);
+          if (response.data.Success == true) {
+            setLoginSuccess(true); // Burası DiREKT OLARAK TRUE YAPMIYOR. Usestate anında gerçekleşmez render olduktan sonra useeffect kısmında olur Ve burası aynı zamanda useEFFECT TETİKLİYOR KONTROL İŞLEMLERİ ORADA OLACAK.
+            SetToken(response.data.Token);
+          } else {
+            setLoginSuccess(false);
+            SetToken(null);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      setLoginPressedCaller(!LoginPressedCaller);
+      }
+      else {
+        console.log('Kullanıcı adı veya şifre boş olamaz');
         notifyMessage('Kullanıcı adı veya şifre boş olamaz!');
-      else
-        Alert.alert(
-          'Kullanıcı adı veya şifre yanlış!',
-          'Lütfen Tekrar Deneyiniz.',
-        );
+      }
+       // her yanlış girildiğinde sürekli çağırması için
+
+      // Buradaki kıyaslama işlerini useeffect kısmında yaptık çünkü setloginsuccess render sonunda true dönüyor değer olarak
     };
 
     return (
       <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
         <Input
-          value={Username}
-          onChangeText={text => setUsername(text)}
+          value={userName}
+          onChangeText={text => setuserName(text)}
           size="lg"
           placeholder="Kullanıcı adı"
         />
         <Input
-          onChangeText={text => setPassword(text)}
-          value={Password}
+          onChangeText={text => setpassword(text)}
+          value={password}
           size="lg"
           type={show ? 'text' : 'password'}
           width="100%"

@@ -1,8 +1,5 @@
-const RESOURCE_NAME = 'RestService.svc';
-
+const baseUrl = 'RestService.svc';
+import axios from "axios";
 export default {
-  login(userName, password) {
-    const params = {userName, password};
-    return axios.get(`${RESOURCE_NAME}/Login`, {params});
-  },
+  
 };

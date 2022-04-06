@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const MainMenu = ({navigation}) => {
+// import {useRoute} from '@react-navigation/native';
+const MainMenu = ({navigation, route}) => {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
+  // const route = useRoute();
 
-  
   // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)
   //   try {
   //     AsyncStorage.getItem('UserData').then(value => {
@@ -63,18 +63,20 @@ const MainMenu = ({navigation}) => {
     // };
     const backAction = () => {
       // SADECE BU SAYFADA GERİ YAPINCA UYARSIN HER SAYFADA UYARIYOR
-      Alert.alert(
-        'Hesabınızdan çıkış yapılacaktır.',
-        'Giriş Ekranına dönmek istediğinize emin misiniz?',
-        [
-          {
-            text: 'Hayır',
-            onPress: () => null,
-            style: 'cancel',
-          },
-          {text: 'Evet', onPress: () => navigation.navigate('Login Screen')},
-        ],
-      );
+      // Alert.alert(
+      //   'Hesabınızdan çıkış yapılacaktır.',
+      //   'Giriş Ekranına dönmek istediğinize emin misiniz?',
+      //   [
+      //     {
+      //       text: 'Hayır',
+      //       onPress: () => console.log(route.name),
+      //       style: 'cancel',
+      //     },
+      //     {text: 'Evet', onPress: () => {
+      //       if(route.name == "Main Menu Screen") // Her Sayfayı Main Menu Screen olarak görüyor
+      //       navigation.navigate('Login Screen')}}, // Parametre ile tokenvalue : null diye geri gönder ana ekrana
+      //   ],
+      // );
       return true;
     };
 
@@ -103,8 +105,8 @@ const MainMenu = ({navigation}) => {
         {
           text: 'Evet',
           onPress: () => {
-            AsyncStorage.removeItem('UserData');
-            navigation.navigate('Login Screen');
+            // AsyncStorage.removeItem('UserToken');
+            navigation.navigate('Login Screen'); //LOGİN SUCCESS DEĞERİ FALSE OLMALI
           },
         },
       ],
@@ -124,26 +126,6 @@ const MainMenu = ({navigation}) => {
           }}>
           Ana Menü
         </Text>
-        {/* <Text // BUNLAR SONRADAN SİLİNCEK DENEME AMAÇLI TEST İÇİN KOYDUM
-          style={{
-            fontWeight: 'bold',
-            color: 'black',
-            fontSize: 40,
-            bottom: '83%',
-            position: 'absolute',
-          }}>
-          Kullanıcı adı : {Username}
-        </Text>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: 'black',
-            fontSize: 40,
-            bottom: '75%',
-            position: 'absolute',
-          }}>
-          Şifre: {Password}
-        </Text> */}
         <View
           style={{
             flex: 1,

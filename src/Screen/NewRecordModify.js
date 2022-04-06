@@ -8,8 +8,8 @@ const NewRecordModify = ({navigation}) => {
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Formik
         initialValues={{
-          Tarih: '',
-          MusteriKodu: '',
+          Date: '',
+          CustomerCode: '',
           KabHurda: '',
           IrsaliyeNo: '',
           IrsaliyeTarihi: '',
@@ -29,12 +29,13 @@ const NewRecordModify = ({navigation}) => {
         {props => {
           <View>
             <Input
+              type="" // tipleri buradan giriyoruz
               autoCapitalize="none"
               style={styles.Input}
               placeholder="Tarihi gir"
               placeholderTextColor="#ddd"
               onChangeText={props.handleChange('Tarih')}
-              value={props.values.Tarih}
+              value={props.values.Date}
             />
             <Input
               autoCapitalize="none"
@@ -42,7 +43,7 @@ const NewRecordModify = ({navigation}) => {
               placeholder="MusteriKodu gir"
               placeholderTextColor="#ddd"
               onChangeText={props.handleChange('MusteriKodu')}
-              value={props.values.MusteriKodu}
+              value={props.values.CustomerCode}
             />
             <Input
               autoCapitalize="none"
