@@ -52,7 +52,7 @@ const AddPicture = ({navigation}) => {
       });
   };
 
-  const BottomAddPhotoMenu = () => {
+  const BottomAddPhotoMenu = () => { // BUNU İOS İÇİNDE YAPMAMIZ GEREKİYOR ANDROİD İÇİN KURDUM BEN. POD İNSTALL YAPAMADIM(MAC CİHAZIM YOK)
     return (
       <View style={styles.panel}>
         <View style={{alignItems: 'center'}}>
@@ -68,11 +68,6 @@ const AddPicture = ({navigation}) => {
           onPress={ChoosePhotoFromLibrary}>
           <Text style={styles.panelButtonTitle}>Galeriden Seç</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          style={styles.panelButton}
-          onPress={() => this.bs.current.snapTo(1)}>
-          <Text style={styles.panelButtonTitle}>İptal</Text>
-        </TouchableOpacity> */}
       </View>
     );
   };

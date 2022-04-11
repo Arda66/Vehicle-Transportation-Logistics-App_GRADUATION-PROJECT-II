@@ -118,7 +118,6 @@ const Login = ({navigation}) => {
 
   useEffect(() => {
     getToken(); // BURAYA TOKEN ÇAĞRILARAK AUTO LOGİN YAPILCAK. Birde Eğer Token null ise lOGİN SUCCESS FALSE OLSUN. Gerçi zaten false ama genede kontrol etmekte fayda var
-    // setLoginSuccess(false); // Eğer olurda çıkış yaparsak default olarak false olsun bu değer
     const backAction = () => {
       Alert.alert(
         'Uygulamadan çıkış yapılacaktır!',

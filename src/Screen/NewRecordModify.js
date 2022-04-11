@@ -6,7 +6,7 @@ import {Input, NativeBaseProvider} from 'native-base';
 const NewRecordModify = ({navigation}) => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Formik
+      <Formik 
         initialValues={{
           Date: '',
           CustomerCode: '',
@@ -34,7 +34,7 @@ const NewRecordModify = ({navigation}) => {
               style={styles.Input}
               placeholder="Tarihi gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Tarih')}
+              onChangeText={props.handleChange('Date')}
               value={props.values.Date}
             />
             <Input
@@ -42,7 +42,7 @@ const NewRecordModify = ({navigation}) => {
               style={styles.Input}
               placeholder="MusteriKodu gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('MusteriKodu')}
+              onChangeText={props.handleChange('CustomerCode')}
               value={props.values.CustomerCode}
             />
             <Input
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 14,
     fontWeight: '600',
+    
   },
 });
 

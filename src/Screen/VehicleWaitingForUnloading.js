@@ -15,13 +15,14 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   var token = '';
   var total_vehicle_number = '';
   const ListItems = [{}];
-  const [FlatListRefresher, setFlatListRefresher] = useState(false);
+  
+  // const [FlatListRefresher, setFlatListRefresher] = useState(false);
 
   useEffect(() => {
-    GetWaitingVehicles();
+    UpdateVehicles();
   }, []);
 
-  const GetWaitingVehicles = () => {
+  const UpdateVehicles = () => {
     AsyncStorage.getItem('UserToken').then(value => {
       // Tokeni daha iyi çekebiliriz şuan için deneme amaçlı
       if (value != null) {
@@ -35,11 +36,14 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
             ListItems.push(response.data[i]);
           }
+          AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
+          // AsyncStorage.setItem("VehicleList",ListItems);
+          // AsyncStorage.
           // for (let i = 0; i < total_vehicle_number; i++) {
           //   // 21 araç var 0-20 ikiside dahil
           //   ListItems[i];
           // }
-          // console.log(ListItems);
+          console.log(ListItems);
         });
       }
     });
@@ -50,55 +54,16 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'black',
-                top: 10,
-                flex: 1,
-                left: 10,
-              }}>
-              Firma : {item.Firma}
+            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}</Text>
+            <Text style={styles.ValuesOnScreen}>
+              Giriş zamanı : {item.LoginTime}
             </Text>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'black',
-                top: 10,
-                flex: 1,
-                left: 10,
-              }}>
-              Giriş zamanı : {item.GirisZamani}
-            </Text>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'black',
-                top: 10,
-                flex: 1,
-                left: 10,
-              }}>
-              Plaka : {item.Plaka}
-            </Text>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'black',
-                top: 10,
-                flex: 1,
-                left: 10,
-              }}>
+            <Text style={styles.ValuesOnScreen}>Plaka : {item.Plate}</Text>
+            <Text style={styles.ValuesOnScreen}>
               Set3Deger : {item.Set3Deger}
             </Text>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'black',
-                top: 10,
-                flex: 1,
-                left: 10,
-              }}>
-              Tartim No : {item.TartimNo}
+            <Text style={styles.ValuesOnScreen}>
+              Tartim No : {item.WeighingNo}
             </Text>
             <View
               style={{
@@ -134,16 +99,16 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   };
   return (
     <FlatList
-       extraData={(FlatListRefresher)}
-      data={ListItems}
+      // extraData={FlatListRefresher}
+      data={ListItems} // Program başlarken değer girdiğmiz için null kalıyor. useEffect güncelledikten sonra geliyor ctrl + s yapınca
       renderItem={({item}) => {
         return (
           <ListItem
-            Firma={item.Firma}
-            GirisZamani={item.GirisZamani}
-            Plaka={item.Plaka}
+            Company={item.Firma}
+            LoginTime={item.GirisZamani}
+            Plate={item.Plaka}
             Set3Deger={item.Set3Deger}
-            TartimNo={item.TartimNo}
+            WeighingNo={item.TartimNo}
           />
         );
       }}
@@ -173,6 +138,13 @@ const styles = StyleSheet.create({
     width: '87%',
     height: '95%',
     marginVertical: '25%',
+  },
+  ValuesOnScreen: {
+    fontWeight: 'bold',
+    color: 'black',
+    top: 10,
+    flex: 1,
+    left: 10,
   },
 });
 

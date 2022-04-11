@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RestService from '../../services/RestService';
 // import {useRoute} from '@react-navigation/native';
 const MainMenu = ({navigation, route}) => {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
+
   // const route = useRoute();
 
   // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)
@@ -29,7 +31,37 @@ const MainMenu = ({navigation, route}) => {
   //   }
   // };
 
+  const GetWaitingVehicles = () => {
+    const ListItems = [{}];
+
+    AsyncStorage.getItem('UserToken').then(value => {
+      // Tokeni daha iyi çekebiliriz şuan için deneme amaçlı
+      if (value != null) {
+        token = value;
+        RestService.GetWaitingVehicles(token).then(response => {
+          //  ListItems =  JSON.parse(response.data);
+          // console.log(response.data.splice(0,5))
+          // obj = JSON.parse(response.data);
+          total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
+          for (let i = 0; i < total_vehicle_number; i++) {
+            // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
+            ListItems.push(response.data[i]);
+          }
+          AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
+          // AsyncStorage.setItem("VehicleList",ListItems);
+          // AsyncStorage.
+          // for (let i = 0; i < total_vehicle_number; i++) {
+          //   // 21 araç var 0-20 ikiside dahil
+          //   ListItems[i];
+          // }
+          console.log(ListItems);
+        });
+      }
+    });
+  };
+
   useEffect(() => {
+    GetWaitingVehicles();
     // getData();
     // const headerleffunction = () => {
     //   // SOL ÜSTTEKİ GERİ TUŞUNA BASINCA NE YAPSIN!
@@ -104,9 +136,9 @@ const MainMenu = ({navigation, route}) => {
         },
         {
           text: 'Evet',
-          onPress: async() => {
-           await AsyncStorage.removeItem('UserToken');
-            navigation.navigate('Login Screen'); 
+          onPress: async () => {
+            await AsyncStorage.removeItem('UserToken');
+            navigation.navigate('Login Screen');
           },
         },
       ],
