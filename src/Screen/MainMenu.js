@@ -10,12 +10,10 @@ import {
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
-// import {useRoute} from '@react-navigation/native';
 const MainMenu = ({navigation, route}) => {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
 
-  // const route = useRoute();
 
   // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)
   //   try {
@@ -39,21 +37,14 @@ const MainMenu = ({navigation, route}) => {
       if (value != null) {
         token = value;
         RestService.GetWaitingVehicles(token).then(response => {
-          //  ListItems =  JSON.parse(response.data);
-          // console.log(response.data.splice(0,5))
-          // obj = JSON.parse(response.data);
+
           total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
           for (let i = 0; i < total_vehicle_number; i++) {
             // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
             ListItems.push(response.data[i]);
           }
           AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
-          // AsyncStorage.setItem("VehicleList",ListItems);
-          // AsyncStorage.
-          // for (let i = 0; i < total_vehicle_number; i++) {
-          //   // 21 araç var 0-20 ikiside dahil
-          //   ListItems[i];
-          // }
+
           console.log(ListItems);
         });
       }
@@ -94,7 +85,6 @@ const MainMenu = ({navigation, route}) => {
     //   });
     // };
     const backAction = () => {
-      // SADECE BU SAYFADA GERİ YAPINCA UYARSIN HER SAYFADA UYARIYOR
       // Alert.alert(
       //   'Hesabınızdan çıkış yapılacaktır.',
       //   'Giriş Ekranına dönmek istediğinize emin misiniz?',
