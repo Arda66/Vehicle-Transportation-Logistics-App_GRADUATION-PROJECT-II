@@ -52,7 +52,8 @@ const AddPicture = ({navigation}) => {
       });
   };
 
-  const BottomAddPhotoMenu = () => { // BUNU İOS İÇİNDE YAPMAMIZ GEREKİYOR ANDROİD İÇİN KURDUM BEN. POD İNSTALL YAPAMADIM(MAC CİHAZIM YOK)
+  const BottomAddPhotoMenu = () => {
+    // BUNU İOS İÇİNDE YAPMAMIZ GEREKİYOR ANDROİD İÇİN KURDUM BEN. POD İNSTALL YAPAMADIM(MAC CİHAZIM YOK)
     return (
       <View style={styles.panel}>
         <View style={{alignItems: 'center'}}>
@@ -75,12 +76,13 @@ const AddPicture = ({navigation}) => {
   const ImageListBox = () => {
     // Fotoğrafları flatlist ile alt alta göstercez.
     return (
-      <FlatList>
+      <FlatList
         data={ImageList}
         renderItem=
         {({item}) => {
           return <item></item>;
         }}
+      >
       </FlatList>
     );
   };

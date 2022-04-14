@@ -6,22 +6,22 @@ import {Input, NativeBaseProvider} from 'native-base';
 const NewRecordModify = ({navigation}) => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Formik 
+      <Formik
         initialValues={{
           Date: '',
           CustomerCode: '',
-          KabHurda: '',
-          IrsaliyeNo: '',
-          IrsaliyeTarihi: '',
+          Scrap: '',
+          WaybillNo: '',
+          WaybillDate: '',
           Exper: '',
-          Durum: '',
-          Plaka: '',
-          KonteynerNo: '',
-          FaturaReferansNo: '',
-          Liman: '',
-          TartimNo: '',
-          KayitEden: '',
-          KayitTarihi: '',
+          Situation: '',
+          Plate: '',
+          ContainerNo: '',
+          InvoiceReferenceNo: '',
+          Port: '',
+          WeighingNo: '',
+          Registrant: '',
+          RegistrationDate: '',
         }}
         onSubmit={values => {
           console.log(values); // burada handle submit yani axios şeysini çağırcaz misal login kontrol yapan
@@ -40,7 +40,7 @@ const NewRecordModify = ({navigation}) => {
             <Input
               autoCapitalize="none"
               style={styles.Input}
-              placeholder="MusteriKodu gir"
+              placeholder="Musteri Kodu gir"
               placeholderTextColor="#ddd"
               onChangeText={props.handleChange('CustomerCode')}
               value={props.values.CustomerCode}
@@ -50,16 +50,24 @@ const NewRecordModify = ({navigation}) => {
               style={styles.Input}
               placeholder="KabHurda gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('KabHurda')}
-              value={props.values.KabHurda}
+              onChangeText={props.handleChange('Scrap')}
+              value={props.values.Scrap}
             />
             <Input
               autoCapitalize="none"
               style={styles.Input}
-              placeholder="IrsaliyeNo gir"
+              placeholder="Irsaliye Numarası gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('IrsaliyeNo')}
-              value={props.values.IrsaliyeNo}
+              onChangeText={props.handleChange('WaybillNo')}
+              value={props.values.WaybillNo}
+            />
+            <Input
+              autoCapitalize="none"
+              style={styles.Input}
+              placeholder="Irsaliye Tarihi gir"
+              placeholderTextColor="#ddd"
+              onChangeText={props.handleChange('WaybillDate')}
+              value={props.values.WaybillDate}
             />
             <Input
               autoCapitalize="none"
@@ -74,64 +82,64 @@ const NewRecordModify = ({navigation}) => {
               style={styles.Input}
               placeholder="Durum gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Durum')}
-              value={props.values.Durum}
+              onChangeText={props.handleChange('Situation')}
+              value={props.values.Situation}
             />
             <Input
               autoCapitalize="none"
               style={styles.Input}
               placeholder="Plaka gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Plaka')}
-              value={props.values.Plaka}
+              onChangeText={props.handleChange('Plate')}
+              value={props.values.Plate}
             />
             <Input
               autoCapitalize="none"
               style={styles.Input}
-              placeholder="KonteynerNo gir"
+              placeholder="Konteyner Numarası gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('KonteynerNo')}
-              value={props.values.KonteynerNo}
+              onChangeText={props.handleChange('ContainerNo')}
+              value={props.values.ContainerNo}
             />
             <Input
               autoCapitalize="none"
               style={styles.Input}
-              placeholder="FaturaReferansNo gir"
+              placeholder="FaturaReferans numarası gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('FaturaReferansNo')}
-              value={props.values.FaturaReferansNo}
+              onChangeText={props.handleChange('InvoiceReferenceNo')}
+              value={props.values.InvoiceReferenceNo}
             />
             <Input
               autoCapitalize="none"
               style={styles.Input}
               placeholder="Liman gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Liman')}
-              value={props.values.Liman}
+              onChangeText={props.handleChange('Port')}
+              value={props.values.Port}
             />
             <Input
               autoCapitalize="none"
               style={styles.Input}
-              placeholder="TartimNo gir"
+              placeholder="Tartim numarası gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('TartimNo')}
-              value={props.values.TartimNo}
+              onChangeText={props.handleChange('WeighingNo')}
+              value={props.values.WeighingNo}
             />
             <Input
               autoCapitalize="none"
               style={styles.Input}
               placeholder="KayitEden gir"
               placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('KayitEden')}
-              value={props.values.KayitEden}
+              onChangeText={props.handleChange('Registrant')}
+              value={props.values.Registrant}
             />
             <Input
               autoCapitalize="none"
               style={styles.Input}
               placeholderTextColor="#ddd"
               placeholder="KayitTarihi gir"
-              onChangeText={props.handleChange('KayitTarihi')}
-              value={props.values.KayitTarihi}
+              onChangeText={props.handleChange('RegistrationDate')}
+              value={props.values.RegistrationDate}
             />
             <Button
               block
@@ -164,7 +172,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 14,
     fontWeight: '600',
-    
   },
 });
 

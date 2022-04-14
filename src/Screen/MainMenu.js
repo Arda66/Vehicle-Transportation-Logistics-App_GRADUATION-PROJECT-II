@@ -13,8 +13,6 @@ import RestService from '../../services/RestService';
 const MainMenu = ({navigation, route}) => {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
-
-
   // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)
   //   try {
   //     AsyncStorage.getItem('UserData').then(value => {
@@ -31,26 +29,22 @@ const MainMenu = ({navigation, route}) => {
 
   const GetWaitingVehicles = () => {
     const ListItems = [{}];
-
     AsyncStorage.getItem('UserToken').then(value => {
       // Tokeni daha iyi çekebiliriz şuan için deneme amaçlı
       if (value != null) {
         token = value;
         RestService.GetWaitingVehicles(token).then(response => {
-
           total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
           for (let i = 0; i < total_vehicle_number; i++) {
             // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
             ListItems.push(response.data[i]);
           }
           AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
-
           console.log(ListItems);
         });
       }
     });
   };
-
   useEffect(() => {
     GetWaitingVehicles();
     // getData();
@@ -101,14 +95,12 @@ const MainMenu = ({navigation, route}) => {
       // );
       return true;
     };
-
     // headerleffunction();
     const backHandler = BackHandler.addEventListener(
       // Bu sadece Androidde geçerli
       'hardwareBackPress',
       backAction,
     );
-
     return () => {
       // headerleffunction();
       backHandler.remove();
@@ -134,7 +126,6 @@ const MainMenu = ({navigation, route}) => {
       ],
     );
   };
-
   return (
     <View style={styles.Container}>
       <View style={styles.Container}>
@@ -177,7 +168,6 @@ const MainMenu = ({navigation, route}) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   Container: {
     flex: 1,
