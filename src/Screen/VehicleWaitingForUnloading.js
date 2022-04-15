@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  Modal,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import RestService from '../../services/RestService';
@@ -15,7 +16,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   var token = '';
   var total_vehicle_number = '';
   const ListItems = [{}];
-  
+
   // const [FlatListRefresher, setFlatListRefresher] = useState(false);
 
   useEffect(() => {
@@ -98,21 +99,24 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     );
   };
   return (
-    <FlatList
-      // extraData={FlatListRefresher}
-      data={ListItems} // Program başlarken değer girdiğmiz için null kalıyor. useEffect güncelledikten sonra geliyor ctrl + s yapınca
-      renderItem={({item}) => {
-        return (
-          <ListItem
-            Company={item.Firma}
-            LoginTime={item.GirisZamani}
-            Plate={item.Plaka}
-            Set3Deger={item.Set3Deger}
-            WeighingNo={item.TartimNo}
-          />
-        );
-      }}
-    />
+    <View style={{flex:1}}>
+      <FlatList
+        // extraData={FlatListRefresher}
+        data={ListItems} // Program başlarken değer girdiğmiz için null kalıyor. useEffect güncelledikten sonra geliyor ctrl + s yapınca
+        renderItem={({item}) => {
+          return (
+            <ListItem
+              Company={item.Firma}
+              LoginTime={item.GirisZamani}
+              Plate={item.Plaka}
+              Set3Deger={item.Set3Deger}
+              WeighingNo={item.TartimNo}
+            />
+          );
+        }}
+      />
+      
+    </View>
   );
 };
 

@@ -19,7 +19,7 @@ const HeaderLeftFunction = props => {  // BUNU NAVİGATİON.SETOPTİONS KISMI İ
       }>
       <Image
         style={{width: 25, height: 20, marginRight: 15}}
-        source={require('./src/Resim/left_arrow.png')}
+        source={require('../pictures/LeftArrow.png')}
       />
     </TouchableOpacity>
   );

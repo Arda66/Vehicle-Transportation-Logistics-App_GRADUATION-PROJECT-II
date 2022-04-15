@@ -10,7 +10,7 @@ import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const AddPicture = ({navigation}) => {
-  const [image, setImage] = useState(''); // TEST AMAÇLI
+  // const [image, setImage] = useState(''); // TEST AMAÇLI
   const ImageList = [];
 
   const TakePhotoFromCamera = () => {
@@ -22,8 +22,8 @@ const AddPicture = ({navigation}) => {
     })
       .then(image => {
         if (image != null) {
-          console.log(image);
-          setImage(image.path); // TEST AMAÇLI
+          console.log(image.path);
+          // setImage(image.path); // TEST AMAÇLI
           ImageList.push(image.path);
         }
         // this.bs.current.snapTo(1);
@@ -41,8 +41,8 @@ const AddPicture = ({navigation}) => {
     })
       .then(image => {
         if (image != null) {
-          console.log(image);
-          setImage(image.path); // TEST AMAÇLI
+          console.log(image.path);
+          // setImage(image.path); // TEST AMAÇLI
           ImageList.push(image.path);
         }
         // this.bs.current.snapTo(1);
@@ -78,12 +78,13 @@ const AddPicture = ({navigation}) => {
     return (
       <FlatList
         data={ImageList}
-        renderItem=
-        {({item}) => {
-          return <item></item>;
-        }}
-      >
-      </FlatList>
+        renderItem={({item}) => {
+          return (
+            <View style={{flex: 1}}>
+              <Image source={item} />
+            </View>
+          );
+        }}></FlatList>
     );
   };
 
@@ -91,9 +92,8 @@ const AddPicture = ({navigation}) => {
     <View style={{flex: 1}}>
       {/* <ImageListBox /> */}
       {/* <Image source={require('')}></Image> */}
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        <BottomAddPhotoMenu></BottomAddPhotoMenu>
-      </View>
+      <ImageListBox />
+      <BottomAddPhotoMenu></BottomAddPhotoMenu>
     </View>
   );
 };
