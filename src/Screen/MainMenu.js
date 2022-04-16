@@ -11,8 +11,8 @@ import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
 const MainMenu = ({navigation, route}) => {
-  const [Username, setUsername] = useState('');
-  const [Password, setPassword] = useState('');
+  // const [Username, setUsername] = useState('');
+  // const [Password, setPassword] = useState('');
   // const [ListItems, setListItems] = useState([]);
 
   // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)

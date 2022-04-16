@@ -25,6 +25,7 @@ const AddPicture = ({navigation}) => {
           console.log(image.path);
           // setImage(image.path); // TEST AMAÇLI
           ImageList.push(image.path);
+          console.log('ImageList : ', ImageList);
         }
         // this.bs.current.snapTo(1);
       })

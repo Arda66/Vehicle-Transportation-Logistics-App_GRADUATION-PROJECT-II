@@ -25,7 +25,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
 
   const UpdateVehicles = () => {
     AsyncStorage.getItem('UserToken').then(value => {
-      // Tokeni daha iyi çekebiliriz şuan için deneme amaçlı
+      // Tokeni daha iyi çekebiliriz
       if (value != null) {
         token = value;
         RestService.GetWaitingVehicles(token).then(response => {
