@@ -154,9 +154,13 @@ const Login = ({navigation}) => {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
     useEffect(() => {
-      console.log('Selam LoginSuccess Değerim : ', LoginSuccess);
+      console.log('LoginSuccess Değerim : ', LoginSuccess);
       // TRUE OLARAK ATADIKTAN SONRA BURADA YAPACAZ DEĞİŞİKLİK useeffect tanımlanmadan sonra yapılır.
-      if (LoginSuccess == false) {
+      if ((userName.length != 0 && password.length != 0) && (LoginSuccess == false)) { // DAHA SONRA ÇÖZÜLCEK
+        Alert.alert(
+              'Kullanıcı adı veya şifre yanlış!',
+              'Lütfen Tekrar Deneyiniz.',
+            );
         // burası false olunca diğer kısımlardaki else kısmına gitmesin diye yaptık. Çıkış yaptan sonra token null ise false dedik bişey yapmasın yani.
       } else if (LoginSuccess == true) {
         setLoginSuccess(false);

@@ -29,26 +29,26 @@ const MainMenu = ({navigation, route}) => {
   //   }
   // };
 
-  const GetWaitingVehicles = () => {
-    const ListItems = [{}];
+  const GetWaitingVehiclesFromAPI = () => {
     AsyncStorage.getItem('UserToken').then(value => {
       // Tokeni daha iyi çekebiliriz şuan için deneme amaçlı
       if (value != null) {
         token = value;
         RestService.GetWaitingVehicles(token).then(response => {
-          total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
-          for (let i = 0; i < total_vehicle_number; i++) {
-            // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
-            ListItems.push(response.data[i]);
-          }
-          AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
-          console.log(ListItems);
+          AsyncStorage.setItem('VehicleItems', JSON.stringify(response.data));
+          // AsyncStorage.getItem('VehicleItems').then(value =>{
+          //   let array;
+          //   array = value;
+          //   console.log(array);
+          // });
+          
+
         });
       }
     });
   };
   useEffect(() => {
-    GetWaitingVehicles();
+    GetWaitingVehiclesFromAPI();
     // getData();
     // const headerleffunction = () => {
     //   // SOL ÜSTTEKİ GERİ TUŞUNA BASINCA NE YAPSIN!
@@ -122,6 +122,7 @@ const MainMenu = ({navigation, route}) => {
           text: 'Evet',
           onPress: async () => {
             await AsyncStorage.removeItem('UserToken');
+            await AsyncStorage.removeItem('VehicleItems');
             navigation.navigate('Login Screen');
           },
         },

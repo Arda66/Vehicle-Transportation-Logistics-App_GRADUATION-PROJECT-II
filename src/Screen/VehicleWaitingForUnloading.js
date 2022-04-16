@@ -7,27 +7,41 @@ import {
   TouchableOpacity,
   FlatList,
   Modal,
+  Button,
+  ToastAndroid,
+  TextInput,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import RestService from '../../services/RestService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {Formik} from 'formik';
+import {NativeBaseProvider, Input} from 'native-base';
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   var token = '';
   var total_vehicle_number = '';
+  const [ModalVisible, setModalVisible] = useState(false);
+  const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
+  console.log('Merhaba');
   const ListItems = [{}];
-
-  // const [FlatListRefresher, setFlatListRefresher] = useState(false);
-
   useEffect(() => {
+    // GetVehicles();
     UpdateVehicles();
   }, []);
+
+  const GetVehicles = () => {
+    // Şuan çalışmıyor  bunu let listitems ile tanımlayıp değer atarsan renderdan önce çalışır
+    AsyncStorage.getItem('VehicleItems').then(value => {
+      ListItems = value;
+      console.log('Listİtems : ', ListItems);
+    });
+  };
 
   const UpdateVehicles = () => {
     AsyncStorage.getItem('UserToken').then(value => {
       // Tokeni daha iyi çekebiliriz
       if (value != null) {
         token = value;
+        // ListItems = value.data;
         RestService.GetWaitingVehicles(token).then(response => {
           //  ListItems =  JSON.parse(response.data);
           // console.log(response.data.splice(0,5))
@@ -44,7 +58,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           //   // 21 araç var 0-20 ikiside dahil
           //   ListItems[i];
           // }
-          console.log(ListItems);
+          // console.log(ListItems);
         });
       }
     });
@@ -74,8 +88,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 margin: 5,
               }}>
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('NewRecord or Modify Screen')
+                onPress={
+                  () => setModalVisible(true)
+                  // navigation.navigate('NewRecord or Modify Screen').i
                 }
                 style={styles.button}>
                 <Text style={styles.text}>Düzelt</Text>
@@ -92,31 +107,163 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 style={styles.button}>
                 <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
+              <NewRecordModifyPopUp />
             </View>
           </View>
         </View>
       </View>
     );
   };
+  const notifyMessage = msg => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
+    }
+  };
+  const NewRecordModifyPopUp = () => {
+    return (
+      <Modal
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+        animationType="fade"
+        transparent={false}
+        visible={ModalVisible}
+        onRequestClose={() => {
+          notifyMessage('Düzeltme işlemi iptal edildi!.');
+          // values going to be null.
+          setModalVisible(false);
+        }}>
+        <View style={{flex: 1}}>
+          <Formik
+            initialValues={{
+              Company: '',
+              LoginTime: '',
+              Plate: '',
+              Set3Value: '',
+              WeighingNo: '',
+            }}
+            onSubmit={values => {
+              let Firma = values.Company;
+              let GirisZamani = values.LoginTime;
+              let Plaka = values.Plate;
+              let Set3Deger = values.Set3Value;
+              let TartimNo = values.WeighingNo;
+
+              // ListItems[0].Firma = values.Company;
+              // console.log('Push öncesi LİSTİTEM : ', ListItems);
+              ListItems.push({
+                Firma,
+                GirisZamani,
+                Plaka,
+                Set3Deger,
+                TartimNo,
+              });
+              console.log('Push sonrası LİSTİTEM : ', ListItems);
+              console.log(values);
+
+              //  console.log(values.Company);
+              setFlatlistRenderer(!FlatlistRenderer);
+              setModalVisible(false);
+              // burada handle submit yani axios şeysini çağırcaz misal login kontrol yapan(values.Company fln)
+            }}>
+            {({handleChange, handleSubmit, values}) => (
+              <NativeBaseProvider>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'stretch',
+                  }}>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      marginTop: 20,
+                      marginBottom: 50,
+                      fontSize: 25,
+                      fontWeight: 'bold',
+                      color: 'black',
+                    }}>
+                    Değerleri Düzenleyin
+                  </Text>
+                  <TextInput
+                    type="" // tipleri buradan giriyoruz
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Firma gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Company')}
+                    value={values.Company}
+                  />
+                  <TextInput
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Giriş  Zamanı gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('LoginTime')}
+                    value={values.LoginTime}
+                  />
+                  <TextInput
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Plaka gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Plate')}
+                    value={values.Plate}
+                  />
+                  <TextInput
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Set3Değer gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Set3Value')}
+                    value={values.Set3Value}
+                  />
+                  <TextInput
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="TartimNo  gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('WeighingNo')}
+                    value={values.WeighingNo}
+                  />
+                  <Button
+                    block
+                    success
+                    style={{
+                      borderRadius: 4,
+                      elevation: 1,
+                      marginHorizontal: 1,
+                      marginTop: 10,
+                    }}
+                    title="Kaydet"
+                    color="maroon"
+                    onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
+                  />
+                </View>
+              </NativeBaseProvider>
+            )}
+          </Formik>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
-    <View style={{flex:1}}>
-      <FlatList
-        // extraData={FlatListRefresher}
-        data={ListItems} // Program başlarken değer girdiğmiz için null kalıyor. useEffect güncelledikten sonra geliyor ctrl + s yapınca
-        renderItem={({item}) => {
-          return (
-            <ListItem
-              Company={item.Firma}
-              LoginTime={item.GirisZamani}
-              Plate={item.Plaka}
-              Set3Deger={item.Set3Deger}
-              WeighingNo={item.TartimNo}
-            />
-          );
-        }}
-      />
-      
-    </View>
+    <FlatList
+      extraData={FlatlistRenderer}
+      data={ListItems} // Program başlarken değer girdiğmiz için null kalıyor. useEffect güncelledikten sonra geliyor ctrl + s yapınca
+      renderItem={({item}) => {
+        return (
+          <ListItem
+            Company={item.Firma}
+            LoginTime={item.GirisZamani}
+            Plate={item.Plaka}
+            Set3Deger={item.Set3Deger}
+            WeighingNo={item.TartimNo}
+          />
+        );
+      }}
+    />
   );
 };
 
@@ -149,6 +296,13 @@ const styles = StyleSheet.create({
     top: 10,
     flex: 1,
     left: 10,
+  },
+  Input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    fontSize: 18,
+    borderRadius: 6,
   },
 });
 

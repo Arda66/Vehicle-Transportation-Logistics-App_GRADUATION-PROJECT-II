@@ -4,161 +4,130 @@ import {Formik} from 'formik';
 import {Input, NativeBaseProvider} from 'native-base';
 
 const NewRecordModify = ({navigation}) => {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Formik
-        initialValues={{
-          Date: '',
-          CustomerCode: '',
-          Scrap: '',
-          WaybillNo: '',
-          WaybillDate: '',
-          Exper: '',
-          Situation: '',
-          Plate: '',
-          ContainerNo: '',
-          InvoiceReferenceNo: '',
-          Port: '',
-          WeighingNo: '',
-          Registrant: '',
-          RegistrationDate: '',
-        }}
-        onSubmit={values => {
-          console.log(values); // burada handle submit yani axios şeysini çağırcaz misal login kontrol yapan
+    return (
+      <Modal
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+        animationType="fade"
+        transparent={false}
+        visible={ModalVisible}
+        onRequestClose={() => {
+          notifyMessage('Düzeltme işlemi iptal edildi!.');
+          // values going to be null.
+          setModalVisible(false);
         }}>
-        {props => {
-          <View>
-            <Input
-              type="" // tipleri buradan giriyoruz
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Tarihi gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Date')}
-              value={props.values.Date}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Musteri Kodu gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('CustomerCode')}
-              value={props.values.CustomerCode}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="KabHurda gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Scrap')}
-              value={props.values.Scrap}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Irsaliye Numarası gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('WaybillNo')}
-              value={props.values.WaybillNo}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Irsaliye Tarihi gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('WaybillDate')}
-              value={props.values.WaybillDate}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Exper gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Exper')}
-              value={props.values.Exper}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Durum gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Situation')}
-              value={props.values.Situation}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Plaka gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Plate')}
-              value={props.values.Plate}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Konteyner Numarası gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('ContainerNo')}
-              value={props.values.ContainerNo}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="FaturaReferans numarası gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('InvoiceReferenceNo')}
-              value={props.values.InvoiceReferenceNo}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Liman gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Port')}
-              value={props.values.Port}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="Tartim numarası gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('WeighingNo')}
-              value={props.values.WeighingNo}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholder="KayitEden gir"
-              placeholderTextColor="#ddd"
-              onChangeText={props.handleChange('Registrant')}
-              value={props.values.Registrant}
-            />
-            <Input
-              autoCapitalize="none"
-              style={styles.Input}
-              placeholderTextColor="#ddd"
-              placeholder="KayitTarihi gir"
-              onChangeText={props.handleChange('RegistrationDate')}
-              value={props.values.RegistrationDate}
-            />
-            <Button
-              block
-              success
-              style={{
-                borderRadius: 4,
-                elevation: 1,
-                marginHorizontal: 1,
-                marginTop: 10,
-              }}
-              title="Kaydet"
-              color="maroon"
-              onPress={props.handleSubmit} //ONsubmit Fonksiyonunu Çağırır
-            />
-          </View>;
-        }}
-      </Formik>
-    </View>
-  );
+        <View style={{flex: 1}}>
+          <Formik
+            initialValues={{
+              Company: '',
+              LoginTime: '',
+              Plate: '',
+              Set3Value: '',
+              WeighingNo: '',
+            }}
+            onSubmit={values => {
+              let Firma = values.Company;
+              let GirisZamani = values.LoginTime;
+              let Plaka = values.Plate;
+              let Set3Deger = values.Set3Value;
+              let TartimNo = values.WeighingNo;
+
+              // ListItems[0].Firma = values.Company;
+              // console.log('Push öncesi LİSTİTEM : ', ListItems);
+              ListItems.push({
+                Firma,
+                GirisZamani,
+                Plaka,
+                Set3Deger,
+                TartimNo,
+              });
+              console.log('Push sonrası LİSTİTEM : ', ListItems);
+              console.log(values);
+
+              //  console.log(values.Company);
+              setFlatlistRenderer(!FlatlistRenderer);
+              setModalVisible(false);
+              // burada handle submit yani axios şeysini çağırcaz misal login kontrol yapan(values.Company fln)
+            }}>
+            {({handleChange, handleSubmit, values}) => (
+              <NativeBaseProvider>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'stretch',
+                  }}>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      marginTop: 20,
+                      marginBottom: 50,
+                      fontSize: 25,
+                      fontWeight: 'bold',
+                      color: 'black',
+                    }}>
+                    Değerleri Düzenleyin
+                  </Text>
+                  <Input
+                    type="" // tipleri buradan giriyoruz
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Firma gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Company')}
+                    value={values.Company}
+                  />
+                  <Input
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Giriş  Zamanı gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('LoginTime')}
+                    value={values.LoginTime}
+                  />
+                  <Input
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Plaka gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Plate')}
+                    value={values.Plate}
+                  />
+                  <Input
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Set3Değer gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Set3Value')}
+                    value={values.Set3Value}
+                  />
+                  <Input
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="TartimNo  gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('WeighingNo')}
+                    value={values.WeighingNo}
+                  />
+                  <Button
+                    block
+                    success
+                    style={{
+                      borderRadius: 4,
+                      elevation: 1,
+                      marginHorizontal: 1,
+                      marginTop: 10,
+                    }}
+                    title="Kaydet"
+                    color="maroon"
+                    onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
+                  />
+                </View>
+              </NativeBaseProvider>
+            )}
+          </Formik>
+        </View>
+      </Modal>
+    );
 };
 
 const styles = StyleSheet.create({
