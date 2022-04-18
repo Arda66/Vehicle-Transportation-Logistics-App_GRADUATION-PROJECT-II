@@ -21,12 +21,13 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   var total_vehicle_number = '';
   const [ModalVisible, setModalVisible] = useState(false);
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
-  console.log('Merhaba');
   const ListItems = [{}];
   useEffect(() => {
-    // GetVehicles();
+    //GetVehicles(); 
     UpdateVehicles();
   }, []);
+
+
 
   const GetVehicles = () => {
     // Şuan çalışmıyor  bunu let listitems ile tanımlayıp değer atarsan renderdan önce çalışır
@@ -51,6 +52,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
             ListItems.push(response.data[i]);
           }
+          console.log(ListItems);
           AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
           // AsyncStorage.setItem("VehicleList",ListItems);
           // AsyncStorage.
@@ -58,7 +60,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           //   // 21 araç var 0-20 ikiside dahil
           //   ListItems[i];
           // }
-          // console.log(ListItems);
+           //console.log(ListItems);
         });
       }
     });

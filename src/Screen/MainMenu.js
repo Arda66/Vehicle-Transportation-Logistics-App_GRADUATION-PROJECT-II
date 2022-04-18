@@ -11,38 +11,11 @@ import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
 const MainMenu = ({navigation, route}) => {
-  // const [Username, setUsername] = useState('');
-  // const [Password, setPassword] = useState('');
-  // const [ListItems, setListItems] = useState([]);
-
-  // const getData = () => {    // KULLANICI ADI VE ŞİFRE DEĞERLERİNİ EKRANA BASTIRMAK İÇİN BURAYA GÖNDERDİK (İSTEĞE BAĞLI)
-  //   try {
-  //     AsyncStorage.getItem('UserData').then(value => {
-  //       if (value != null) {
-  //         let user = JSON.parse(value);
-  //         setUsername(user.Username);
-  //         setPassword(user.Password);
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const GetWaitingVehiclesFromAPI = () => {
     AsyncStorage.getItem('UserToken').then(value => {
-      // Tokeni daha iyi çekebiliriz şuan için deneme amaçlı
       if (value != null) {
-        token = value;
-        RestService.GetWaitingVehicles(token).then(response => {
+        RestService.GetWaitingVehicles(value).then(response => {
           AsyncStorage.setItem('VehicleItems', JSON.stringify(response.data));
-          // AsyncStorage.getItem('VehicleItems').then(value =>{
-          //   let array;
-          //   array = value;
-          //   console.log(array);
-          // });
-          
-
         });
       }
     });
@@ -131,42 +104,31 @@ const MainMenu = ({navigation, route}) => {
   };
   return (
     <View style={styles.Container}>
-      <View style={styles.Container}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: 'black',
-            fontSize: 40,
-            bottom: '90%',
-            position: 'absolute',
-          }}>
-          Ana Menü
-        </Text>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: '35%',
-          }}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('Vehicle Waiting For Unloading Screen')
-            }
-            style={styles.touchable}>
-            <Text style={styles.text}>Boşalta Bekleyen Araç Listesi</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('LoginList Screen')}
-            style={styles.touchable}>
-            <Text style={styles.text}>Giriş Listesi</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => ExitwithAlertForButton()}
-            style={[styles.touchable, styles.exitButton]}>
-            <Text style={styles.text}>Çıkış Yap</Text>
-          </TouchableOpacity>
-        </View>
+      <Text
+        style={{
+          fontWeight: 'bold',color: 'black',fontSize: 40,bottom: '90%',position: 'absolute'}}>
+        Ana Menü
+      </Text>
+      <View
+        style={{
+         flex: 1,justifyContent: 'center', alignItems: 'center',marginBottom: '35%'}}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Vehicle Waiting For Unloading Screen')
+          }
+          style={styles.touchable}>
+          <Text style={styles.text}>Boşaltma Bekleyen Araç Listesi</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('LoginList Screen')}
+          style={styles.touchable}>
+          <Text style={styles.text}>Giriş Listesi</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => ExitwithAlertForButton()}
+          style={[styles.touchable, styles.exitButton]}>
+          <Text style={styles.text}>Çıkış Yap</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

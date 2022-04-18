@@ -1,13 +1,4 @@
-import {
-  Stack,
-  Center,
-  NativeBaseProvider,
-  Button,
-  Box,
-  Icon,
-  MaterialIcons,
-  Toast,
-} from 'native-base';
+import {Stack, NativeBaseProvider, Button, Box} from 'native-base';
 import React, {useState, useEffect} from 'react';
 import {
   KeyboardAvoidingView,
@@ -28,16 +19,14 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import Vehicle_Waiting_For_Unloading from './src/screen/VehicleWaitingForUnloading';
 import MainMenu from './src/screen/MainMenu';
 import NewRecordModify from './src/screen/NewRecordModify';
 import LoginList from './src/screen/LoginList';
 import AddPicture from './src/screen/AddPicture';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import AccountService from './services/AccountService';
-import RestService from './services/RestService';
-import {Formik} from 'formik';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Input} from 'native-base';
 const HideKeyboard = ({children}) => {
   return (
@@ -154,28 +143,13 @@ const Login = ({navigation}) => {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
     useEffect(() => {
-      console.log('LoginSuccess Değerim : ', LoginSuccess);
-      // TRUE OLARAK ATADIKTAN SONRA BURADA YAPACAZ DEĞİŞİKLİK useeffect tanımlanmadan sonra yapılır.
-      if ((userName.length != 0 && password.length != 0) && (LoginSuccess == false)) { // DAHA SONRA ÇÖZÜLCEK
-        Alert.alert(
-              'Kullanıcı adı veya şifre yanlış!',
-              'Lütfen Tekrar Deneyiniz.',
-            );
-        // burası false olunca diğer kısımlardaki else kısmına gitmesin diye yaptık. Çıkış yaptan sonra token null ise false dedik bişey yapmasın yani.
-      } else if (LoginSuccess == true) {
+      if (LoginSuccess == true) {
         setLoginSuccess(false);
         notifyMessage('Giriş Başarılı!');
-        // console.log('Token Değerim : ', Token);
-        // setToken();
         navigation.navigate('Main Menu Screen');
         setuserName('');
         setpassword('');
       }
-      //  else
-      //   Alert.alert(
-      //     'Kullanıcı adı veya şifre yanlış!',
-      //     'Lütfen Tekrar Deneyiniz.',
-      //   );
     }, [LoginPressedCaller]);
 
     const setTokenFunction = async Token => {
@@ -193,11 +167,13 @@ const Login = ({navigation}) => {
             console.log('Response data : ', response.data);
             if (response.data.Success == true) {
               setLoginSuccess(true); // Burası DiREKT OLARAK TRUE YAPMIYOR. Usestate anında gerçekleşmez render olduktan sonra useeffect kısmında olur Ve burası aynı zamanda useEFFECT TETİKLİYOR KONTROL İŞLEMLERİ ORADA OLACAK.
-              // SetToken(response.data.Token);
               setTokenFunction(response.data.Token);
             } else {
               setLoginSuccess(false);
-              // SetToken(null);
+              Alert.alert(
+                'Kullanıcı adı veya şifre yanlış!',
+                'Lütfen Tekrar Deneyiniz.',
+              );
             }
           })
           .catch(error => {
@@ -207,9 +183,7 @@ const Login = ({navigation}) => {
       } else {
         notifyMessage('Kullanıcı adı veya şifre boş olamaz!');
       }
-      // her yanlış girildiğinde sürekli çağırması için
-
-      // Buradaki kıyaslama işlerini useeffect kısmında yaptık çünkü setloginsuccess render sonunda true dönüyor değer olarak
+      // her yanlış girildiğinde sürekli çağırması için Buradaki kıyaslama işlerini useeffect kısmında yaptık çünkü setloginsuccess render sonunda true dönüyor değer olarak
     };
 
     return (
