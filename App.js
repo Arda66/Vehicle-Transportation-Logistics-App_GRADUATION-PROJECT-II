@@ -131,11 +131,7 @@ const Login = ({navigation}) => {
     return () => backHandler.remove();
   }, []);
 
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  
 
   const InputBoxes = () => {
     const [userName, setuserName] = useState('');
@@ -225,8 +221,7 @@ const Login = ({navigation}) => {
   return (
     <NativeBaseProvider>
       <HideKeyboard>
-        <SafeAreaView style={[backgroundStyle, styles.sectionContainer]}>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <SafeAreaView style={styles.sectionContainer}>
           <KeyboardAvoidingView style={{flex: 1}}>
             <InputBoxes />
           </KeyboardAvoidingView>

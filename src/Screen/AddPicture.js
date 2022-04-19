@@ -5,12 +5,15 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
+  ImageBackground,
+  Button,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 
 const AddPicture = ({navigation}) => {
-  // const [image, setImage] = useState(''); // TEST AMAÇLI
+  const [FlatListRenderer, setFlatListRenderer] = useState(false);
   const ImageList = [];
 
   const TakePhotoFromCamera = () => {
@@ -23,11 +26,10 @@ const AddPicture = ({navigation}) => {
       .then(image => {
         if (image != null) {
           console.log(image.path);
-          // setImage(image.path); // TEST AMAÇLI
           ImageList.push(image.path);
           console.log('ImageList : ', ImageList);
+          setFlatListRenderer(!FlatListRenderer);
         }
-        // this.bs.current.snapTo(1);
       })
       .catch(err => {
         console.log('TakePhotoFromCamera err catch ' + err.toString());
@@ -43,10 +45,9 @@ const AddPicture = ({navigation}) => {
       .then(image => {
         if (image != null) {
           console.log(image.path);
-          // setImage(image.path); // TEST AMAÇLI
           ImageList.push(image.path);
+          setFlatListRenderer(!FlatListRenderer);
         }
-        // this.bs.current.snapTo(1);
       })
       .catch(err => {
         console.log('ChoosePhotoFromLibrary err catch  ' + err.toString());
@@ -77,23 +78,27 @@ const AddPicture = ({navigation}) => {
   const ImageListBox = () => {
     // Fotoğrafları flatlist ile alt alta göstercez.
     return (
-      <FlatList
-        data={ImageList}
-        renderItem={({item}) => {
-          return (
-            <View style={{flex: 1}}>
-              <Image source={item} />
-            </View>
-          );
-        }}></FlatList>
+      <View style={{flex: 1}}>
+        <FlatList
+          extraData={FlatListRenderer}
+          data={ImageList}
+          renderItem={({item}) => {
+            return (
+              <View style={{flex: 1, alignItems: 'center'}}>
+                <Image style={{width: 300, height: 300}} source={{uri: item}} />
+              </View>
+            );
+          }}></FlatList>
+      </View>
     );
   };
 
   return (
     <View style={{flex: 1}}>
-      {/* <ImageListBox /> */}
-      {/* <Image source={require('')}></Image> */}
       <ImageListBox />
+      {/* <View style={{justifyContent:'center', alignItems: 'center'}}>
+      <Image style={{width: 300, height: 300}} source={{uri: "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0,176,3008,1654&wid=2000&hei=1100&scl=1.504"}} />
+      </View> */}
       <BottomAddPhotoMenu></BottomAddPhotoMenu>
     </View>
   );
@@ -126,7 +131,6 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -1, height: -3},
     shadowRadius: 2,
     shadowOpacity: 0.4,
-    // elevation: 5,
     paddingTop: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
