@@ -17,7 +17,6 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Vehicle_Waiting_For_Unloading from './src/screen/VehicleWaitingForUnloading';
@@ -130,8 +129,6 @@ const Login = ({navigation}) => {
 
     return () => backHandler.remove();
   }, []);
-
-  
 
   const InputBoxes = () => {
     const [userName, setuserName] = useState('');

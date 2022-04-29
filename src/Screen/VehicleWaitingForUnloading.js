@@ -101,7 +101,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 style={styles.button}>
                 <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
-              <NewRecordModifyPopUp />
+              <NewRecordPopUpModal />
             </View>
           </View>
         </View>
@@ -115,14 +115,15 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       AlertIOS.alert(msg);
     }
   };
-  const NewRecordModifyPopUp = () => {
+  const NewRecordPopUpModal = () => {
     return (
-      <Modal style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+      <Modal
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
         animationType="fade"
         transparent={false}
         visible={ModalVisible}
         onRequestClose={() => {
-          notifyMessage('Düzeltme işlemi iptal edildi!.');
+          notifyMessage('Yeni kayıt işlemi iptal edildi!.');
           setModalVisible(false);
         }}>
         <View style={{flex: 1}}>
@@ -140,7 +141,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               let Plaka = values.Plate;
               let Set3Deger = values.Set3Value;
               let TartimNo = values.WeighingNo;
-              
               ListItems.push({
                 Firma,
                 GirisZamani,
