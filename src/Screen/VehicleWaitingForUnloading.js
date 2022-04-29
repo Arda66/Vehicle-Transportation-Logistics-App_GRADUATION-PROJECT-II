@@ -16,9 +16,11 @@ import {Formik} from 'formik';
 import {NativeBaseProvider} from 'native-base';
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   // var token = '';
-  var total_vehicle_number = '';
-  const [ModalVisible, setModalVisible] = useState(false);
+  var total_vehicle_number_index = ''; // index olarak değer tutar 22 toplam aracımız var
+  const [NewRecordModalVisible, setNewRecordModalVisible] = useState(false);
+  const [ModifyModalVisible, setModifyModalVisible] = useState(false);
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
+  let index = null;
   const ListItems = [{}];
   useEffect(() => {
     UpdateVehicles();
@@ -31,8 +33,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           //  ListItems =  JSON.parse(response.data);
           // console.log(response.data.splice(0,5))
           // obj = JSON.parse(response.data);
-          total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
-          for (let i = 0; i < total_vehicle_number; i++) {
+          total_vehicle_number_index = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
+          for (let i = 0; i < total_vehicle_number_index; i++) {
             // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
             ListItems.push(response.data[i]);
           }
@@ -58,17 +60,18 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   };
 
   const ListItem = item => {
+    // item.index şeklinde gönder oradan index = index yap
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
-            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}</Text>
+            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}       index :   {item.index}</Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
             </Text>
             <Text style={styles.ValuesOnScreen}>Plaka : {item.Plate}</Text>
             <Text style={styles.ValuesOnScreen}>
-              Set3Deger : {item.Set3Deger}
+              Set3Deger : {item.Set3Deger} {}
             </Text>
             <Text style={styles.ValuesOnScreen}>
               Tartim No : {item.WeighingNo}
@@ -81,16 +84,20 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 margin: 5,
               }}>
               <TouchableOpacity
-                onPress={() =>
+                onPress={
+                  () => {
+                    index = item.index;
+                    console.log("Index : ",index);
+                    setModifyModalVisible(true);
+                  }
                   // () => setModalVisible(true)
-                  navigation.navigate('NewRecord or Modify Screen')
                 }
                 style={styles.button}>
                 <Text style={styles.text}>Düzelt</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={
-                  () => setModalVisible(true)
+                  () => setNewRecordModalVisible(true)
                   // navigation.navigate('NewRecord or Modify Screen')
                 }
                 style={styles.button}>
@@ -102,6 +109,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
               <NewRecordPopUpModal />
+              <ModifyPopUpModal />
             </View>
           </View>
         </View>
@@ -121,10 +129,12 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
         animationType="fade"
         transparent={false}
-        visible={ModalVisible}
+        visible={NewRecordModalVisible}
         onRequestClose={() => {
           notifyMessage('Yeni kayıt işlemi iptal edildi!.');
-          setModalVisible(false);
+          setNewRecordModalVisible(false);
+          index = null;
+
         }}>
         <View style={{flex: 1}}>
           <Formik
@@ -148,11 +158,13 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 Set3Deger,
                 TartimNo,
               });
+
               console.log('Push sonrası LİSTİTEM : ', ListItems);
               console.log(values);
 
               setFlatlistRenderer(!FlatlistRenderer);
-              setModalVisible(false);
+              setNewRecordModalVisible(false);
+              index = null;
               // burada handle submit yani axios şeysini çağırcaz misal login kontrol yapan(values.Company fln)
             }}>
             {({handleChange, handleSubmit, values}) => (
@@ -236,12 +248,135 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       </Modal>
     );
   };
+  const ModifyPopUpModal = () => {
+    return (
+      <Modal
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+        animationType="fade"
+        transparent={false}
+        visible={ModifyModalVisible}
+        onRequestClose={() => {
+          notifyMessage('Düzenleme işlemi iptal edildi!.');
+          setModifyModalVisible(false);
+          index = null;
+        }}>
+        <View style={{flex: 1}}>
+          <Formik
+            initialValues={{
+              Company: '',
+              LoginTime: '',
+              Plate: '',
+              Set3Value: '',
+              WeighingNo: '',
+            }}
+            onSubmit={values => {
+              let Firma = values.Company;
+              let GirisZamani = values.LoginTime;
+              let Plaka = values.Plate;
+              let Set3Deger = values.Set3Value;
+              let TartimNo = values.WeighingNo;
+              // ListItems.push({
+              //   Firma,
+              //   GirisZamani,
+              //   Plaka,
+              //   Set3Deger,
+              //   TartimNo,
+              // });
+              // console.log('Push sonrası LİSTİTEM : ', ListItems);
+              // console.log(values);
+
+              setFlatlistRenderer(!FlatlistRenderer);
+              setModifyModalVisible(false);
+              index = null;
+              // burada handle submit yani axios şeysini çağırcaz misal login kontrol yapan(values.Company fln)
+            }}>
+            {({handleChange, handleSubmit, values}) => (
+              <NativeBaseProvider>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'stretch',
+                  }}>
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      marginTop: 20,
+                      marginBottom: 50,
+                      fontSize: 25,
+                      fontWeight: 'bold',
+                      color: 'black',
+                    }}>
+                    Değerleri Düzenle
+                  </Text>
+                  <TextInput
+                    type="" // tipleri buradan giriyoruz
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Firma gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Company')}
+                    value={values.Company}
+                  />
+                  <TextInput
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Giriş  Zamanı gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('LoginTime')}
+                    value={values.LoginTime}
+                  />
+                  <TextInput
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Plaka gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Plate')}
+                    value={values.Plate}
+                  />
+                  <TextInput
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="Set3Değer gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('Set3Value')}
+                    value={values.Set3Value}
+                  />
+                  <TextInput
+                    autoCapitalize="none"
+                    style={styles.Input}
+                    placeholder="TartimNo  gir"
+                    placeholderTextColor="#ddd"
+                    onChangeText={handleChange('WeighingNo')}
+                    value={values.WeighingNo}
+                  />
+                  <Button
+                    block
+                    success
+                    style={{
+                      borderRadius: 4,
+                      elevation: 1,
+                      marginHorizontal: 1,
+                      marginTop: 10,
+                    }}
+                    title="Kaydet"
+                    color="maroon"
+                    onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
+                  />
+                </View>
+              </NativeBaseProvider>
+            )}
+          </Formik>
+        </View>
+      </Modal>
+    );
+  };
 
   return (
     <FlatList
       extraData={FlatlistRenderer}
       data={ListItems} // Program başlarken değer girdiğmiz için null kalıyor. useEffect güncelledikten sonra geliyor ctrl + s yapınca
-      renderItem={({item}) => {
+      renderItem={({item, index}) => {
         return (
           <ListItem
             Company={item.Firma}
@@ -249,6 +384,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             Plate={item.Plaka}
             Set3Deger={item.Set3Deger}
             WeighingNo={item.TartimNo}
+            index={index}
           />
         );
       }}
