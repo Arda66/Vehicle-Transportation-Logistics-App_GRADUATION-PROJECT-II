@@ -65,7 +65,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
-            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}       index :   {item.index}</Text>
+            <Text style={styles.ValuesOnScreen}>
+              Firma : {item.Company} index : {item.index}
+            </Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
             </Text>
@@ -87,7 +89,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 onPress={
                   () => {
                     index = item.index;
-                    console.log("Index : ",index);
+                    console.log('Index : ', index);
                     setModifyModalVisible(true);
                   }
                   // () => setModalVisible(true)
@@ -134,7 +136,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           notifyMessage('Yeni kayıt işlemi iptal edildi!.');
           setNewRecordModalVisible(false);
           index = null;
-
         }}>
         <View style={{flex: 1}}>
           <Formik
@@ -275,15 +276,14 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               let Plaka = values.Plate;
               let Set3Deger = values.Set3Value;
               let TartimNo = values.WeighingNo;
-              // ListItems.push({
-              //   Firma,
-              //   GirisZamani,
-              //   Plaka,
-              //   Set3Deger,
-              //   TartimNo,
-              // });
-              // console.log('Push sonrası LİSTİTEM : ', ListItems);
-              // console.log(values);
+
+              let Array = {Firma, GirisZamani, Plaka, Set3Deger, TartimNo};
+              if (index != null) {
+                ListItems.splice(index,1,Array);
+              } else console.log('Index is null !');
+        
+              console.log('Edit sonrası LİSTİTEM : ', ListItems);
+              console.log(values);
 
               setFlatlistRenderer(!FlatlistRenderer);
               setModifyModalVisible(false);
