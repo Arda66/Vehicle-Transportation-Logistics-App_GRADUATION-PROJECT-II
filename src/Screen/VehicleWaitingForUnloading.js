@@ -236,6 +236,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               ) {
                 notifyMessage('Hiçbir değişiklik yapmadınız!');
               } else {
+                notifyMessage('Değerler başarıyla değiştirildi!');
                 let Firma = values.Company;
                 let GirisZamani = values.LoginTime;
                 let Plaka = values.Plate;
@@ -350,7 +351,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   };
   const Delete_With_Alert = () => {
     Alert.alert(
-      'Seçtiğiniz araç silinecektir.',
+      'Seçtiğiniz araç bilgileriyle silinecektir.',
       'Silmek istediğinize emin misiniz ?',
       [
         {

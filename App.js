@@ -179,12 +179,14 @@ const Login = ({navigation}) => {
     return (
       <Stack mt={'30%'} space={'15%'} width="100%" maxW="70%">
         <Input
+          autoCapitalize="none"
           value={userName}
           onChangeText={text => setuserName(text)}
           size="lg"
           placeholder="Kullanıcı adı"
         />
         <Input
+          autoCapitalize="none"
           onChangeText={text => setpassword(text)}
           value={password}
           size="lg"
