@@ -10,8 +10,6 @@ import {
   TextInput,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import RestService from '../../services/RestService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Formik} from 'formik';
 import {NativeBaseProvider} from 'native-base';
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
@@ -27,7 +25,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         <View style={styles.container}>
           <View style={{flex: 1}}>
             <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} index : {item.index}
+              Firma : {item.Company} 
             </Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
@@ -253,7 +251,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               }
             }}>
             {({handleChange, handleSubmit, values}) => (
-              <NativeBaseProvider>
                 <View
                   style={{
                     flex: 1,
@@ -326,7 +323,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
                   />
                 </View>
-              </NativeBaseProvider>
             )}
           </Formik>
         </View>
@@ -390,6 +386,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     borderRadius: 6,
+    marginVertical: 5
   },
 });
 
