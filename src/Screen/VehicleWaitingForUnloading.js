@@ -9,6 +9,7 @@ import {
   ToastAndroid,
   TextInput,
   Alert,
+  KeyboardAvoidingView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Formik} from 'formik';
@@ -323,6 +324,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   color="maroon"
                   onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
                 />
+                <KeyboardAvoidingView>
                 <TouchableOpacity
                   onPress={() => {
                     Delete_With_Alert();
@@ -336,12 +338,13 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     borderRadius: 10,
                     borderColor: 'maroon',
                     borderWidth: 1,
-                    top: '87%',
-                    left: '45%',
+                    left: '44%',
+                    marginTop: 20,
                     backgroundColor: 'maroon',
                   }}>
                   <Text style={{color: 'white'}}>SİL</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> 
+                </KeyboardAvoidingView>
               </View>
             )}
           </Formik>
