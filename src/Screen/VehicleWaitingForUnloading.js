@@ -20,10 +20,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [NewRecordModalVisible, setNewRecordModalVisible] = useState(false);
   const [ModifyModalVisible, setModifyModalVisible] = useState(false);
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
-  let index = null;
-  const ListItems = [{}];
+  var index = null;
   useEffect(() => {
-    UpdateVehicles();
+    // UpdateVehicles();
   }, []);
 
   const UpdateVehicles = () => {
@@ -39,7 +38,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             ListItems.push(response.data[i]);
           }
           console.log(ListItems);
-          AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
+          // AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
           // AsyncStorage.setItem("VehicleList",ListItems);
           // AsyncStorage.
           // for (let i = 0; i < total_vehicle_number; i++) {
@@ -147,6 +146,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               WeighingNo: '',
             }}
             onSubmit={values => {
+              // Buradaki şeyleri yoruma alsakta genede ekrandaki değerler gidiyor kaydetsekte iptalda etsek
               let Firma = values.Company;
               let GirisZamani = values.LoginTime;
               let Plaka = values.Plate;
@@ -264,7 +264,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         <View style={{flex: 1}}>
           <Formik
             initialValues={{
-              Company: '',
+              Company: ListItems[5].Firma, // Buralara oradaki değerleri koy null yerine çalışıoyr bu 0 yerine index yazıoz ama array başta boş olduğu için tanımıyor useeffect yüzünden
               LoginTime: '',
               Plate: '',
               Set3Value: '',
@@ -279,9 +279,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
 
               let Array = {Firma, GirisZamani, Plaka, Set3Deger, TartimNo};
               if (index != null) {
-                ListItems.splice(index,1,Array);
+                ListItems.splice(index, 1, Array);
               } else console.log('Index is null !');
-        
+
               console.log('Edit sonrası LİSTİTEM : ', ListItems);
               console.log(values);
 

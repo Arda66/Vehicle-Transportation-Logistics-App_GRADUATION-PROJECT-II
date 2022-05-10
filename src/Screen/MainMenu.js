@@ -15,7 +15,11 @@ const MainMenu = ({navigation, route}) => {
     AsyncStorage.getItem('UserToken').then(value => {
       if (value != null) {
         RestService.GetWaitingVehicles(value).then(response => {
-          AsyncStorage.setItem('VehicleItems', JSON.stringify(response.data));
+          global.ListItems = [];
+          total_vehicle_number_index = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
+          for (let i = 0; i < total_vehicle_number_index; i++) {
+            ListItems.push(response.data[i]);
+          }
         });
       }
     });
@@ -106,12 +110,21 @@ const MainMenu = ({navigation, route}) => {
     <View style={styles.Container}>
       <Text
         style={{
-          fontWeight: 'bold',color: 'black',fontSize: 40,bottom: '90%',position: 'absolute'}}>
+          fontWeight: 'bold',
+          color: 'black',
+          fontSize: 40,
+          bottom: '90%',
+          position: 'absolute',
+        }}>
         Ana Menü
       </Text>
       <View
         style={{
-         flex: 1,justifyContent: 'center', alignItems: 'center',marginBottom: '35%'}}>
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: '35%',
+        }}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Vehicle Waiting For Unloading Screen')

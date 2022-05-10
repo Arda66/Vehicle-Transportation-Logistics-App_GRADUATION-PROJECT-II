@@ -3,11 +3,8 @@ import React, {useState, useEffect} from 'react';
 import {
   KeyboardAvoidingView,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   Keyboard,
   TouchableWithoutFeedback,
