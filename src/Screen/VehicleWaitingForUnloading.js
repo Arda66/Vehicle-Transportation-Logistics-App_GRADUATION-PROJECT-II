@@ -8,6 +8,7 @@ import {
   Button,
   ToastAndroid,
   TextInput,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Formik} from 'formik';
@@ -25,7 +26,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         <View style={styles.container}>
           <View style={{flex: 1}}>
             <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} 
+              Firma : {item.Company} İndex:{item.index}
             </Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
@@ -126,80 +127,78 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               }
             }}>
             {({handleChange, handleSubmit, values}) => (
-              <NativeBaseProvider>
-                <View
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'stretch',
+                }}>
+                <Text
                   style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'stretch',
+                    alignSelf: 'center',
+                    marginTop: 20,
+                    marginBottom: 50,
+                    fontSize: 25,
+                    fontWeight: 'bold',
+                    color: 'black',
                   }}>
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      marginTop: 20,
-                      marginBottom: 50,
-                      fontSize: 25,
-                      fontWeight: 'bold',
-                      color: 'black',
-                    }}>
-                    Yeni kayıt ekleme
-                  </Text>
-                  <TextInput
-                    type="" // tipleri buradan giriyoruz
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="Firma gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('Company')}
-                    value={values.Company}
-                  />
-                  <TextInput
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="Giriş Zamanı gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('LoginTime')}
-                    value={values.LoginTime}
-                  />
-                  <TextInput
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="Plaka gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('Plate')}
-                    value={values.Plate}
-                  />
-                  <TextInput
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="Set3Değer gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('Set3Value')}
-                    value={values.Set3Value}
-                  />
-                  <TextInput
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="TartimNo gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('WeighingNo')}
-                    value={values.WeighingNo}
-                  />
-                  <Button
-                    block
-                    success
-                    style={{
-                      borderRadius: 4,
-                      elevation: 1,
-                      marginHorizontal: 1,
-                      marginTop: 10,
-                    }}
-                    title="Kaydet"
-                    color="maroon"
-                    onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
-                  />
-                </View>
-              </NativeBaseProvider>
+                  Yeni kayıt ekleme
+                </Text>
+                <TextInput
+                  type="" // tipleri buradan giriyoruz
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="Firma gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('Company')}
+                  value={values.Company}
+                />
+                <TextInput
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="Giriş Zamanı gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('LoginTime')}
+                  value={values.LoginTime}
+                />
+                <TextInput
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="Plaka gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('Plate')}
+                  value={values.Plate}
+                />
+                <TextInput
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="Set3Değer gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('Set3Value')}
+                  value={values.Set3Value}
+                />
+                <TextInput
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="TartimNo gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('WeighingNo')}
+                  value={values.WeighingNo}
+                />
+                <Button
+                  block
+                  success
+                  style={{
+                    borderRadius: 4,
+                    elevation: 1,
+                    marginHorizontal: 1,
+                    marginTop: 10,
+                  }}
+                  title="Kaydet"
+                  color="maroon"
+                  onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
+                />
+              </View>
             )}
           </Formik>
         </View>
@@ -232,9 +231,10 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 values.LoginTime == ListItems[index].GirisZamani &&
                 values.Plate == ListItems[index].Plaka &&
                 values.Set3Value == ListItems[index].Set3Deger &&
-                values.WeighingNo.toString() == ListItems[index].TartimNo.toString()
+                values.WeighingNo.toString() ==
+                  ListItems[index].TartimNo.toString()
               ) {
-                notifyMessage("Hiçbir değişiklik yapmadınız!");
+                notifyMessage('Hiçbir değişiklik yapmadınız!');
               } else {
                 let Firma = values.Company;
                 let GirisZamani = values.LoginTime;
@@ -251,85 +251,133 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               }
             }}>
             {({handleChange, handleSubmit, values}) => (
-                <View
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'stretch',
+                }}>
+                <Text
                   style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'stretch',
+                    alignSelf: 'center',
+                    marginTop: 20,
+                    marginBottom: 50,
+                    fontSize: 25,
+                    fontWeight: 'bold',
+                    color: 'black',
                   }}>
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      marginTop: 20,
-                      marginBottom: 50,
-                      fontSize: 25,
-                      fontWeight: 'bold',
-                      color: 'black',
-                    }}>
-                    Değerleri Düzenle
-                  </Text>
-                  <TextInput
-                    // type="" // tipleri buradan giriyoruz
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="Firma gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('Company')}
-                    value={values.Company}
-                  />
-                  <TextInput
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="Giriş  Zamanı gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('LoginTime')}
-                    value={values.LoginTime}
-                  />
-                  <TextInput
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="Plaka gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('Plate')}
-                    value={values.Plate}
-                  />
-                  <TextInput
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="Set3Değer gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('Set3Value')}
-                    value={values.Set3Value}
-                  />
-                  <TextInput
-                    autoCapitalize="none"
-                    style={styles.Input}
-                    placeholder="TartimNo  gir"
-                    placeholderTextColor="#9791cc"
-                    onChangeText={handleChange('WeighingNo')}
-                    value={values.WeighingNo}
-                  />
-                  <Button
-                    block
-                    success
-                    style={{
-                      borderRadius: 4,
-                      elevation: 1,
-                      marginHorizontal: 1,
-                      marginTop: 10,
-                    }}
-                    title="Kaydet"
-                    color="maroon"
-                    onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
-                  />
-                </View>
+                  Değerleri Düzenle
+                </Text>
+                <TextInput
+                  // type="" // tipleri buradan giriyoruz
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="Firma gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('Company')}
+                  value={values.Company}
+                />
+                <TextInput
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="Giriş  Zamanı gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('LoginTime')}
+                  value={values.LoginTime}
+                />
+                <TextInput
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="Plaka gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('Plate')}
+                  value={values.Plate}
+                />
+                <TextInput
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="Set3Değer gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('Set3Value')}
+                  value={values.Set3Value}
+                />
+                <TextInput
+                  autoCapitalize="none"
+                  style={styles.Input}
+                  placeholder="TartimNo  gir"
+                  placeholderTextColor="#9791cc"
+                  onChangeText={handleChange('WeighingNo')}
+                  value={values.WeighingNo}
+                />
+                <Button
+                  block
+                  success
+                  style={{
+                    borderRadius: 4,
+                    elevation: 1,
+                    marginHorizontal: 1,
+                    marginTop: 10,
+                  }}
+                  title="Kaydet"
+                  color="maroon"
+                  onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
+                />
+                <TouchableOpacity
+                  onPress={() => {
+                    Delete_With_Alert();
+                  }}
+                  style={{
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 50,
+                    height: 50,
+                    borderRadius: 10,
+                    borderColor: 'maroon',
+                    borderWidth: 1,
+                    top: '87%',
+                    left: '45%',
+                    backgroundColor: 'maroon',
+                  }}>
+                  <Text style={{color: 'white'}}>SİL</Text>
+                </TouchableOpacity>
+              </View>
             )}
           </Formik>
         </View>
       </Modal>
     );
   };
+  const Delete_With_Alert = () => {
+    Alert.alert(
+      'Seçtiğiniz araç silinecektir.',
+      'Silmek istediğinize emin misiniz ?',
+      [
+        {
+          text: 'Hayır',
+          onPress: () => {
+            notifyMessage('Silme işlemi iptal edildi!');
+          },
+          style: 'cancel',
+        },
+        {
+          text: 'Evet',
+          onPress: () => {
+            if (index == ListItems.length - 1) {
+              // Son elemanı farklı şekilde sil pop ile yoksa hata veriyor.
+              console.log('Son elemanı sildiniz!');
+               ListItems.pop();
+               setIndex(0); // index değeri yok oluyordu bu şekilde çözdük.
+            } else ListItems.splice(index, 1);
 
+            notifyMessage('Başarıyla silindi!');
+            setFlatlistRenderer(!FlatlistRenderer);
+            setModifyModalVisible(false);
+          },
+        },
+      ],
+    );
+  };
   return (
     <FlatList
       extraData={FlatlistRenderer}
@@ -386,7 +434,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     borderRadius: 6,
-    marginVertical: 5
+    marginVertical: 5,
   },
 });
 
