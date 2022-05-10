@@ -15,48 +15,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Formik} from 'formik';
 import {NativeBaseProvider} from 'native-base';
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
-  // var token = '';
-  var total_vehicle_number_index = ''; // index olarak değer tutar 22 toplam aracımız var
   const [NewRecordModalVisible, setNewRecordModalVisible] = useState(false);
   const [ModifyModalVisible, setModifyModalVisible] = useState(false);
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
-  var index = null;
-  useEffect(() => {
-    // UpdateVehicles();
-  }, []);
-
-  const UpdateVehicles = () => {
-    AsyncStorage.getItem('UserToken').then(value => {
-      if (value != null) {
-        RestService.GetWaitingVehicles(value).then(response => {
-          //  ListItems =  JSON.parse(response.data);
-          // console.log(response.data.splice(0,5))
-          // obj = JSON.parse(response.data);
-          total_vehicle_number_index = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
-          for (let i = 0; i < total_vehicle_number_index; i++) {
-            // HERŞEYİ LİSTİTEM ARRAYINA ATTIK
-            ListItems.push(response.data[i]);
-          }
-          console.log(ListItems);
-          // AsyncStorage.setItem('VehicleItems', JSON.stringify(ListItems));
-          // AsyncStorage.setItem("VehicleList",ListItems);
-          // AsyncStorage.
-          // for (let i = 0; i < total_vehicle_number; i++) {
-          //   // 21 araç var 0-20 ikiside dahil
-          //   ListItems[i];
-          // }
-          //console.log(ListItems);
-        });
-      }
-    });
-  };
-  const GetVehicles = () => {
-    // Şuan çalışmıyor  bunu let listitems ile tanımlayıp değer atarsan renderdan önce çalışır
-    AsyncStorage.getItem('VehicleItems').then(value => {
-      ListItems = value;
-      console.log('Listİtems : ', ListItems);
-    });
-  };
+  const [index, setIndex] = useState(0);
 
   const ListItem = item => {
     // item.index şeklinde gönder oradan index = index yap
@@ -72,7 +34,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             </Text>
             <Text style={styles.ValuesOnScreen}>Plaka : {item.Plate}</Text>
             <Text style={styles.ValuesOnScreen}>
-              Set3Deger : {item.Set3Deger} {}
+              Set3Deger : {item.Set3Deger}
             </Text>
             <Text style={styles.ValuesOnScreen}>
               Tartim No : {item.WeighingNo}
@@ -85,22 +47,16 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 margin: 5,
               }}>
               <TouchableOpacity
-                onPress={
-                  () => {
-                    index = item.index;
-                    console.log('Index : ', index);
-                    setModifyModalVisible(true);
-                  }
-                  // () => setModalVisible(true)
-                }
+                onPress={() => {
+                  setIndex(item.index);
+                  console.log('Index : ', index);
+                  setModifyModalVisible(true);
+                }}
                 style={styles.button}>
                 <Text style={styles.text}>Düzelt</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={
-                  () => setNewRecordModalVisible(true)
-                  // navigation.navigate('NewRecord or Modify Screen')
-                }
+                onPress={() => setNewRecordModalVisible(true)}
                 style={styles.button}>
                 <Text style={styles.text}>Yeni Kayıt</Text>
               </TouchableOpacity>
@@ -132,9 +88,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         transparent={false}
         visible={NewRecordModalVisible}
         onRequestClose={() => {
-          notifyMessage('Yeni kayıt işlemi iptal edildi!.');
+          notifyMessage('Yeni kayıt işlemi iptal edildi!');
           setNewRecordModalVisible(false);
-          index = null;
         }}>
         <View style={{flex: 1}}>
           <Formik
@@ -147,26 +102,30 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             }}
             onSubmit={values => {
               // Buradaki şeyleri yoruma alsakta genede ekrandaki değerler gidiyor kaydetsekte iptalda etsek
-              let Firma = values.Company;
-              let GirisZamani = values.LoginTime;
-              let Plaka = values.Plate;
-              let Set3Deger = values.Set3Value;
-              let TartimNo = values.WeighingNo;
-              ListItems.push({
-                Firma,
-                GirisZamani,
-                Plaka,
-                Set3Deger,
-                TartimNo,
-              });
-
-              console.log('Push sonrası LİSTİTEM : ', ListItems);
-              console.log(values);
-
-              setFlatlistRenderer(!FlatlistRenderer);
-              setNewRecordModalVisible(false);
-              index = null;
-              // burada handle submit yani axios şeysini çağırcaz misal login kontrol yapan(values.Company fln)
+              if (
+                values.Company == '' &&
+                values.LoginTime == '' &&
+                values.Plate == '' &&
+                values.Set3Value == '' &&
+                values.WeighingNo == ''
+              ) {
+                notifyMessage('Boş liste eklenemez lütfen değerleri girin!');
+              } else {
+                let Firma = values.Company;
+                let GirisZamani = values.LoginTime;
+                let Plaka = values.Plate;
+                let Set3Deger = values.Set3Value;
+                let TartimNo = values.WeighingNo.toString();
+                ListItems.push({
+                  Firma,
+                  GirisZamani,
+                  Plaka,
+                  Set3Deger,
+                  TartimNo,
+                });
+                setFlatlistRenderer(!FlatlistRenderer);
+                setNewRecordModalVisible(false);
+              }
             }}>
             {({handleChange, handleSubmit, values}) => (
               <NativeBaseProvider>
@@ -192,15 +151,15 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     autoCapitalize="none"
                     style={styles.Input}
                     placeholder="Firma gir"
-                    placeholderTextColor="#ddd"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('Company')}
                     value={values.Company}
                   />
                   <TextInput
                     autoCapitalize="none"
                     style={styles.Input}
-                    placeholder="Giriş  Zamanı gir"
-                    placeholderTextColor="#ddd"
+                    placeholder="Giriş Zamanı gir"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('LoginTime')}
                     value={values.LoginTime}
                   />
@@ -208,7 +167,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     autoCapitalize="none"
                     style={styles.Input}
                     placeholder="Plaka gir"
-                    placeholderTextColor="#ddd"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('Plate')}
                     value={values.Plate}
                   />
@@ -216,15 +175,15 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     autoCapitalize="none"
                     style={styles.Input}
                     placeholder="Set3Değer gir"
-                    placeholderTextColor="#ddd"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('Set3Value')}
                     value={values.Set3Value}
                   />
                   <TextInput
                     autoCapitalize="none"
                     style={styles.Input}
-                    placeholder="TartimNo  gir"
-                    placeholderTextColor="#ddd"
+                    placeholder="TartimNo gir"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('WeighingNo')}
                     value={values.WeighingNo}
                   />
@@ -257,38 +216,41 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         transparent={false}
         visible={ModifyModalVisible}
         onRequestClose={() => {
-          notifyMessage('Düzenleme işlemi iptal edildi!.');
+          notifyMessage('Düzenleme işlemi iptal edildi!');
           setModifyModalVisible(false);
-          index = null;
         }}>
         <View style={{flex: 1}}>
           <Formik
             initialValues={{
-              Company: ListItems[5].Firma, // Buralara oradaki değerleri koy null yerine çalışıoyr bu 0 yerine index yazıoz ama array başta boş olduğu için tanımıyor useeffect yüzünden
-              LoginTime: '',
-              Plate: '',
-              Set3Value: '',
-              WeighingNo: '',
+              Company: ListItems[index].Firma, // Buralara oradaki değerleri koy null yerine çalışıoyr bu 0 yerine index yazıoz ama array başta boş olduğu için tanımıyor useeffect yüzünden
+              LoginTime: ListItems[index].GirisZamani,
+              Plate: ListItems[index].Plaka,
+              Set3Value: ListItems[index].Set3Deger,
+              WeighingNo: ListItems[index].TartimNo.toString(),
             }}
             onSubmit={values => {
-              let Firma = values.Company;
-              let GirisZamani = values.LoginTime;
-              let Plaka = values.Plate;
-              let Set3Deger = values.Set3Value;
-              let TartimNo = values.WeighingNo;
+              if (
+                values.Company == ListItems[index].Firma &&
+                values.LoginTime == ListItems[index].GirisZamani &&
+                values.Plate == ListItems[index].Plaka &&
+                values.Set3Value == ListItems[index].Set3Deger &&
+                values.WeighingNo.toString() == ListItems[index].TartimNo.toString()
+              ) {
+                notifyMessage("Hiçbir değişiklik yapmadınız!");
+              } else {
+                let Firma = values.Company;
+                let GirisZamani = values.LoginTime;
+                let Plaka = values.Plate;
+                let Set3Deger = values.Set3Value;
+                let TartimNo = values.WeighingNo.toString();
 
-              let Array = {Firma, GirisZamani, Plaka, Set3Deger, TartimNo};
-              if (index != null) {
-                ListItems.splice(index, 1, Array);
-              } else console.log('Index is null !');
-
-              console.log('Edit sonrası LİSTİTEM : ', ListItems);
-              console.log(values);
-
-              setFlatlistRenderer(!FlatlistRenderer);
-              setModifyModalVisible(false);
-              index = null;
-              // burada handle submit yani axios şeysini çağırcaz misal login kontrol yapan(values.Company fln)
+                let Array = {Firma, GirisZamani, Plaka, Set3Deger, TartimNo};
+                if (index != null) {
+                  ListItems.splice(index, 1, Array);
+                } else console.log('Index is null !');
+                setFlatlistRenderer(!FlatlistRenderer);
+                setModifyModalVisible(false);
+              }
             }}>
             {({handleChange, handleSubmit, values}) => (
               <NativeBaseProvider>
@@ -310,11 +272,11 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     Değerleri Düzenle
                   </Text>
                   <TextInput
-                    type="" // tipleri buradan giriyoruz
+                    // type="" // tipleri buradan giriyoruz
                     autoCapitalize="none"
                     style={styles.Input}
                     placeholder="Firma gir"
-                    placeholderTextColor="#ddd"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('Company')}
                     value={values.Company}
                   />
@@ -322,7 +284,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     autoCapitalize="none"
                     style={styles.Input}
                     placeholder="Giriş  Zamanı gir"
-                    placeholderTextColor="#ddd"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('LoginTime')}
                     value={values.LoginTime}
                   />
@@ -330,7 +292,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     autoCapitalize="none"
                     style={styles.Input}
                     placeholder="Plaka gir"
-                    placeholderTextColor="#ddd"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('Plate')}
                     value={values.Plate}
                   />
@@ -338,7 +300,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     autoCapitalize="none"
                     style={styles.Input}
                     placeholder="Set3Değer gir"
-                    placeholderTextColor="#ddd"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('Set3Value')}
                     value={values.Set3Value}
                   />
@@ -346,7 +308,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                     autoCapitalize="none"
                     style={styles.Input}
                     placeholder="TartimNo  gir"
-                    placeholderTextColor="#ddd"
+                    placeholderTextColor="#9791cc"
                     onChangeText={handleChange('WeighingNo')}
                     value={values.WeighingNo}
                   />

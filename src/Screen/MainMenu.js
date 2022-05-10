@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Alert,
   BackHandler,
-  Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,52 +25,8 @@ const MainMenu = ({navigation, route}) => {
   };
   useEffect(() => {
     GetWaitingVehiclesFromAPI();
-    // getData();
-    // const headerleffunction = () => {
-    //   // SOL ÜSTTEKİ GERİ TUŞUNA BASINCA NE YAPSIN!
-    //   navigation.setOptions({
-    //     headerLeft: () => (
-    //       //   // <TouchableOpacity
-    //       //   //   onPress={() =>
-    //       //   //     Alert.alert(
-    //       //   //       'Hesabınızdan çıkış yapılacaktır.',
-    //       //   //       'Giriş Ekranına dönmek istediğinize emin misiniz?',
-    //       //   //       [
-    //       //   //         {
-    //       //   //           text: 'Hayır',
-    //       //   //           onPress: () => null,
-    //       //   //           style: 'cancel',
-    //       //   //         },
-    //       //   //         {
-    //       //   //           text: 'Evet',
-    //       //   //           onPress: () => navigation.navigate('Giriş Ekranı'),
-    //       //   //         },
-    //       //   //       ],
-    //       //   //     )
-    //       //   //   }>
-    //       //   //   <Image
-    //       //   //     style={{width: 25, height: 20, marginRight: 15}}
-    //       //   //     source={require('../Resim/left_arrow.png')}
-    //       //   //   />
-    //       //   // </TouchableOpacity>
-    //     ),
-    //   });
-    // };
+
     const backAction = () => {
-      // Alert.alert(
-      //   'Hesabınızdan çıkış yapılacaktır.',
-      //   'Giriş Ekranına dönmek istediğinize emin misiniz?',
-      //   [
-      //     {
-      //       text: 'Hayır',
-      //       onPress: () => console.log(route.name),
-      //       style: 'cancel',
-      //     },
-      //     {text: 'Evet', onPress: () => {
-      //       if(route.name == "Main Menu Screen") // Her Sayfayı Main Menu Screen olarak görüyor
-      //       navigation.navigate('Login Screen')}}, // Parametre ile tokenvalue : null diye geri gönder ana ekrana
-      //   ],
-      // );
       return true;
     };
     // headerleffunction();
@@ -133,7 +88,9 @@ const MainMenu = ({navigation, route}) => {
           <Text style={styles.text}>Boşaltma Bekleyen Araç Listesi</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('LoginList Screen')}
+          onPress={() =>
+            navigation.navigate('Vehicle Waiting For Unloading Screen')
+          }
           style={styles.touchable}>
           <Text style={styles.text}>Giriş Listesi</Text>
         </TouchableOpacity>
