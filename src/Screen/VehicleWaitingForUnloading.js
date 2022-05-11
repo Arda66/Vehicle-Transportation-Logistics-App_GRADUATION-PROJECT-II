@@ -19,7 +19,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [ModifyModalVisible, setModifyModalVisible] = useState(false);
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
   const [index, setIndex] = useState(0);
-
+  global.index_for_pictures = index; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
   const ListItem = item => {
     // item.index şeklinde gönder oradan index = index yap
     return (
@@ -49,7 +49,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               <TouchableOpacity
                 onPress={() => {
                   setIndex(item.index);
-                  console.log('Index : ', index);
                   setModifyModalVisible(true);
                 }}
                 style={styles.button}>
@@ -123,6 +122,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   Set3Deger,
                   TartimNo,
                 });
+                total_index_for_picturelist += 1;
+                // console.log("Toplam araç indexi : ",total_index_for_picturelist);
                 setFlatlistRenderer(!FlatlistRenderer);
                 setNewRecordModalVisible(false);
               }
@@ -325,25 +326,25 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   onPress={handleSubmit} //ONsubmit Fonksiyonunu Çağırır
                 />
                 <KeyboardAvoidingView>
-                <TouchableOpacity
-                  onPress={() => {
-                    Delete_With_Alert();
-                  }}
-                  style={{
-                    position: 'absolute',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: 50,
-                    height: 50,
-                    borderRadius: 10,
-                    borderColor: 'maroon',
-                    borderWidth: 1,
-                    left: '44%',
-                    marginTop: 20,
-                    backgroundColor: 'maroon',
-                  }}>
-                  <Text style={{color: 'white'}}>SİL</Text>
-                </TouchableOpacity> 
+                  <TouchableOpacity
+                    onPress={() => {
+                      Delete_With_Alert();
+                    }}
+                    style={{
+                      position: 'absolute',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: 50,
+                      height: 50,
+                      borderRadius: 10,
+                      borderColor: 'maroon',
+                      borderWidth: 1,
+                      left: '44%',
+                      marginTop: 20,
+                      backgroundColor: 'maroon',
+                    }}>
+                    <Text style={{color: 'white'}}>SİL</Text>
+                  </TouchableOpacity>
                 </KeyboardAvoidingView>
               </View>
             )}
@@ -369,11 +370,12 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           onPress: () => {
             if (index == ListItems.length - 1) {
               // Son elemanı farklı şekilde sil pop ile yoksa hata veriyor.
-              console.log('Son elemanı sildiniz!');
-               ListItems.pop();
-               setIndex(0); // index değeri yok oluyordu bu şekilde çözdük.
+              ListItems.pop();
+              setIndex(0); // index değeri yok oluyordu bu şekilde çözdük.
             } else ListItems.splice(index, 1);
 
+            total_index_for_picturelist -= 1;
+            // console.log("Toplam araç indexi : ",total_index_for_picturelist);
             notifyMessage('Başarıyla silindi!');
             setFlatlistRenderer(!FlatlistRenderer);
             setModifyModalVisible(false);

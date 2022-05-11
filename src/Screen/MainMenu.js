@@ -15,8 +15,9 @@ const MainMenu = ({navigation, route}) => {
       if (value != null) {
         RestService.GetWaitingVehicles(value).then(response => {
           global.ListItems = [];
-          total_vehicle_number_index = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
-          for (let i = 0; i < total_vehicle_number_index; i++) {
+          global.total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
+          global.total_index_for_picturelist = total_vehicle_number - 1; // bu doğru çalışıyor toplamda kaç index varsa ekleyip çıkarınca değişiyor.
+          for (let i = 0; i < total_vehicle_number; i++) {
             ListItems.push(response.data[i]);
           }
         });

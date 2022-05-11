@@ -9,13 +9,17 @@ import {
   Button,
   ToastAndroid,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 
-const AddPicture = ({navigation}) => {
+const AddPicture = () => {
   const [FlatListRenderer, setFlatListRenderer] = useState(false);
-  const ImageList = [];
-
+ // const ImageList = ["https://img01.imgsinemalar.com/images/afis_buyuk/u/uri-the-surgical-strike-1573833071.jpg","https://media-cdn.tripadvisor.com/media/photo-s/1c/44/c1/93/canton-uri-31-ottobre.jpg","https://media-cdn.tripadvisor.com/media/photo-s/1c/44/c3/6e/canton-uri-31-ottobre.jpg"];
+  ImageList = Array.from({length: total_index_for_picturelist+1}) // Her seferinde sıfırdan oluşturcak
+  //index_for_pictures kullan array olarak ImageList[index_for_pictures] şeklinde
+  useEffect(()=>{
+    console.log("ImageList : ",ImageList);
+  },[])
   const TakePhotoFromCamera = () => {
     ImagePicker.openCamera({
       compressImageMaxWidth: 300,
@@ -25,7 +29,6 @@ const AddPicture = ({navigation}) => {
     })
       .then(image => {
         if (image != null) {
-          console.log(image.path);
           ImageList.push(image.path);
           console.log('ImageList : ', ImageList);
           setFlatListRenderer(!FlatListRenderer);
@@ -44,8 +47,8 @@ const AddPicture = ({navigation}) => {
     })
       .then(image => {
         if (image != null) {
-          console.log(image.path);
           ImageList.push(image.path);
+          console.log('ImageList : ', ImageList);
           setFlatListRenderer(!FlatListRenderer);
         }
       })
@@ -84,11 +87,11 @@ const AddPicture = ({navigation}) => {
           data={ImageList}
           renderItem={({item}) => {
             return (
-              <View style={{flex: 1, alignItems: 'center'}}>
-                <Image style={{width: 300, height: 300}} source={{uri: item}} />
+              <View style={{flex: 1, alignItems: 'center', bottom: '30%',marginVertical:10,top:'2%'}}>
+              <Image style={{width: 300, height: 300}} source={{uri: item}} />
               </View>
             );
-          }}></FlatList>
+          }}/>
       </View>
     );
   };
@@ -96,9 +99,6 @@ const AddPicture = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <ImageListBox />
-      {/* <View style={{justifyContent:'center', alignItems: 'center'}}>
-      <Image style={{width: 300, height: 300}} source={{uri: "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0,176,3008,1654&wid=2000&hei=1100&scl=1.504"}} />
-      </View> */}
       <BottomAddPhotoMenu></BottomAddPhotoMenu>
     </View>
   );
