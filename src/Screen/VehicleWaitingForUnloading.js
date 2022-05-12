@@ -19,7 +19,40 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [ModifyModalVisible, setModifyModalVisible] = useState(false);
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
   const [index, setIndex] = useState(0);
-  global.index_for_pictures = index; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
+  const [AddController, setAddController] = useState(null);
+  global.index_for_pictures; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
+
+  useEffect(() => {
+    // Eklememi çıkarmamı yapıldı kontrol ediyoruz
+    if (AddController == null) {
+      // başlangıçta ilk çalıştırmada hiçbirşey yapmasın.
+      console.log('Başlangıç addcontroller değeri null!');
+    } else if (AddController == true) {
+      // ekleme yapıldıysa
+      ImageList.push([]);
+    } else if (AddController == false) {
+      // çıkarma yapıldıysa
+      if (index == ListItems.length - 1) {
+        // son elemandan bir öncekinide silerken  imagelistin içinde son elemanını siliyor sadece orada hata var.
+        console.log('Index değeri: ', index);
+        if (index  == ListItems.length - 2) {
+          // sondan bir önceki elemansa yapmaya çalışıyoruz ama olmuyor...
+          ImageList.splice(-2, 1);
+          console.log(
+            'Sondan bir önceki elemanı ImageList üzerinden sildiniz!',
+          );
+        } else {
+          console.log('Son elemanı ImageList üzerinden sildiniz!');
+          ImageList.splice(-1, 1);
+        }
+      } // Son elemanı farklı şekilde sil pop ile yoksa silmiyor.
+      else {
+        ImageList.splice(index, 1);
+        console.log(index, ' indexli numarayı sildiniz.');
+      }
+    }
+    console.log('ImageList : ', ImageList);
+  }, [total_index_for_picturelist]);
   const ListItem = item => {
     // item.index şeklinde gönder oradan index = index yap
     return (
@@ -60,7 +93,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 <Text style={styles.text}>Yeni Kayıt</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Pictures Screen')}
+                onPress={() => {
+                  index_for_pictures = item.index;
+                  navigation.navigate('Pictures Screen')}}
                 style={styles.button}>
                 <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
@@ -122,6 +157,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   Set3Deger,
                   TartimNo,
                 });
+                notifyMessage('Yeni kayıt başarılı!');
+                setAddController(true);
                 total_index_for_picturelist += 1;
                 // console.log("Toplam araç indexi : ",total_index_for_picturelist);
                 setFlatlistRenderer(!FlatlistRenderer);
@@ -370,10 +407,15 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           onPress: () => {
             if (index == ListItems.length - 1) {
               // Son elemanı farklı şekilde sil pop ile yoksa hata veriyor.
-              ListItems.pop();
-              setIndex(0); // index değeri yok oluyordu bu şekilde çözdük.
+              setIndex(index - 1);
+              ListItems.splice(-1, 1);
+              console.log(
+                'Son eleman listItem üzerinden silindi! İndex değeri : ',
+                index,
+              );
+              // index değeri yok oluyordu bu şekilde çözdük.
             } else ListItems.splice(index, 1);
-
+            setAddController(false);
             total_index_for_picturelist -= 1;
             // console.log("Toplam araç indexi : ",total_index_for_picturelist);
             notifyMessage('Başarıyla silindi!');

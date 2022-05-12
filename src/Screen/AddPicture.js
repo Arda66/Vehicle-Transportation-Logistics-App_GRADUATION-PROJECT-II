@@ -14,12 +14,13 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 const AddPicture = () => {
   const [FlatListRenderer, setFlatListRenderer] = useState(false);
- // const ImageList = ["https://img01.imgsinemalar.com/images/afis_buyuk/u/uri-the-surgical-strike-1573833071.jpg","https://media-cdn.tripadvisor.com/media/photo-s/1c/44/c1/93/canton-uri-31-ottobre.jpg","https://media-cdn.tripadvisor.com/media/photo-s/1c/44/c3/6e/canton-uri-31-ottobre.jpg"];
-  ImageList = Array.from({length: total_index_for_picturelist+1}) // Her seferinde sıfırdan oluşturcak
+  // const ImageList = ["https://img01.imgsinemalar.com/images/afis_buyuk/u/uri-the-surgical-strike-1573833071.jpg","https://media-cdn.tripadvisor.com/media/photo-s/1c/44/c1/93/canton-uri-31-ottobre.jpg","https://media-cdn.tripadvisor.com/media/photo-s/1c/44/c3/6e/canton-uri-31-ottobre.jpg"];
   //index_for_pictures kullan array olarak ImageList[index_for_pictures] şeklinde
-  useEffect(()=>{
-    console.log("ImageList : ",ImageList);
-  },[])
+
+  useEffect(() => {
+    console.log('ImageList : ', ImageList);
+    console.log('IndexforPictures : ', index_for_pictures);
+  }, []);
   const TakePhotoFromCamera = () => {
     ImagePicker.openCamera({
       compressImageMaxWidth: 300,
@@ -29,7 +30,21 @@ const AddPicture = () => {
     })
       .then(image => {
         if (image != null) {
-          ImageList.push(image.path);
+          console.log('Index for pictures : ', index_for_pictures);
+          // ImageList.push(image.path);
+          // ImageList.splice( // BÖYLE YAPINCA 1 FOTOĞRAF EKLİYOR
+          //   index_for_pictures,
+          //   1,
+          //   'https://img01.imgsinemalar.com/images/afis_buyuk/u/uri-the-surgical-strike-1573833071.jpg',
+          // );
+          // ImageList.splice(
+          //   index_for_pictures,
+          //   0,
+          //   'https://img01.imgsinemalar.com/images/afis_buyuk/u/uri-the-surgical-strike-1573833071.jpg',
+          // );
+          ImageList[index_for_pictures].splice( // Buraya yazılan index for pictures ın bir önemi yok onu düzeltmeye çalış her arraya ekliyor değeri
+            ImageList[index_for_pictures].length-1,0,image.path,
+          );
           console.log('ImageList : ', ImageList);
           setFlatListRenderer(!FlatListRenderer);
         }
@@ -47,7 +62,9 @@ const AddPicture = () => {
     })
       .then(image => {
         if (image != null) {
-          ImageList.push(image.path);
+          ImageList[index_for_pictures].splice( // Buraya yazılan index for pictures ın bir önemi yok onu düzeltmeye çalış her arraya ekliyor değeri
+          ImageList[index_for_pictures].length-1,0,image.path,
+        ); // push kullanabiliriz aynı sonuç çıkıyor.
           console.log('ImageList : ', ImageList);
           setFlatListRenderer(!FlatListRenderer);
         }
@@ -84,14 +101,40 @@ const AddPicture = () => {
       <View style={{flex: 1}}>
         <FlatList
           extraData={FlatListRenderer}
-          data={ImageList}
+          data={ImageList[index_for_pictures]}
           renderItem={({item}) => {
             return (
-              <View style={{flex: 1, alignItems: 'center', bottom: '30%',marginVertical:10,top:'2%'}}>
-              <Image style={{width: 300, height: 300}} source={{uri: item}} />
-              </View>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  bottom: '30%',
+                  marginVertical: 10,
+                  top: '2%',
+                }}>
+                <Image style={{width: 300, height: 300}} source={{uri: item}} />
+              </View> // item[index_for_pictures] yapmamız lazım.
             );
-          }}/>
+          }}
+        />
+      </View>
+    );
+  };
+
+  const ShowImages = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          bottom: '30%',
+          marginVertical: 10,
+          top: '2%',
+        }}>
+        <Image
+          style={{width: 300, height: 300}}
+          source={{uri: ImageList[index_for_pictures]}}
+        />
       </View>
     );
   };
@@ -99,6 +142,7 @@ const AddPicture = () => {
   return (
     <View style={{flex: 1}}>
       <ImageListBox />
+      {/* <ShowImages></ShowImages> */}
       <BottomAddPhotoMenu></BottomAddPhotoMenu>
     </View>
   );
