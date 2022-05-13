@@ -35,7 +35,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       if (index == ListItems.length - 1) {
         // son elemandan bir öncekinide silerken  imagelistin içinde son elemanını siliyor sadece orada hata var.
         console.log('Index değeri: ', index);
-        if (index  == ListItems.length - 2) {
+        if (index == ListItems.length - 2) {
           // sondan bir önceki elemansa yapmaya çalışıyoruz ama olmuyor...
           ImageList.splice(-2, 1);
           console.log(
@@ -95,7 +95,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               <TouchableOpacity
                 onPress={() => {
                   index_for_pictures = item.index;
-                  navigation.navigate('Pictures Screen')}}
+                  navigation.navigate('Pictures Screen');
+                }}
                 style={styles.button}>
                 <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
@@ -184,7 +185,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   Yeni kayıt ekleme
                 </Text>
                 <TextInput
-                  type="" // tipleri buradan giriyoruz
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Firma gir"
@@ -193,6 +194,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Company}
                 />
                 <TextInput
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Giriş Zamanı gir"
@@ -201,6 +203,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.LoginTime}
                 />
                 <TextInput
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Plaka gir"
@@ -209,6 +212,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Plate}
                 />
                 <TextInput
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Set3Değer gir"
@@ -217,6 +221,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Set3Value}
                 />
                 <TextInput
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="TartimNo gir"
@@ -310,6 +315,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 </Text>
                 <TextInput
                   // type="" // tipleri buradan giriyoruz
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Firma gir"
@@ -318,6 +324,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Company}
                 />
                 <TextInput
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Giriş  Zamanı gir"
@@ -326,6 +333,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.LoginTime}
                 />
                 <TextInput
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Plaka gir"
@@ -334,6 +342,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Plate}
                 />
                 <TextInput
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Set3Değer gir"
@@ -342,6 +351,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Set3Value}
                 />
                 <TextInput
+                  color='black'
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="TartimNo  gir"

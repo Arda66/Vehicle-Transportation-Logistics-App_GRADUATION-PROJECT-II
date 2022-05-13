@@ -8,6 +8,7 @@ import {
   ImageBackground,
   Button,
   ToastAndroid,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -19,7 +20,7 @@ const AddPicture = () => {
 
   useEffect(() => {
     console.log('ImageList : ', ImageList);
-    console.log('IndexforPictures : ', index_for_pictures);
+    console.log('IndexforPictures : ', index_for_pictures); // Inner arrayda seçtiğimiz rastgele birine değer eklersek herbirine ekliyor fill yüzünden fill olmayanlara eklemiyor!
   }, []);
   const TakePhotoFromCamera = () => {
     ImagePicker.openCamera({
@@ -30,20 +31,11 @@ const AddPicture = () => {
     })
       .then(image => {
         if (image != null) {
-          console.log('Index for pictures : ', index_for_pictures);
-          // ImageList.push(image.path);
-          // ImageList.splice( // BÖYLE YAPINCA 1 FOTOĞRAF EKLİYOR
-          //   index_for_pictures,
-          //   1,
-          //   'https://img01.imgsinemalar.com/images/afis_buyuk/u/uri-the-surgical-strike-1573833071.jpg',
-          // );
-          // ImageList.splice(
-          //   index_for_pictures,
-          //   0,
-          //   'https://img01.imgsinemalar.com/images/afis_buyuk/u/uri-the-surgical-strike-1573833071.jpg',
-          // );
-          ImageList[index_for_pictures].splice( // Buraya yazılan index for pictures ın bir önemi yok onu düzeltmeye çalış her arraya ekliyor değeri
-            ImageList[index_for_pictures].length-1,0,image.path,
+          ImageList[index_for_pictures].unshift(
+            // unshift arrayin başına ekler
+            // inner arraya iniyoruz orada işlem yapacağız
+            // Buraya yazılan index for pictures ın bir önemi yok onu düzeltmeye çalış her arraya ekliyor değeri
+            image.path,
           );
           console.log('ImageList : ', ImageList);
           setFlatListRenderer(!FlatListRenderer);
@@ -62,9 +54,12 @@ const AddPicture = () => {
     })
       .then(image => {
         if (image != null) {
-          ImageList[index_for_pictures].splice( // Buraya yazılan index for pictures ın bir önemi yok onu düzeltmeye çalış her arraya ekliyor değeri
-          ImageList[index_for_pictures].length-1,0,image.path,
-        ); // push kullanabiliriz aynı sonuç çıkıyor.
+          ImageList[index_for_pictures].unshift(
+            // unshift arrayin başına ekler
+            // inner arraya iniyoruz orada işlem yapacağız
+            // Buraya yazılan index for pictures ın bir önemi yok onu düzeltmeye çalış her arraya ekliyor değeri
+            image.path,
+          );
           console.log('ImageList : ', ImageList);
           setFlatListRenderer(!FlatListRenderer);
         }
@@ -111,8 +106,28 @@ const AddPicture = () => {
                   bottom: '30%',
                   marginVertical: 10,
                   top: '2%',
+                  right: '7%',
                 }}>
                 <Image style={{width: 300, height: 300}} source={{uri: item}} />
+                <TouchableOpacity
+                  onPress={() => {
+                    Delete_Photo();
+                  }}
+                  style={{
+                    width: 50,
+                    height: 50,
+                    position: 'absolute',
+                    top: '50%',
+                    left: '93%',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    borderColor: 'maroon',
+                    backgroundColor: 'maroon',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white'}}>SİL</Text>
+                </TouchableOpacity>
               </View> // item[index_for_pictures] yapmamız lazım.
             );
           }}
@@ -120,29 +135,45 @@ const AddPicture = () => {
       </View>
     );
   };
-
-  const ShowImages = () => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          bottom: '30%',
-          marginVertical: 10,
-          top: '2%',
-        }}>
-        <Image
-          style={{width: 300, height: 300}}
-          source={{uri: ImageList[index_for_pictures]}}
-        />
-      </View>
+  const Delete_Photo = () => {
+    Alert.alert(
+      'Seçtiğiniz fotoğraf silinecektir.',
+      'Silmek istediğinize emin misiniz ?',
+      [
+        {
+          text: 'Hayır',
+          onPress: () => {
+            notifyMessage('Fotoğraf silme işlemi iptal edildi!');
+          },
+          style: 'cancel',
+        },
+        {
+          text: 'Evet',
+          onPress: () => {
+            ImageList[index_for_pictures].reverse().splice(
+              ImageList[index_for_pictures].length - 1,
+              1,
+            );
+            notifyMessage('Fotoğraf Başarıyla silindi!');
+            setFlatListRenderer(!FlatListRenderer);
+            console.log('Imagelist : ', ImageList);
+          },
+        },
+      ],
     );
+  };
+
+  const notifyMessage = msg => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
+    }
   };
 
   return (
     <View style={{flex: 1}}>
       <ImageListBox />
-      {/* <ShowImages></ShowImages> */}
       <BottomAddPhotoMenu></BottomAddPhotoMenu>
     </View>
   );

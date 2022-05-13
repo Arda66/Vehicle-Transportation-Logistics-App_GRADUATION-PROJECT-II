@@ -10,19 +10,19 @@ import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
 const MainMenu = ({navigation}) => {
-  const GetWaitingVehiclesFromAPI = () => {
+  const GetWaitingVehiclesFromAPI = async () => {
     AsyncStorage.getItem('UserToken').then(value => {
       if (value != null) {
         RestService.GetWaitingVehicles(value).then(response => {
-          global.ListItems = [];
+          global.ListItems = response.data;
           global.total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
           global.total_index_for_picturelist = total_vehicle_number - 1; // bu doğru çalışıyor toplamda kaç index varsa ekleyip çıkarınca değişiyor.
-          global.ImageList = Array(total_index_for_picturelist + 1).fill(
-            [],
-          );
+          global.ImageList = [];
+          // global.ImageList = Array(total_index_for_picturelist + 1).fill([]);
           // Her seferinde sıfırdan oluşturcak
           for (let i = 0; i < total_vehicle_number; i++) {
-            ListItems.push(response.data[i]);
+            // ListItems.push(response.data[i]);
+            ImageList.push([]);
           }
         });
       }
