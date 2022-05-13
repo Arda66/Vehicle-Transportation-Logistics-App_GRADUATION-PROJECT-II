@@ -97,7 +97,7 @@ const AddPicture = () => {
         <FlatList
           extraData={FlatListRenderer}
           data={ImageList[index_for_pictures]}
-          renderItem={({item}) => {
+          renderItem={({item, index}) => {
             return (
               <View
                 style={{
@@ -111,7 +111,7 @@ const AddPicture = () => {
                 <Image style={{width: 300, height: 300}} source={{uri: item}} />
                 <TouchableOpacity
                   onPress={() => {
-                    Delete_Photo();
+                    Delete_Photo(index);
                   }}
                   style={{
                     width: 50,
@@ -135,7 +135,7 @@ const AddPicture = () => {
       </View>
     );
   };
-  const Delete_Photo = () => {
+  const Delete_Photo = index => {
     Alert.alert(
       'Seçtiğiniz fotoğraf silinecektir.',
       'Silmek istediğinize emin misiniz ?',
@@ -150,10 +150,10 @@ const AddPicture = () => {
         {
           text: 'Evet',
           onPress: () => {
-            ImageList[index_for_pictures].reverse().splice(
-              ImageList[index_for_pictures].length - 1,
-              1,
-            );
+            console.log(ImageList[index_for_pictures][index]);
+
+            ImageList[index_for_pictures]
+              .splice(index, 1); // Baştaki ve sondaki okay ama ortalardakileri silince bir üst alt siliyor ...
             notifyMessage('Fotoğraf Başarıyla silindi!');
             setFlatListRenderer(!FlatListRenderer);
             console.log('Imagelist : ', ImageList);
