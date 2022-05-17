@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Formik} from 'formik';
-import {NativeBaseProvider} from 'native-base';
+
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [NewRecordModalVisible, setNewRecordModalVisible] = useState(false);
   const [ModifyModalVisible, setModifyModalVisible] = useState(false);
@@ -33,18 +33,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     } else if (AddController == false) {
       // çıkarma yapıldıysa
       if (index == ListItems.length - 1) {
-        // son elemandan bir öncekinide silerken  imagelistin içinde son elemanını siliyor sadece orada hata var.
         console.log('Index değeri: ', index);
-        if (index == ListItems.length - 2) {
-          // sondan bir önceki elemansa yapmaya çalışıyoruz ama olmuyor...
-          ImageList.splice(-2, 1);
-          console.log(
-            'Sondan bir önceki elemanı ImageList üzerinden sildiniz!',
-          );
-        } else {
-          console.log('Son elemanı ImageList üzerinden sildiniz!');
-          ImageList.splice(-1, 1);
-        }
+        console.log('Son elemanı ImageList üzerinden sildiniz!');
+        ImageList.splice(-1, 1);
       } // Son elemanı farklı şekilde sil pop ile yoksa silmiyor.
       else {
         ImageList.splice(index, 1);
@@ -54,13 +45,12 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     console.log('ImageList : ', ImageList);
   }, [total_index_for_picturelist]);
   const ListItem = item => {
-    // item.index şeklinde gönder oradan index = index yap
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
             <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} İndex:{item.index}
+              Firma : {item.Company} 
             </Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
@@ -136,7 +126,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               WeighingNo: '',
             }}
             onSubmit={values => {
-              // Buradaki şeyleri yoruma alsakta genede ekrandaki değerler gidiyor kaydetsekte iptalda etsek
               if (
                 values.Company == '' &&
                 values.LoginTime == '' &&
@@ -161,7 +150,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 notifyMessage('Yeni kayıt başarılı!');
                 setAddController(true);
                 total_index_for_picturelist += 1;
-                // console.log("Toplam araç indexi : ",total_index_for_picturelist);
                 setFlatlistRenderer(!FlatlistRenderer);
                 setNewRecordModalVisible(false);
               }
@@ -185,7 +173,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   Yeni kayıt ekleme
                 </Text>
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Firma gir"
@@ -194,7 +182,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Company}
                 />
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Giriş Zamanı gir"
@@ -203,7 +191,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.LoginTime}
                 />
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Plaka gir"
@@ -212,7 +200,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Plate}
                 />
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Set3Değer gir"
@@ -221,7 +209,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Set3Value}
                 />
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="TartimNo gir"
@@ -263,7 +251,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         <View style={{flex: 1}}>
           <Formik
             initialValues={{
-              Company: ListItems[index].Firma, // Buralara oradaki değerleri koy null yerine çalışıoyr bu 0 yerine index yazıoz ama array başta boş olduğu için tanımıyor useeffect yüzünden
+              Company: ListItems[index].Firma,
               LoginTime: ListItems[index].GirisZamani,
               Plate: ListItems[index].Plaka,
               Set3Value: ListItems[index].Set3Deger,
@@ -315,7 +303,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 </Text>
                 <TextInput
                   // type="" // tipleri buradan giriyoruz
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Firma gir"
@@ -324,7 +312,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Company}
                 />
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Giriş  Zamanı gir"
@@ -333,7 +321,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.LoginTime}
                 />
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Plaka gir"
@@ -342,7 +330,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Plate}
                 />
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="Set3Değer gir"
@@ -351,7 +339,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   value={values.Set3Value}
                 />
                 <TextInput
-                  color='black'
+                  color="black"
                   autoCapitalize="none"
                   style={styles.Input}
                   placeholder="TartimNo  gir"
@@ -427,7 +415,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             } else ListItems.splice(index, 1);
             setAddController(false);
             total_index_for_picturelist -= 1;
-            // console.log("Toplam araç indexi : ",total_index_for_picturelist);
             notifyMessage('Başarıyla silindi!');
             setFlatlistRenderer(!FlatlistRenderer);
             setModifyModalVisible(false);
@@ -439,7 +426,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   return (
     <FlatList
       extraData={FlatlistRenderer}
-      data={ListItems} // Program başlarken değer girdiğmiz için null kalıyor. useEffect güncelledikten sonra geliyor ctrl + s yapınca
+      data={ListItems}
       renderItem={({item, index}) => {
         return (
           <ListItem

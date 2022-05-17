@@ -15,8 +15,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 const AddPicture = () => {
   const [FlatListRenderer, setFlatListRenderer] = useState(false);
-  // const ImageList = ["https://img01.imgsinemalar.com/images/afis_buyuk/u/uri-the-surgical-strike-1573833071.jpg","https://media-cdn.tripadvisor.com/media/photo-s/1c/44/c1/93/canton-uri-31-ottobre.jpg","https://media-cdn.tripadvisor.com/media/photo-s/1c/44/c3/6e/canton-uri-31-ottobre.jpg"];
-  //index_for_pictures kullan array olarak ImageList[index_for_pictures] şeklinde
 
   useEffect(() => {
     console.log('ImageList : ', ImageList);
@@ -57,7 +55,6 @@ const AddPicture = () => {
           ImageList[index_for_pictures].unshift(
             // unshift arrayin başına ekler
             // inner arraya iniyoruz orada işlem yapacağız
-            // Buraya yazılan index for pictures ın bir önemi yok onu düzeltmeye çalış her arraya ekliyor değeri
             image.path,
           );
           console.log('ImageList : ', ImageList);
@@ -128,7 +125,7 @@ const AddPicture = () => {
                   }}>
                   <Text style={{color: 'white'}}>SİL</Text>
                 </TouchableOpacity>
-              </View> // item[index_for_pictures] yapmamız lazım.
+              </View>
             );
           }}
         />
@@ -150,10 +147,7 @@ const AddPicture = () => {
         {
           text: 'Evet',
           onPress: () => {
-            console.log(ImageList[index_for_pictures][index]);
-
-            ImageList[index_for_pictures]
-              .splice(index, 1); // Baştaki ve sondaki okay ama ortalardakileri silince bir üst alt siliyor ...
+            ImageList[index_for_pictures].splice(index, 1);
             notifyMessage('Fotoğraf Başarıyla silindi!');
             setFlatListRenderer(!FlatListRenderer);
             console.log('Imagelist : ', ImageList);

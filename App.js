@@ -4,15 +4,11 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   StyleSheet,
-  Text,
-  View,
   Keyboard,
   TouchableWithoutFeedback,
   Alert,
   ToastAndroid,
   BackHandler,
-  TouchableOpacity,
-  Image,
 } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -24,6 +20,7 @@ import AddPicture from './src/screen/AddPicture';
 import AccountService from './services/AccountService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Input} from 'native-base';
+
 const HideKeyboard = ({children}) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
