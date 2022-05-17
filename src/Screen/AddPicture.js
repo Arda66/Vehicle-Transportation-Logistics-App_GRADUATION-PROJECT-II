@@ -37,6 +37,7 @@ const AddPicture = () => {
           );
           console.log('ImageList : ', ImageList);
           setFlatListRenderer(!FlatListRenderer);
+          // burada resim ekleyince boşaltma bekleyen araçta resimler yazısı güncellenmeli flatlistrenderer çağrılmalı oradaki
         }
       })
       .catch(err => {

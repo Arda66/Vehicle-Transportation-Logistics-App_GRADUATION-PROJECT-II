@@ -21,6 +21,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [index, setIndex] = useState(0);
   const [AddController, setAddController] = useState(null);
   global.index_for_pictures; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
+  global.picture_length_callback = 0;
 
   useEffect(() => {
     // Eklememi çıkarmamı yapıldı kontrol ediyoruz
@@ -44,14 +45,17 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     }
     console.log('ImageList : ', ImageList);
   }, [total_index_for_picturelist]);
+
+  useEffect(() => {
+    if (picture_length_callback != 0) setFlatlistRenderer(!FlatlistRenderer);
+  }, [picture_length_callback]);
+
   const ListItem = item => {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
-            <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} 
-            </Text>
+            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}</Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
             </Text>
@@ -88,7 +92,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   navigation.navigate('Pictures Screen');
                 }}
                 style={styles.button}>
-                <Text style={styles.text}>Resimler</Text>
+                <Text style={styles.text}>
+                  Resimler ({ImageList[item.index].length})
+                </Text>
               </TouchableOpacity>
               <NewRecordPopUpModal />
               <ModifyPopUpModal />
@@ -290,10 +296,28 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'stretch',
                 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log('bu tuşa basıldı.');
+                  }}>
+                  <View
+                    style={{
+                      padding:8,
+                      position: 'absolute',
+                      borderRadius: 25,
+                      borderWidth: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      left: '70%',
+                      bottom: '45%',
+                    }}>
+                    <Text style={{fontSize: 20, color: 'black'}}>Detaylar</Text>
+                  </View>
+                </TouchableOpacity>
                 <Text
                   style={{
                     alignSelf: 'center',
-                    marginTop: 20,
+                    marginTop: 25,
                     marginBottom: 50,
                     fontSize: 25,
                     fontWeight: 'bold',
