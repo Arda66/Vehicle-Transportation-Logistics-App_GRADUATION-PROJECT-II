@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Formik} from 'formik';
+import DetailListScreen from './DetailListScreen';
 
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [NewRecordModalVisible, setNewRecordModalVisible] = useState(false);
@@ -20,7 +21,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
   const [index, setIndex] = useState(0);
   const [AddController, setAddController] = useState(null);
-  global.index_for_pictures; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
 
   useEffect(() => {
     // Eklememi çıkarmamı yapıldı kontrol ediyoruz
@@ -30,28 +30,31 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     } else if (AddController == true) {
       // ekleme yapıldıysa
       ImageList.push([]);
+      DetailList.push([]);
     } else if (AddController == false) {
       // çıkarma yapıldıysa
       if (index == ListItems.length - 1) {
         console.log('Index değeri: ', index);
         console.log('Son elemanı ImageList üzerinden sildiniz!');
         ImageList.splice(-1, 1);
+        DetailList.splice(-1, 1);
       } // Son elemanı farklı şekilde sil pop ile yoksa silmiyor.
       else {
         ImageList.splice(index, 1);
+        DetailList.splice(index, 1);
         console.log(index, ' indexli numarayı sildiniz.');
       }
     }
     console.log('ImageList : ', ImageList);
-  }, [total_index_for_picturelist]);
+    console.log('DetailList :', DetailList);
+  }, [total_index_for_picturelist_and_detaillist]);
+
   const ListItem = item => {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
-            <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} 
-            </Text>
+            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}   İndex : {item.index}</Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
             </Text>
@@ -72,6 +75,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               <TouchableOpacity
                 onPress={() => {
                   setIndex(item.index);
+                  index_for_pictures_and_details = item.index;
                   setModifyModalVisible(true);
                 }}
                 style={styles.button}>
@@ -84,7 +88,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  index_for_pictures = item.index;
+                  index_for_pictures_and_details = item.index;
                   navigation.navigate('Pictures Screen');
                 }}
                 style={styles.button}>
@@ -97,6 +101,10 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         </View>
       </View>
     );
+
+    {
+      /* ({ImageList[item.index].length}) bunu resimlerin yanına koy sonra */
+    }
   };
   const notifyMessage = msg => {
     if (Platform.OS === 'android') {
@@ -149,7 +157,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 });
                 notifyMessage('Yeni kayıt başarılı!');
                 setAddController(true);
-                total_index_for_picturelist += 1;
+                total_index_for_picturelist_and_detaillist += 1;
                 setFlatlistRenderer(!FlatlistRenderer);
                 setNewRecordModalVisible(false);
               }
@@ -290,10 +298,29 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   justifyContent: 'center',
                   alignItems: 'stretch',
                 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('DetailListScreen');
+                    setModifyModalVisible(false);
+                  }}>
+                  <View
+                    style={{
+                      padding: 8,
+                      position: 'absolute',
+                      borderRadius: 25,
+                      borderWidth: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      left: '70%',
+                      bottom: '45%',
+                    }}>
+                    <Text style={{fontSize: 20, color: 'black'}}>Detaylar</Text>
+                  </View>
+                </TouchableOpacity>
                 <Text
                   style={{
                     alignSelf: 'center',
-                    marginTop: 20,
+                    marginTop: 25,
                     marginBottom: 50,
                     fontSize: 25,
                     fontWeight: 'bold',
@@ -414,7 +441,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               // index değeri yok oluyordu bu şekilde çözdük.
             } else ListItems.splice(index, 1);
             setAddController(false);
-            total_index_for_picturelist -= 1;
+            total_index_for_picturelist_and_detaillist -= 1;
             notifyMessage('Başarıyla silindi!');
             setFlatlistRenderer(!FlatlistRenderer);
             setModifyModalVisible(false);

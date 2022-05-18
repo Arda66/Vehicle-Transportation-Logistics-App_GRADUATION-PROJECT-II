@@ -10,18 +10,21 @@ import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
 const MainMenu = ({navigation}) => {
-  const GetWaitingVehiclesFromAPI =  () => {
+  const GetWaitingVehiclesFromAPI = () => {
     AsyncStorage.getItem('UserToken').then(value => {
       if (value != null) {
         RestService.GetWaitingVehicles(value).then(response => {
           global.ListItems = response.data;
           global.total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
-          global.total_index_for_picturelist = total_vehicle_number - 1; // bu doğru çalışıyor toplamda kaç index varsa ekleyip çıkarınca değişiyor.
+          global.total_index_for_picturelist_and_detaillist = total_vehicle_number - 1; // bu doğru çalışıyor toplamda kaç index varsa ekleyip çıkarınca değişiyor.
           global.ImageList = [];
-          // global.ImageList = Array(total_index_for_picturelist + 1).fill([]);    BÖYLE YAPINCA BİR RESİM EKLEDİĞİMDE HER ARACA EKLİYOR RESMİ FİLL İLE İLGİLİ SORUN TEYİT ETTİM.
+          global.DetailList = [];
+          global.index_for_pictures_and_details; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
+          // global.ImageList = Array(total_index_for_picturelist_and_detaillist + 1).fill([]);    BÖYLE YAPINCA BİR RESİM EKLEDİĞİMDE HER ARACA EKLİYOR RESMİ FİLL İLE İLGİLİ SORUN TEYİT ETTİM.
           // Her seferinde sıfırdan oluşturcak
           for (let i = 0; i < total_vehicle_number; i++) {
             ImageList.push([]);
+            DetailList.push([]);
           }
         });
       }

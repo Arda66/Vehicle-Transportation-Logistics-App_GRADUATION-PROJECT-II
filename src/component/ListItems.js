@@ -1,7 +1,6 @@
 global.ListItems = [
   {
     Firma: 'ASDASDSA',
-    GirisKaydiVar: true,
     GirisZamani: '2022-04-01T00:00-0000',
     Plaka: '59AJ323',
     Set3Deger: 'TCLU800720-5',

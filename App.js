@@ -14,12 +14,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Vehicle_Waiting_For_Unloading from './src/screen/VehicleWaitingForUnloading';
 import MainMenu from './src/screen/MainMenu';
-import NewRecordModify from './src/screen/NewRecordModify';
 import LoginList from './src/screen/LoginList';
 import AddPicture from './src/screen/AddPicture';
 import AccountService from './services/AccountService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Input} from 'native-base';
+import DetailListScreen from './src/screen/DetailListScreen';
 
 const HideKeyboard = ({children}) => {
   return (
@@ -54,9 +54,9 @@ const StackNavigator = () => {
           options={{title: 'Boşaltma Bekleyen Araç Listesi'}}
         />
         <StackNavigate.Screen
-          name="NewRecord or Modify Screen"
-          component={NewRecordModify}
-          options={{title: 'Yeni Kayıt veya Düzenle'}}
+          name="DetailListScreen"
+          component={DetailListScreen}
+          options={{title: 'Detay Ekle/Çıkar'}}
         />
         <StackNavigate.Screen
           name="LoginList Screen"

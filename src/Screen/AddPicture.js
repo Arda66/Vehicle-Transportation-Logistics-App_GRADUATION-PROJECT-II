@@ -5,8 +5,6 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
-  ImageBackground,
-  Button,
   ToastAndroid,
   Alert,
 } from 'react-native';
@@ -18,7 +16,7 @@ const AddPicture = () => {
 
   useEffect(() => {
     console.log('ImageList : ', ImageList);
-    console.log('IndexforPictures : ', index_for_pictures); // Inner arrayda seçtiğimiz rastgele birine değer eklersek herbirine ekliyor fill yüzünden fill olmayanlara eklemiyor!
+    console.log('IndexforPictures : ', index_for_pictures_and_details); // Inner arrayda seçtiğimiz rastgele birine değer eklersek herbirine ekliyor fill yüzünden fill olmayanlara eklemiyor!
   }, []);
   const TakePhotoFromCamera = () => {
     ImagePicker.openCamera({
@@ -29,7 +27,7 @@ const AddPicture = () => {
     })
       .then(image => {
         if (image != null) {
-          ImageList[index_for_pictures].unshift(
+          ImageList[index_for_pictures_and_details].unshift(
             // unshift arrayin başına ekler
             // inner arraya iniyoruz orada işlem yapacağız
             // Buraya yazılan index for pictures ın bir önemi yok onu düzeltmeye çalış her arraya ekliyor değeri
@@ -37,6 +35,7 @@ const AddPicture = () => {
           );
           console.log('ImageList : ', ImageList);
           setFlatListRenderer(!FlatListRenderer);
+          // burada resim ekleyince boşaltma bekleyen araçta resimler yazısı güncellenmeli flatlistrenderer çağrılmalı oradaki
         }
       })
       .catch(err => {
@@ -52,7 +51,7 @@ const AddPicture = () => {
     })
       .then(image => {
         if (image != null) {
-          ImageList[index_for_pictures].unshift(
+          ImageList[index_for_pictures_and_details].unshift(
             // unshift arrayin başına ekler
             // inner arraya iniyoruz orada işlem yapacağız
             image.path,
@@ -67,7 +66,6 @@ const AddPicture = () => {
   };
 
   const BottomAddPhotoMenu = () => {
-    // BUNU İOS İÇİNDE YAPMAMIZ GEREKİYOR ANDROİD İÇİN KURDUM BEN. POD İNSTALL YAPAMADIM(MAC CİHAZIM YOK)
     return (
       <View style={styles.panel}>
         <View style={{alignItems: 'center'}}>
@@ -93,7 +91,7 @@ const AddPicture = () => {
       <View style={{flex: 1}}>
         <FlatList
           extraData={FlatListRenderer}
-          data={ImageList[index_for_pictures]}
+          data={ImageList[index_for_pictures_and_details]}
           renderItem={({item, index}) => {
             return (
               <View
@@ -147,7 +145,7 @@ const AddPicture = () => {
         {
           text: 'Evet',
           onPress: () => {
-            ImageList[index_for_pictures].splice(index, 1);
+            ImageList[index_for_pictures_and_details].splice(index, 1);
             notifyMessage('Fotoğraf Başarıyla silindi!');
             setFlatListRenderer(!FlatListRenderer);
             console.log('Imagelist : ', ImageList);
