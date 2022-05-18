@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Formik} from 'formik';
-import DetailListScreen from './DetailListScreen';
 
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [NewRecordModalVisible, setNewRecordModalVisible] = useState(false);
@@ -21,11 +20,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
   const [index, setIndex] = useState(0);
   const [AddController, setAddController] = useState(null);
-<<<<<<< HEAD
-=======
-  global.index_for_pictures; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
-  global.picture_length_callback = 0;
->>>>>>> 1c02755e29c99a486024c15a3d43c4b95d8ee755
 
   useEffect(() => {
     // Eklememi çıkarmamı yapıldı kontrol ediyoruz
@@ -51,27 +45,17 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       }
     }
     console.log('ImageList : ', ImageList);
-<<<<<<< HEAD
     console.log('DetailList :', DetailList);
   }, [total_index_for_picturelist_and_detaillist]);
-=======
-  }, [total_index_for_picturelist]);
-
-  useEffect(() => {
-    if (picture_length_callback != 0) setFlatlistRenderer(!FlatlistRenderer);
-  }, [picture_length_callback]);
->>>>>>> 1c02755e29c99a486024c15a3d43c4b95d8ee755
 
   const ListItem = item => {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
-<<<<<<< HEAD
-            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}   İndex : {item.index}</Text>
-=======
-            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}</Text>
->>>>>>> 1c02755e29c99a486024c15a3d43c4b95d8ee755
+            <Text style={styles.ValuesOnScreen}>
+              Firma : {item.Company} İndex : {item.index}
+            </Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
             </Text>
@@ -319,20 +303,12 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 }}>
                 <TouchableOpacity
                   onPress={() => {
-<<<<<<< HEAD
                     navigation.navigate('DetailListScreen');
                     setModifyModalVisible(false);
                   }}>
                   <View
                     style={{
                       padding: 8,
-=======
-                    console.log('bu tuşa basıldı.');
-                  }}>
-                  <View
-                    style={{
-                      padding:8,
->>>>>>> 1c02755e29c99a486024c15a3d43c4b95d8ee755
                       position: 'absolute',
                       borderRadius: 25,
                       borderWidth: 1,
