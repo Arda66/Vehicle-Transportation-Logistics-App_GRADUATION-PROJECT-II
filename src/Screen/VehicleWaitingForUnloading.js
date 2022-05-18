@@ -94,7 +94,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 }}
                 style={styles.button}>
                 <Text style={styles.text}>
-                  Resimler ({ImageList[item.index].length})
+                  Resimler 
                 </Text>
               </TouchableOpacity>
               <NewRecordPopUpModal />
