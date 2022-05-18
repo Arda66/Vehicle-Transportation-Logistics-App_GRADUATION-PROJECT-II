@@ -60,7 +60,7 @@ const DetailListScreen = () => {
               setDetailMessage('');
               setFlatListRenderer(!FlatListRenderer);
             } else notifyMessage('Boş detay eklenemez!');
-            console.log('DetayList : ', DetailList);
+            console.log('DetailList : ', DetailList);
           }}>
           <Text style={{color: 'white'}}>Detay Ekle</Text>
         </TouchableOpacity>
