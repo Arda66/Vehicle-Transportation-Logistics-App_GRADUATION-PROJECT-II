@@ -15,13 +15,14 @@ import React, {useEffect, useState} from 'react';
 import {Formik} from 'formik';
 import DatePicker from 'react-native-date-picker';
 
-
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [NewRecordModalVisible, setNewRecordModalVisible] = useState(false);
   const [ModifyModalVisible, setModifyModalVisible] = useState(false);
   const [FlatlistRenderer, setFlatlistRenderer] = useState(false);
   const [index, setIndex] = useState(0);
   const [AddController, setAddController] = useState(null);
+  const [date, setDate] = useState(new Date());
+
 
   useEffect(() => {
     // Eklememi çıkarmamı yapıldı kontrol ediyoruz
@@ -50,8 +51,41 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     console.log('DetailList :', DetailList);
   }, [total_index_for_picturelist_and_detaillist]);
 
+  const DateTimePicker = () => {
+    const [open, setOpen] = useState(false);
 
-  
+    return (
+      <>
+        <TouchableOpacity
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderWidth: 1,
+            marginHorizontal: 10,
+            marginVertical:10,
+            top:'1%'
+          }}
+          title="Date"
+          onPress={() => setOpen(true)}
+        >
+          <Text style={{color:'black',fontWeight:'bold'}}>{date.toString()}</Text>
+        </TouchableOpacity>
+        <DatePicker
+          modal
+          open={open}
+          date={date}
+          onConfirm={date => {
+            setOpen(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        />
+      </>
+    );
+  };
+
   const ListItem = item => {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -456,28 +490,26 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     );
   };
   return (
-     <View style={{flex:1}} >
-
-
-    <FlatList
-      extraData={FlatlistRenderer}
-      data={ListItems}
-      renderItem={({item, index}) => {
-        return (
-          <ListItem
-            Company={item.Firma}
-            LoginTime={item.GirisZamani}
-            Plate={item.Plaka}
-            Set3Deger={item.Set3Deger}
-            WeighingNo={item.TartimNo}
-            index={index}
-          />
-        );
-      }}
-    />
-   </View>
-    );
-    
+    <View style={{flex: 1}}>
+      <DateTimePicker />
+      <FlatList
+        extraData={FlatlistRenderer}
+        data={ListItems}
+        renderItem={({item, index}) => {
+          return (
+            <ListItem
+              Company={item.Firma}
+              LoginTime={item.GirisZamani}
+              Plate={item.Plaka}
+              Set3Deger={item.Set3Deger}
+              WeighingNo={item.TartimNo}
+              index={index}
+            />
+          );
+        }}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
