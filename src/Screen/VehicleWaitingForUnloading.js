@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Formik} from 'formik';
+import DatePicker from 'react-native-date-picker';
+
 
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [NewRecordModalVisible, setNewRecordModalVisible] = useState(false);
@@ -48,6 +50,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     console.log('DetailList :', DetailList);
   }, [total_index_for_picturelist_and_detaillist]);
 
+
+  
   const ListItem = item => {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -452,6 +456,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     );
   };
   return (
+     <View style={{flex:1}} >
+
+
     <FlatList
       extraData={FlatlistRenderer}
       data={ListItems}
@@ -468,7 +475,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         );
       }}
     />
-  );
+   </View>
+    );
+    
 };
 
 const styles = StyleSheet.create({

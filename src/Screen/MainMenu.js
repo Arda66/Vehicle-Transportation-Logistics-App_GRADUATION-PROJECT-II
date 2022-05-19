@@ -9,6 +9,7 @@ import {
 import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
+
 const MainMenu = ({navigation}) => {
   const GetWaitingVehiclesFromAPI = () => {
     AsyncStorage.getItem('UserToken').then(value => {
