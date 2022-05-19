@@ -14,7 +14,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Vehicle_Waiting_For_Unloading from './src/screen/VehicleWaitingForUnloading';
 import MainMenu from './src/screen/MainMenu';
-import LoginList from './src/screen/LoginList';
 import AddPicture from './src/screen/AddPicture';
 import AccountService from './services/AccountService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -57,11 +56,6 @@ const StackNavigator = () => {
           name="DetailListScreen"
           component={DetailListScreen}
           options={{title: 'Detay Ekle/Çıkar'}}
-        />
-        <StackNavigate.Screen
-          name="LoginList Screen"
-          component={LoginList}
-          options={{title: 'Giriş Listesi'}}
         />
         <StackNavigate.Screen
           name="Pictures Screen"

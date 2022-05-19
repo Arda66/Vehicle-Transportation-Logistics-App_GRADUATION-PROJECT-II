@@ -97,13 +97,7 @@ const MainMenu = ({navigation}) => {
           style={styles.touchable}>
           <Text style={styles.text}>Boşaltma Bekleyen Araç Listesi</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Vehicle Waiting For Unloading Screen')
-          }
-          style={styles.touchable}>
-          <Text style={styles.text}>Giriş Listesi</Text>
-        </TouchableOpacity>
+       
         <TouchableOpacity
           onPress={() => ExitwithAlertForButton()}
           style={[styles.touchable, styles.exitButton]}>
@@ -132,10 +126,10 @@ const styles = StyleSheet.create({
     maxWidth: '90%',
     justifyContent: 'center',
     alignItems: 'center',
-    top: '5%',
+    bottom:'5%'
   },
   exitButton: {
-    top: '40%',
+    top: '50%',
   },
 });
 

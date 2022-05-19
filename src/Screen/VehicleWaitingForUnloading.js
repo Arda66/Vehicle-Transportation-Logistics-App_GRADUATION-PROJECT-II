@@ -22,13 +22,12 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   const [index, setIndex] = useState(0);
   const [AddController, setAddController] = useState(null);
   const [date, setDate] = useState(new Date());
-
+  var NoVehicleFound = true;
 
   useEffect(() => {
     // Eklememi çıkarmamı yapıldı kontrol ediyoruz
     if (AddController == null) {
       // başlangıçta ilk çalıştırmada hiçbirşey yapmasın.
-      console.log('Başlangıç addcontroller değeri null!');
     } else if (AddController == true) {
       // ekleme yapıldıysa
       ImageList.push([]);
@@ -62,15 +61,17 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             alignItems: 'center',
             borderWidth: 1,
             marginHorizontal: 10,
-            marginVertical:10,
-            top:'1%'
+            marginVertical: 10,
+            top: '1%',
           }}
           title="Date"
-          onPress={() => setOpen(true)}
-        >
-          <Text style={{color:'black',fontWeight:'bold'}}>{date.toString()}</Text>
+          onPress={() => setOpen(true)}>
+          <Text style={{color: 'black', fontWeight: 'bold'}}>
+            Tarih : {date.toString()}
+          </Text>
         </TouchableOpacity>
         <DatePicker
+          mode="date"
           modal
           open={open}
           date={date}
@@ -92,7 +93,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         <View style={styles.container}>
           <View style={{flex: 1}}>
             <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} İndex : {item.index}
+              Firma : {item.Company} 
             </Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
@@ -167,7 +168,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           <Formik
             initialValues={{
               Company: '',
-              LoginTime: '',
+              LoginTime: date.toISOString().substring(0, 10),
               Plate: '',
               Set3Value: '',
               WeighingNo: '',
@@ -325,8 +326,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 let Array = {Firma, GirisZamani, Plaka, Set3Deger, TartimNo};
                 if (index != null) {
                   ListItems.splice(index, 1, Array);
-                } else console.log('Index is null !');
-                setFlatlistRenderer(!FlatlistRenderer);
+                }
+                // setFlatlistRenderer(!FlatlistRenderer);
                 setModifyModalVisible(false);
               }
             }}>
@@ -482,13 +483,25 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             setAddController(false);
             total_index_for_picturelist_and_detaillist -= 1;
             notifyMessage('Başarıyla silindi!');
-            setFlatlistRenderer(!FlatlistRenderer);
+            // setFlatlistRenderer(!FlatlistRenderer);
             setModifyModalVisible(false);
           },
         },
       ],
     );
   };
+
+  const No_Vehicle_Found_Alert = (control_number) => {
+    if (NoVehicleFound == true && control_number==0) {
+      Alert.alert(
+        'Bu tarihte veri bulunamadı!',
+        'Lütfen farklı bir tarih seçiniz.',
+      );
+      NoVehicleFound = false;
+    }
+    console.log("No_Vehicle_Çağrıldı!");
+  };
+
   return (
     <View style={{flex: 1}}>
       <DateTimePicker />
@@ -496,16 +509,22 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
         extraData={FlatlistRenderer}
         data={ListItems}
         renderItem={({item, index}) => {
-          return (
-            <ListItem
-              Company={item.Firma}
-              LoginTime={item.GirisZamani}
-              Plate={item.Plaka}
-              Set3Deger={item.Set3Deger}
-              WeighingNo={item.TartimNo}
-              index={index}
-            />
-          );
+          {
+            return item.GirisZamani.toString().substring(0, 10) == date.toISOString().substring(0, 10) ? (
+              <ListItem
+                Company={item.Firma}
+                LoginTime={item.GirisZamani}
+                Plate={item.Plaka}
+                Set3Deger={item.Set3Deger}
+                WeighingNo={item.TartimNo}
+                index={index}
+              /> // Novehiclefound = false yapmalıyız burda.
+              
+            ) : (
+              No_Vehicle_Found_Alert(index) // FlatlistRenderer yüzünden her seferinde bu uyarı çıkıyor baştan render aldığı için
+            );
+          }
+          
         }}
       />
     </View>
