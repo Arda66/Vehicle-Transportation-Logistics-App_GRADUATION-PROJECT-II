@@ -30,6 +30,8 @@ const MainMenu = ({navigation}) => {
       }
     });
   };
+
+  
   useEffect(() => {
     GetWaitingVehiclesFromAPI();
 

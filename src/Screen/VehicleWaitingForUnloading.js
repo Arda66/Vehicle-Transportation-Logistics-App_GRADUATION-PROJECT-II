@@ -34,10 +34,10 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       // çıkarma yapıldıysa
       if (index == ListItems.length - 1) {
         console.log('Index değeri: ', index);
-        console.log('Son elemanı ImageList üzerinden sildiniz!');
+        console.log('Son elemanı ImageList ve DetailList üzerinden sildiniz!');
         ImageList.splice(-1, 1);
         DetailList.splice(-1, 1);
-      } // Son elemanı farklı şekilde sil pop ile yoksa silmiyor.
+      } // Son elemanı farklı şekilde sil   yoksa silmiyor.
       else {
         ImageList.splice(index, 1);
         DetailList.splice(index, 1);
@@ -93,9 +93,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   navigation.navigate('Pictures Screen');
                 }}
                 style={styles.button}>
-                <Text style={styles.text}>
-                  Resimler 
-                </Text>
+                <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
               <NewRecordPopUpModal />
               <ModifyPopUpModal />
@@ -434,14 +432,14 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           text: 'Evet',
           onPress: () => {
             if (index == ListItems.length - 1) {
-              // Son elemanı farklı şekilde sil pop ile yoksa hata veriyor.
+              // Son elemanı farklı şekilde sil  yoksa hata veriyor.
               setIndex(index - 1);
               ListItems.splice(-1, 1);
               console.log(
                 'Son eleman listItem üzerinden silindi! İndex değeri : ',
                 index,
               );
-              // index değeri yok oluyordu bu şekilde çözdük.
+              // index değeri yok oluyordu bu şekilde çözdük.( bu seferde sondan bir önceki elemanı silince hata veriyor)
             } else ListItems.splice(index, 1);
             setAddController(false);
             total_index_for_picturelist_and_detaillist -= 1;
