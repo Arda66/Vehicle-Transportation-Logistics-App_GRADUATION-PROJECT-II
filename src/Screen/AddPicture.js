@@ -34,6 +34,7 @@ const AddPicture = () => {
             image.path,
           );
           console.log('ImageList : ', ImageList);
+          notifyMessage('Fotoğraf Başarıyla eklendi!');
           setFlatListRenderer(!FlatListRenderer);
           // burada resim ekleyince boşaltma bekleyen araçta resimler yazısı güncellenmeli flatlistrenderer çağrılmalı oradaki
         }
@@ -57,6 +58,7 @@ const AddPicture = () => {
             image.path,
           );
           console.log('ImageList : ', ImageList);
+          notifyMessage('Fotoğraf Başarıyla eklendi!');
           setFlatListRenderer(!FlatListRenderer);
         }
       })
@@ -155,13 +157,7 @@ const AddPicture = () => {
     );
   };
 
-  const notifyMessage = msg => {
-    if (Platform.OS === 'android') {
-      ToastAndroid.show(msg, ToastAndroid.SHORT);
-    } else {
-      AlertIOS.alert(msg);
-    }
-  };
+ 
 
   return (
     <View style={{flex: 1}}>

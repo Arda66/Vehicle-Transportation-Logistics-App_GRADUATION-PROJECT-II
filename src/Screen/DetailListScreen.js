@@ -66,13 +66,7 @@ const DetailListScreen = () => {
       </View>
     );
   };
-  const notifyMessage = msg => {
-    if (Platform.OS === 'android') {
-      ToastAndroid.show(msg, ToastAndroid.SHORT);
-    } else {
-      AlertIOS.alert(msg);
-    }
-  };
+ 
   const DetailFlatList = () => {
     return (
       <View style={{flex: 1}}>

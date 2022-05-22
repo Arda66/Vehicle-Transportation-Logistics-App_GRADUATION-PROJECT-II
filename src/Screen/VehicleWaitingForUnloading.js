@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Formik, Form, Field} from 'formik';
+import {Formik} from 'formik';
 import DatePicker from 'react-native-date-picker';
 
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
@@ -101,7 +101,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               Set3Deger : {item.Set3Deger}
             </Text>
             <Text style={styles.ValuesOnScreen}>
-              Tartim No : {item.WeighingNo}
+              Tartım No : {item.WeighingNo}
             </Text>
             <View
               style={{
@@ -144,13 +144,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       /* ({ImageList[item.index].length}) bunu resimlerin yanına koy sonra */
     }
   };
-  const notifyMessage = msg => {
-    if (Platform.OS === 'android') {
-      ToastAndroid.show(msg, ToastAndroid.SHORT);
-    } else {
-      AlertIOS.alert(msg);
-    }
-  };
+  
   const NewRecordPopUpModal = () => {
     return (
       <Modal
@@ -283,6 +277,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       </Modal>
     );
   };
+
   const ModifyPopUpModal = () => {
     return (
       <Modal
@@ -310,7 +305,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
               if (
                 values.Company == ListItems[index].Firma &&
                 values.LoginTime ==
-                  ListItems[index].GirisZamani.toString().substring(0, 10) &&
+                ListItems[index].GirisZamani.toString().substring(0, 10) &&
                 values.Plate == ListItems[index].Plaka &&
                 values.Set3Value == ListItems[index].Set3Deger &&
                 values.WeighingNo.toString() ==
@@ -456,6 +451,13 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       </Modal>
     );
   };
+   global.notifyMessage = msg => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
+    }
+  };
   const Delete_With_Alert = () => {
     Alert.alert(
       'Seçtiğiniz araç bilgileriyle silinecektir.',
@@ -492,9 +494,9 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     );
   };
 
-  const NoVehicleFoundFalse = () =>{
-    return NoVehicleFound = false;
-  }
+  const NoVehicleFoundFalse = () => {
+    return (NoVehicleFound = false);
+  };
 
   const No_Vehicle_Found_Alert = () => {
     if (NoVehicleFound == true) {
@@ -508,7 +510,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
   };
 
   const renderItem = ({item, index}) => {
-    return item.GirisZamani.toString().substring(0, 10) == date.toISOString().substring(0, 10) ? (
+    return item.GirisZamani.toString().substring(0, 10) ==
+      date.toISOString().substring(0, 10) ? (
       <View>
         <ListItem
           Company={item.Firma}
@@ -517,17 +520,12 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           Set3Deger={item.Set3Deger}
           WeighingNo={item.TartimNo}
           index={index}
-        /> 
-        {
-          <NoVehicleFoundFalse/>
-        }
+        />
+        {<NoVehicleFoundFalse />}
       </View>
     ) : (
       No_Vehicle_Found_Alert()
     );
-
-
-    
   };
   const FlatListData = () => {
     return (

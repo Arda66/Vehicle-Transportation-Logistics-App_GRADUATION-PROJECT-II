@@ -6,7 +6,7 @@ import {
   Alert,
   BackHandler,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
 
@@ -32,10 +32,8 @@ const MainMenu = ({navigation}) => {
     });
   };
 
-  
   useEffect(() => {
     GetWaitingVehiclesFromAPI();
-
     const backAction = () => {
       return true;
     };
@@ -97,7 +95,7 @@ const MainMenu = ({navigation}) => {
           style={styles.touchable}>
           <Text style={styles.text}>Boşaltma Bekleyen Araç Listesi</Text>
         </TouchableOpacity>
-       
+
         <TouchableOpacity
           onPress={() => ExitwithAlertForButton()}
           style={[styles.touchable, styles.exitButton]}>
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
     maxWidth: '90%',
     justifyContent: 'center',
     alignItems: 'center',
-    bottom:'5%'
+    bottom: '5%',
   },
   exitButton: {
     top: '50%',
