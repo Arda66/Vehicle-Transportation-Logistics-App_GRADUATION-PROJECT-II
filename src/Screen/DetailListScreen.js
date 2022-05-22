@@ -54,7 +54,6 @@ const DetailListScreen = () => {
             bottom: '50%',
           }}
           onPress={() => {
-            // SORUNSUZ ÇALIŞIYOR
             if (DetailMessage != '') {
               DetailList[index_for_pictures_and_details].push(DetailMessage);
               setDetailMessage('');

@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Formik} from 'formik';
+import {Formik, Form, Field} from 'formik';
 import DatePicker from 'react-native-date-picker';
 
 const Vehicle_Waiting_For_Unloading = ({navigation}) => {
@@ -92,9 +92,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
-            <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} 
-            </Text>
+            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}</Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
             </Text>
@@ -198,7 +196,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                 notifyMessage('Yeni kayıt başarılı!');
                 setAddController(true);
                 total_index_for_picturelist_and_detaillist += 1;
-                setFlatlistRenderer(!FlatlistRenderer);
+                // setFlatlistRenderer(!FlatlistRenderer);
                 setNewRecordModalVisible(false);
               }
             }}>
@@ -300,7 +298,10 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
           <Formik
             initialValues={{
               Company: ListItems[index].Firma,
-              LoginTime: ListItems[index].GirisZamani,
+              LoginTime: ListItems[index].GirisZamani.toString().substring(
+                0,
+                10,
+              ),
               Plate: ListItems[index].Plaka,
               Set3Value: ListItems[index].Set3Deger,
               WeighingNo: ListItems[index].TartimNo.toString(),
@@ -308,7 +309,8 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             onSubmit={values => {
               if (
                 values.Company == ListItems[index].Firma &&
-                values.LoginTime == ListItems[index].GirisZamani &&
+                values.LoginTime ==
+                  ListItems[index].GirisZamani.toString().substring(0, 10) &&
                 values.Plate == ListItems[index].Plaka &&
                 values.Set3Value == ListItems[index].Set3Deger &&
                 values.WeighingNo.toString() ==
@@ -369,7 +371,6 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
                   Değerleri Düzenle
                 </Text>
                 <TextInput
-                  // type="" // tipleri buradan giriyoruz
                   color="black"
                   autoCapitalize="none"
                   style={styles.Input}
@@ -482,7 +483,7 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
             } else ListItems.splice(index, 1);
             setAddController(false);
             total_index_for_picturelist_and_detaillist -= 1;
-            notifyMessage('Başarıyla silindi!');
+            notifyMessage('Araç başarıyla silindi!');
             // setFlatlistRenderer(!FlatlistRenderer);
             setModifyModalVisible(false);
           },
@@ -491,42 +492,58 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
     );
   };
 
-  const No_Vehicle_Found_Alert = (control_number) => {
-    if (NoVehicleFound == true && control_number==0) {
+  const NoVehicleFoundFalse = () =>{
+    return NoVehicleFound = false;
+  }
+
+  const No_Vehicle_Found_Alert = () => {
+    if (NoVehicleFound == true) {
       Alert.alert(
         'Bu tarihte veri bulunamadı!',
         'Lütfen farklı bir tarih seçiniz.',
       );
       NoVehicleFound = false;
     }
-    console.log("No_Vehicle_Çağrıldı!");
+    console.log('No_Vehicle_Çağrıldı!');
   };
 
+  const renderItem = ({item, index}) => {
+    return item.GirisZamani.toString().substring(0, 10) == date.toISOString().substring(0, 10) ? (
+      <View>
+        <ListItem
+          Company={item.Firma}
+          LoginTime={item.GirisZamani.toString().substring(0, 10)}
+          Plate={item.Plaka}
+          Set3Deger={item.Set3Deger}
+          WeighingNo={item.TartimNo}
+          index={index}
+        /> 
+        {
+          <NoVehicleFoundFalse/>
+        }
+      </View>
+    ) : (
+      No_Vehicle_Found_Alert()
+    );
+
+
+    
+  };
+  const FlatListData = () => {
+    return (
+      <View style={{flex: 1}}>
+        <FlatList
+          extraData={FlatlistRenderer}
+          data={ListItems}
+          renderItem={renderItem}
+        />
+      </View>
+    );
+  };
   return (
     <View style={{flex: 1}}>
       <DateTimePicker />
-      <FlatList
-        extraData={FlatlistRenderer}
-        data={ListItems}
-        renderItem={({item, index}) => {
-          {
-            return item.GirisZamani.toString().substring(0, 10) == date.toISOString().substring(0, 10) ? (
-              <ListItem
-                Company={item.Firma}
-                LoginTime={item.GirisZamani}
-                Plate={item.Plaka}
-                Set3Deger={item.Set3Deger}
-                WeighingNo={item.TartimNo}
-                index={index}
-              /> // Novehiclefound = false yapmalıyız burda.
-              
-            ) : (
-              No_Vehicle_Found_Alert(index) // FlatlistRenderer yüzünden her seferinde bu uyarı çıkıyor baştan render aldığı için
-            );
-          }
-          
-        }}
-      />
+      <FlatListData />
     </View>
   );
 };
