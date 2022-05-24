@@ -1,7 +1,8 @@
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 
-const HeaderLeftFunction = props => {  // BUNU NAVİGATİON.SETOPTİONS KISMI İLE DİĞER SAYFALARDA ÇAĞIR USEEFFECT İÇİNDE ! 
+const HeaderLeftFunction = props => {
+  // BUNU NAVİGATİON.SETOPTİONS KISMI İLE DİĞER SAYFALARDA ÇAĞIR USEEFFECT İÇİNDE !
   return (
     <TouchableOpacity
       onPress={() =>

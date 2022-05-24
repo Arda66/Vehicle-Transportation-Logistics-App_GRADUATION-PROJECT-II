@@ -1,4 +1,4 @@
-global.ListItems = [
+ const Listitems = [   // BU ŞEKİLDE LOKALDE DE YAPABİLİRİZ. DENEME İÇİN YAZDIM.
   {
     Firma: 'ASDASDSA',
     GirisZamani: '2022-04-01T00:00-0000',
@@ -24,7 +24,7 @@ global.ListItems = [
     Firma: 'KONTEYNIR',
     GirisZamani: '2022-04-01T00:00-0000',
     Plaka: '59DJ069',
-    Set3Deger: 'MSMU795190-2', 
+    Set3Deger: 'MSMU795190-2',
     TartimNo: 375983,
   },
   {
@@ -148,4 +148,4 @@ global.ListItems = [
   },
 ];
 
-export default ListItems;
+// export default Listitems;

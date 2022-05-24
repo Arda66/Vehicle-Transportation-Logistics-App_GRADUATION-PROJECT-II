@@ -55,7 +55,7 @@ const DetailListScreen = () => {
           }}
           onPress={() => {
             if (DetailMessage != '') {
-              DetailList[index_for_pictures_and_details].push(DetailMessage);
+              DetailList[index_for_vehicle].push(DetailMessage);
               setDetailMessage('');
               setFlatListRenderer(!FlatListRenderer);
             } else notifyMessage('Boş detay eklenemez!');
@@ -72,12 +72,12 @@ const DetailListScreen = () => {
       <View style={{flex: 1}}>
         <FlatList
           extraData={FlatListRenderer}
-          data={DetailList[index_for_pictures_and_details]}
+          data={DetailList[index_for_vehicle]}
           renderItem={({index}) => {
             return (
               <View style={{bottom: '10%'}}>
                 <Text color="black" style={styles.Input}>
-                  {DetailList[index_for_pictures_and_details][index]}
+                  {DetailList[index_for_vehicle][index]}
                 </Text>
                 <TouchableOpacity
                   style={{
@@ -121,7 +121,7 @@ const DetailListScreen = () => {
         {
           text: 'Evet',
           onPress: () => {
-            DetailList[index_for_pictures_and_details].splice(index, 1);
+            DetailList[index_for_vehicle].splice(index, 1);
             notifyMessage('Detay Başarıyla silindi!');
             setFlatListRenderer(!FlatListRenderer);
             console.log('DetayList : ', DetailList);

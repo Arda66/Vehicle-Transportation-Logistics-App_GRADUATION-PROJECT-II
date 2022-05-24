@@ -19,8 +19,10 @@ import AccountService from './services/AccountService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Input} from 'native-base';
 import DetailListScreen from './src/screen/DetailListScreen';
+import NewRecordScreen from './src/screen/NewRecordScreen';
+import ModifyScreen from './src/screen/ModifyScreen';
 
-const HideKeyboard = ({children}) => {
+global.HideKeyboard = ({children}) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       {children}
@@ -61,6 +63,16 @@ const StackNavigator = () => {
           name="Pictures Screen"
           component={AddPicture}
           options={{title: 'Resimler / Resim Ekle'}}
+        />
+        <StackNavigate.Screen
+          name="New Record Screen"
+          component={NewRecordScreen}
+          options={{title: 'Yeni Kayıt Ekranı'}}
+        />
+        <StackNavigate.Screen
+          name="Modify Screen"
+          component={ModifyScreen}
+          options={{title: 'Düzenleme Ekranı'}}
         />
       </StackNavigate.Navigator>
     </NavigationContainer>
