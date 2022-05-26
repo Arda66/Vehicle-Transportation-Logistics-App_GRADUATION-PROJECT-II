@@ -2,7 +2,7 @@ import {View, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import {StoreData} from './DataStore';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const ModifyScreen = observer(({navigation}) => {
   global.global_navigation = useNavigation();

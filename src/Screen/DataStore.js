@@ -17,7 +17,6 @@ class DataStore {
           this.ListItems = response.data;
         });
       }
- 
     });
 
     makeObservable(this, {
@@ -92,7 +91,6 @@ class DataStore {
                 'Vehicle Waiting For Unloading Screen',
               );
             }, 200);
-
           },
         },
       ],

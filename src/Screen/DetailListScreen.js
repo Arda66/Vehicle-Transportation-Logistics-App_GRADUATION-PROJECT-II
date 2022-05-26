@@ -124,7 +124,7 @@ const DetailListScreen = () => {
             DetailList[index_for_vehicle].splice(index, 1);
             notifyMessage('Detay Başarıyla silindi!');
             setFlatListRenderer(!FlatListRenderer);
-            console.log('DetayList : ', DetailList);
+            console.log('DetailList : ', DetailList);
           },
         },
       ],

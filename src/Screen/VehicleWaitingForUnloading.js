@@ -19,7 +19,6 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
 
   useEffect(() => {
     global_date = date;
-    console.log('UseEffect çağrıldı!');
   }, []);
 
   const DateTimePicker = () => {
@@ -67,7 +66,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
         <View style={styles.container}>
           <View style={{flex: 1}}>
             <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} Index: {item.index}
+              Firma : {item.Company} 
             </Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
@@ -138,7 +137,6 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
       );
       NoVehicleFound = false;
     }
-    console.log('No_Vehicle_Çağrıldı!');
   };
 
   const renderItem = ({item, index}) => {

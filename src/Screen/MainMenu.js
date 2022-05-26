@@ -30,15 +30,12 @@ const MainMenu = ({navigation}) => {
             ImageList.push([]);
             DetailList.push([]);
           }
-
         });
       }
     });
-
   };
 
   useEffect(() => {
-
     GetWaitingVehiclesFromAPI();
 
     const backAction = () => {
