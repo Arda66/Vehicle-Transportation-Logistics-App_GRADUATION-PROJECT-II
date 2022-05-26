@@ -9,19 +9,20 @@ import {
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
+import {StoreData} from './DataStore';
 
 const MainMenu = ({navigation}) => {
   const GetWaitingVehiclesFromAPI = () => {
     AsyncStorage.getItem('UserToken').then(value => {
       if (value != null) {
         RestService.GetWaitingVehicles(value).then(response => {
-          global.ListItems = response.data;
+          // StoreData.ListItems = response.data;
           global.total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
           global.ImageList = [];
           global.DetailList = [];
           global.index_for_vehicle;
-          global.flatlistrefresher = false;
           global.global_date;
+
           // bu değer index ile eş zamanlı değişiyor kontrol ettim.
           // global.ImageList = Array(total_index_for_picturelist_and_detaillist + 1).fill([]);    BÖYLE YAPINCA BİR RESİM EKLEDİĞİMDE HER ARACA EKLİYOR RESMİ FİLL İLE İLGİLİ SORUN TEYİT ETTİM.
           // Her seferinde sıfırdan oluşturcak
@@ -29,13 +30,17 @@ const MainMenu = ({navigation}) => {
             ImageList.push([]);
             DetailList.push([]);
           }
+
         });
       }
     });
+
   };
 
   useEffect(() => {
+
     GetWaitingVehiclesFromAPI();
+
     const backAction = () => {
       return true;
     };

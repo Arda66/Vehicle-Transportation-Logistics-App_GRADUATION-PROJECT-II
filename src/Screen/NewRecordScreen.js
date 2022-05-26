@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, Button, TextInput} from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
+import {StoreData} from './DataStore';
 
 const NewRecordScreen = ({navigation}) => {
   const NewRecordPopUp = () => {
@@ -33,7 +34,7 @@ const NewRecordScreen = ({navigation}) => {
                 let Set3Deger = values.Set3Value;
                 let TartimNo = values.WeighingNo.toString();
 
-                ListItems.push({
+                StoreData.ListItems.push({
                   Firma,
                   GirisZamani,
                   Plaka,
@@ -47,7 +48,7 @@ const NewRecordScreen = ({navigation}) => {
                 console.log('DetailList :', DetailList);
                 setTimeout(() => {
                   navigation.navigate('Vehicle Waiting For Unloading Screen');
-                }, 1000);
+                }, 200);
               }
             }}>
             {({handleChange, handleSubmit, values}) => (

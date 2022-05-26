@@ -4,18 +4,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Modal,
-  Button,
   ToastAndroid,
-  TextInput,
   Alert,
-  KeyboardAvoidingView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import DatePicker from 'react-native-date-picker';
+import {observer} from 'mobx-react';
+import {StoreData} from './DataStore';
+import {action, runInAction, toJS} from 'mobx';
 
-
-const Vehicle_Waiting_For_Unloading = ({navigation}) => {
+const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
   const [date, setDate] = useState(new Date());
   var NoVehicleFound = true;
 
@@ -161,24 +159,24 @@ const Vehicle_Waiting_For_Unloading = ({navigation}) => {
       No_Vehicle_Found_Alert()
     );
   };
-  const FlatListData = React.memo(() => {
-    return (
-      <View style={{flex: 1}}>
-        <FlatList
-          data={ListItems}
-          renderItem={renderItem}
-          extraData={flatlistrefresher}
-        />
-      </View>
-    );
-  });
+
+  const FlatListData = React.memo(
+    observer(() => {
+      // STRİCT MODE HATASI BU OBSERVER YÜZÜNDEN GELDİ. AMA BUNA OBSERVER EKLEYİNCE ANLIK OLARAK SİLİYOR İSTEDİĞİMİZ GİBİ.
+      return (
+        <View style={{flex: 1}}>
+          <FlatList data={StoreData.ListItems} renderItem={renderItem} />
+        </View>
+      );
+    }),
+  );
   return (
     <View style={{flex: 1}}>
       <DateTimePicker />
       <FlatListData />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   text: {
