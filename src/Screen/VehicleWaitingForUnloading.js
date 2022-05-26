@@ -12,8 +12,11 @@ import DatePicker from 'react-native-date-picker';
 import {observer} from 'mobx-react';
 import {StoreData} from './DataStore';
 import {action, runInAction, toJS} from 'mobx';
+import { useNavigation } from '@react-navigation/native';
 
 const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
+  global.global_navigation = useNavigation();
+
   const [date, setDate] = useState(new Date());
   var NoVehicleFound = true;
 

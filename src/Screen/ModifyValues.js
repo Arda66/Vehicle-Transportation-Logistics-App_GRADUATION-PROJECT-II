@@ -12,7 +12,7 @@ import {
 import {Formik} from 'formik';
 import {observer} from 'mobx-react';
 
-const ModifyValues = observer(({navigation}) => {
+const ModifyValues = observer(() => {
   return (
     <HideKeyboard>
       <View style={{flex: 1}}>
@@ -56,7 +56,7 @@ const ModifyValues = observer(({navigation}) => {
                   return index === index_for_vehicle ? Array : item;
                 });
                 setTimeout(() => {
-                  navigation.navigate('Vehicle Waiting For Unloading Screen');
+                  global_navigation.navigate('Vehicle Waiting For Unloading Screen');
                 }, 200);
               }
 
@@ -73,7 +73,7 @@ const ModifyValues = observer(({navigation}) => {
               }}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('DetailListScreen');
+                  global_navigation.navigate('DetailListScreen');
                 }}>
                 <View
                   style={{
