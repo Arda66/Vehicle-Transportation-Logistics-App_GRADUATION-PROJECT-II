@@ -51,13 +51,16 @@ const ModifyValues = observer(({navigation}) => {
 
               let Array = {Firma, GirisZamani, Plaka, Set3Deger, TartimNo};
               if (index_for_vehicle != null) {
-                StoreData.ListItems.splice(index_for_vehicle, 1, Array);
-                // StoreData.ListItems = StoreData.ListItems.filter(
-                //   (item, index) => {},
-                // );
+                // StoreData.ListItems.splice(index_for_vehicle, 1, Array);
+                StoreData.ListItems = StoreData.ListItems.map(
+                  (item, index) => {
+                    return index === index_for_vehicle ? Array : item;
+                  },
+                );
                 setTimeout(() => {
                   navigation.navigate('Vehicle Waiting For Unloading Screen');
                 }, 200);
+                console.log(StoreData.ListItems);
               }
 
               //

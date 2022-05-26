@@ -80,7 +80,6 @@ class DataStore {
                 },
               );
 
-              console.log('ListItem: ', this.ListItems[5].Company);
               ImageList.splice(index_for_vehicle, 1);
               DetailList.splice(index_for_vehicle, 1);
               console.log(index_for_vehicle, ' indexli numarayı sildiniz.');
