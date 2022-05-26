@@ -66,7 +66,7 @@ const DetailListScreen = () => {
       </View>
     );
   };
- 
+
   const DetailFlatList = () => {
     return (
       <View style={{flex: 1}}>

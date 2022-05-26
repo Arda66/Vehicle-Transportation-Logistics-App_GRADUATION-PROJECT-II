@@ -38,10 +38,13 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
           title="Date"
           onPress={() => setOpen(true)}>
           <Text style={{color: 'black', fontWeight: 'bold'}}>
-            Tarih : {date.toString()}
+            Tarih : {date.toISOString().substring(0, 10)}
           </Text>
         </TouchableOpacity>
+
         <DatePicker
+          timeZoneOffsetInMinutes={0}
+          locale="en"
           mode="date"
           modal
           open={open}
@@ -65,9 +68,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
-            <Text style={styles.ValuesOnScreen}>
-              Firma : {item.Company} 
-            </Text>
+            <Text style={styles.ValuesOnScreen}>Firma : {item.Company}</Text>
             <Text style={styles.ValuesOnScreen}>
               Giriş zamanı : {item.LoginTime}
             </Text>
