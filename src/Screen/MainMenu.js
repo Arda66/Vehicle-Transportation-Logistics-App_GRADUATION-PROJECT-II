@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Alert,
   BackHandler,
+  Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -97,6 +98,10 @@ const MainMenu = ({navigation}) => {
           alignItems: 'center',
           marginBottom: '35%',
         }}>
+        <Image
+          style={{width: 300, height: 200}}
+          source={require('../pictures/car-transport.png')}
+        />
         <TouchableOpacity
           onPress={() => NavigateVehicleScreen()}
           style={styles.touchable}>
@@ -120,21 +125,25 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: 'black',
+    color: 'white',
   },
   touchable: {
+    backgroundColor: '#349995',
+    borderColor: '#349995',
     margin: '7%',
     borderRadius: 25,
     borderWidth: 1,
     padding: 10,
-    width: 300,
+    width: 350,
+
     maxWidth: '90%',
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: '5%',
+    top: '5%'
   },
   exitButton: {
-    top: '50%',
+    top: '35%',
+    backgroundColor: '#446191',
   },
 });
 

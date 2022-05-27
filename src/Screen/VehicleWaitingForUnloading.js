@@ -12,7 +12,7 @@ import DatePicker from 'react-native-date-picker';
 import {observer} from 'mobx-react';
 import {StoreData} from './DataStore';
 import {action, runInAction, toJS} from 'mobx';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
   global.global_navigation = useNavigation();
@@ -183,25 +183,31 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
 const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
   },
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 20,
+    borderWidth: 2,
+    borderRadius: 18,
     width: 90,
     height: 40,
     marginHorizontal: 10,
+    bottom: '1%',
+    backgroundColor: '#5360a6',
+    borderColor: '#8338ec',
   },
   container: {
     top: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 3,
     width: '87%',
     height: '95%',
     marginVertical: '25%',
+    borderColor: '#2a9d8f',
+    elevation: 2,
+    shadowColor: 'gray',
   },
   ValuesOnScreen: {
     fontWeight: 'bold',
@@ -209,14 +215,7 @@ const styles = StyleSheet.create({
     top: 10,
     flex: 1,
     left: 10,
-  },
-  Input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 6,
-    marginVertical: 5,
+    textShadowColor: 'gray',
   },
 });
 

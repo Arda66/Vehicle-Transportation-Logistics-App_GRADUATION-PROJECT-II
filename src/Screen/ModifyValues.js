@@ -56,7 +56,9 @@ const ModifyValues = observer(() => {
                   return index === index_for_vehicle ? Array : item;
                 });
                 setTimeout(() => {
-                  global_navigation.navigate('Vehicle Waiting For Unloading Screen');
+                  global_navigation.navigate(
+                    'Vehicle Waiting For Unloading Screen',
+                  );
                 }, 200);
               }
 
@@ -85,6 +87,9 @@ const ModifyValues = observer(() => {
                     alignItems: 'center',
                     left: '70%',
                     bottom: '45%',
+                    backgroundColor: '#53e6be',
+                    borderColor: '#53e6be',
+                    elevation: 1,
                   }}>
                   <Text style={{fontSize: 20, color: 'black'}}>Detaylar</Text>
                 </View>
