@@ -51,7 +51,6 @@ const ModifyValues = observer(() => {
 
               let Array = {Firma, GirisZamani, Plaka, Set3Deger, TartimNo};
               if (index_for_vehicle != null) {
-                // StoreData.ListItems.splice(index_for_vehicle, 1, Array);
                 StoreData.ListItems = StoreData.ListItems.map((item, index) => {
                   return index === index_for_vehicle ? Array : item;
                 });

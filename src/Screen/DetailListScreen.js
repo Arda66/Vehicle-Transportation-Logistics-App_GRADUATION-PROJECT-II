@@ -4,8 +4,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Button,
-  ToastAndroid,
   TextInput,
   Alert,
 } from 'react-native';

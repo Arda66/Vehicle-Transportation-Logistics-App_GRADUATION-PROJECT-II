@@ -1,5 +1,5 @@
 import React from 'react';
-import {action, makeObservable, observable, trace} from 'mobx';
+import {action, makeObservable, observable} from 'mobx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
 import {configure} from 'mobx';
@@ -200,7 +200,6 @@ class DataStore {
 
               // Son elemanı silince  o index değeri yok oluyordu hata veriyordu bu şekilde çözdük.
             } else {
-              // this.ListItems.splice(index_for_vehicle, 1);
               this.ListItems = this.ListItems.filter(
                 // filter için aşağıdaki değeri index ile eşit olmayanları alcam şeklinde düşün
                 (item, index) => {

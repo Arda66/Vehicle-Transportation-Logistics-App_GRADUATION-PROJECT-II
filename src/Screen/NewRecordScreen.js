@@ -1,6 +1,5 @@
-import {View, Text, StyleSheet, Button, TextInput} from 'react-native';
-import React, {useState} from 'react';
-import {Formik} from 'formik';
+import {View} from 'react-native';
+import React from 'react';
 import {StoreData} from './DataStore';
 import {observer} from 'mobx-react';
 

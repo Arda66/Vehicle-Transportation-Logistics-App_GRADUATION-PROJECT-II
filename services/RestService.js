@@ -1,11 +1,5 @@
 const baseUrl = 'http://slc.selectoptimus.com:43508/RestService.svc';
 
-
-
-
-
-
-
 import axios from 'axios';
 export default {
   GetWaitingVehicles(token) {

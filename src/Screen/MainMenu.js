@@ -7,26 +7,21 @@ import {
   BackHandler,
   Image,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RestService from '../../services/RestService';
-import {StoreData} from './DataStore';
 
 const MainMenu = ({navigation}) => {
   const GetWaitingVehiclesFromAPI = () => {
     AsyncStorage.getItem('UserToken').then(value => {
       if (value != null) {
         RestService.GetWaitingVehicles(value).then(response => {
-          // StoreData.ListItems = response.data;
           global.total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
           global.ImageList = [];
           global.DetailList = [];
-          global.index_for_vehicle;
+          global.index_for_vehicle; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
           global.global_date;
 
-          // bu değer index ile eş zamanlı değişiyor kontrol ettim.
-          // global.ImageList = Array(total_index_for_picturelist_and_detaillist + 1).fill([]);    BÖYLE YAPINCA BİR RESİM EKLEDİĞİMDE HER ARACA EKLİYOR RESMİ FİLL İLE İLGİLİ SORUN TEYİT ETTİM.
-          // Her seferinde sıfırdan oluşturcak
           for (let i = 0; i < total_vehicle_number; i++) {
             ImageList.push([]);
             DetailList.push([]);
@@ -139,7 +134,7 @@ const styles = StyleSheet.create({
     maxWidth: '90%',
     justifyContent: 'center',
     alignItems: 'center',
-    top: '5%'
+    top: '5%',
   },
   exitButton: {
     top: '35%',

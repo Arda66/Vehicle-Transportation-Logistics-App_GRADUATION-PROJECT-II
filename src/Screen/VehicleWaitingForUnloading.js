@@ -11,7 +11,6 @@ import React, {useEffect, useState} from 'react';
 import DatePicker from 'react-native-date-picker';
 import {observer} from 'mobx-react';
 import {StoreData} from './DataStore';
-import {action, runInAction, toJS} from 'mobx';
 import {useNavigation} from '@react-navigation/native';
 
 const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
@@ -164,7 +163,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
 
   const FlatListData = React.memo(
     observer(() => {
-      // STRİCT MODE HATASI BU OBSERVER YÜZÜNDEN GELDİ. AMA BUNA OBSERVER EKLEYİNCE ANLIK OLARAK SİLİYOR İSTEDİĞİMİZ GİBİ.
+      //  BUNA OBSERVER EKLEYİNCE ANLIK OLARAK SİLİYOR İSTEDİĞİMİZ GİBİ SORUN BUNDAN KAYNAKLIMIŞ.
       return (
         <View style={{flex: 1}}>
           <FlatList data={StoreData.ListItems} renderItem={renderItem} />
