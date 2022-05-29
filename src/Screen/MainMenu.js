@@ -19,7 +19,7 @@ const MainMenu = ({navigation}) => {
           global.total_vehicle_number = Object.keys(response.data).length; // KAÇ TANE ARAÇ OLDUĞUNA BAKTIK YANİ JSON ARRAYI İÇİNDE KAÇ JSON OBJESİ VAR
           global.ImageList = [];
           global.DetailList = [];
-          global.index_for_vehicle; // bu değer index ile eş zamanlı değişiyor kontrol ettim.
+          global.index_for_vehicle; // bu değer flatlistteki index ile eş zamanlı değişiyor kontrol ettim.
           global.global_date;
 
           for (let i = 0; i < total_vehicle_number; i++) {

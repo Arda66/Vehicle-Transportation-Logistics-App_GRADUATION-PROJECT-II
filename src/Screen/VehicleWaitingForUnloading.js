@@ -45,7 +45,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
         </TouchableOpacity>
 
         <DatePicker
-          timeZoneOffsetInMinutes={0}
+          timeZoneOffsetInMinutes={0} // GMT 00:00 YAPMAK İÇİN
           locale="en"
           mode="date"
           modal
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     bottom: '1%',
     backgroundColor: '#5360a6',
-    borderColor: '#8338ec',
+    borderColor: '#5360a6',
   },
   container: {
     top: 5,

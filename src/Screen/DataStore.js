@@ -17,7 +17,6 @@ class DataStore {
         });
       }
     });
-
     makeObservable(this, {
       ListItems: observable,
       DeleteVehicle: action,
@@ -200,13 +199,10 @@ class DataStore {
 
               // Son elemanı silince  o index değeri yok oluyordu hata veriyordu bu şekilde çözdük.
             } else {
-              this.ListItems = this.ListItems.filter(
-                // filter için aşağıdaki değeri index ile eşit olmayanları alcam şeklinde düşün
-                (item, index) => {
-                  return index !== index_for_vehicle;
-                },
-              );
-
+              // filter için aşağıdaki değeri index ile eşit olmayanları alcam şeklinde düşün
+              this.ListItems = this.ListItems.filter((item, index) => {
+                return index !== index_for_vehicle;
+              });
               ImageList.splice(index_for_vehicle, 1);
               DetailList.splice(index_for_vehicle, 1);
               console.log(index_for_vehicle, ' indexli numarayı sildiniz.');
