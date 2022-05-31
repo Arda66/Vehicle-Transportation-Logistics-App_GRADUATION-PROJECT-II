@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     borderRadius: 6,
-    marginVertical: 5,
+    marginVertical: 9,
   },
 });
 export default ModifyValues;

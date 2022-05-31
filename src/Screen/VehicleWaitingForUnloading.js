@@ -46,7 +46,8 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
 
         <DatePicker
           timeZoneOffsetInMinutes={0} // GMT 00:00 YAPMAK İÇİN
-          locale="en"
+          // locale="en"
+          theme="light"
           mode="date"
           modal
           open={open}
