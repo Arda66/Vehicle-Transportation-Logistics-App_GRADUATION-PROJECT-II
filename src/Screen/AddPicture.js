@@ -35,7 +35,6 @@ const AddPicture = () => {
           console.log('ImageList : ', ImageList);
           notifyMessage('Fotoğraf Başarıyla eklendi!');
           setFlatListRenderer(!FlatListRenderer);
-          // burada resim ekleyince boşaltma bekleyen araçta resimler yazısı güncellenmeli flatlistrenderer çağrılmalı oradaki
         }
       })
       .catch(err => {

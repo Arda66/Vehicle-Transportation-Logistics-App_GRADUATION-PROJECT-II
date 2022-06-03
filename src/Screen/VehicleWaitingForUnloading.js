@@ -94,7 +94,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
                   index_for_vehicle = item.index;
                   navigation.navigate('Modify Screen');
                 }}
-                style={styles.button}>
+                style={[styles.button,{backgroundColor:'#ada25a'}]}>
                 <Text style={styles.text}>Düzelt</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -107,7 +107,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
                   index_for_vehicle = item.index;
                   navigation.navigate('Pictures Screen');
                 }}
-                style={styles.button}>
+                style={[styles.button,{backgroundColor:'blue'}]}>
                 <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
             </View>
@@ -173,7 +173,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
     }),
   );
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1,backgroundColor:'#7bafbd'}}>
       <DateTimePicker />
       <FlatListData />
     </View>
@@ -188,24 +188,23 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
     borderRadius: 18,
     width: 90,
     height: 40,
     marginHorizontal: 10,
     bottom: '1%',
     backgroundColor: '#5360a6',
-    borderColor: '#5360a6',
   },
   container: {
+    backgroundColor:'#ded6c1',
     top: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3,
+    borderWidth: 4,
     width: '87%',
     height: '95%',
     marginVertical: '25%',
-    borderColor: '#2a9d8f',
+    borderColor: '#aaad78',
     elevation: 2,
     shadowColor: 'gray',
   },

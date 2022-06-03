@@ -52,7 +52,11 @@ const StackNavigator = () => {
         <StackNavigate.Screen
           name="Vehicle Waiting For Unloading Screen"
           component={Vehicle_Waiting_For_Unloading}
-          options={{title: 'Boşaltma Bekleyen Araç Listesi'}}
+          options={{
+            title: 'Boşaltma Bekleyen Araç Listesi',
+            headerStyle: {backgroundColor: '#9dc1c4'},
+            headerTitleStyle: {fontWeight: 'bold'},
+          }}
         />
         <StackNavigate.Screen
           name="DetailListScreen"
