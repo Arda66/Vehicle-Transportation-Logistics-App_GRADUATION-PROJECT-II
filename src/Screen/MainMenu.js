@@ -102,9 +102,9 @@ const MainMenu = ({navigation}) => {
           style={styles.touchable}>
           <Text style={styles.text}>Boşaltma Bekleyen Araç Listesi</Text>
         </TouchableOpacity>
-        <Text style={{color:'#1319d4',fontWeight:'bold',fontSize:25,top:'19%'}}>
+        {/* <Text style={{color:'#1319d4',fontWeight:'bold',fontSize:25,top:'19%'}}>
           (Made By ARDA DUMANOĞLU)
-        </Text>
+        </Text> */}
         <TouchableOpacity
           onPress={() => ExitwithAlertForButton()}
           style={[styles.touchable, styles.exitButton]}>

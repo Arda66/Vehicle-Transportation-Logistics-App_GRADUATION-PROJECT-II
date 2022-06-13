@@ -94,7 +94,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
                   index_for_vehicle = item.index;
                   navigation.navigate('Modify Screen');
                 }}
-                style={[styles.button,{backgroundColor:'#ada25a'}]}>
+                style={[styles.button, {backgroundColor: '#ada25a'}]}>
                 <Text style={styles.text}>Düzelt</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -107,7 +107,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
                   index_for_vehicle = item.index;
                   navigation.navigate('Pictures Screen');
                 }}
-                style={[styles.button,{backgroundColor:'blue'}]}>
+                style={[styles.button, {backgroundColor: 'blue'}]}>
                 <Text style={styles.text}>Resimler</Text>
               </TouchableOpacity>
             </View>
@@ -173,7 +173,7 @@ const Vehicle_Waiting_For_Unloading = observer(({navigation}) => {
     }),
   );
   return (
-    <View style={{flex: 1,backgroundColor:'#7bafbd'}}>
+    <View style={{flex: 1, backgroundColor: '#7bafbd'}}>
       <DateTimePicker />
       <FlatListData />
     </View>
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#5360a6',
   },
   container: {
-    backgroundColor:'#ded6c1',
+    backgroundColor: '#ded6c1',
     top: 5,
     justifyContent: 'center',
     alignItems: 'center',

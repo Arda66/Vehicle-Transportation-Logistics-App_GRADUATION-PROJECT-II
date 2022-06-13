@@ -1,4 +1,4 @@
- const Listitems = [   // BU ŞEKİLDE LOKALDE DE YAPABİLİRİZ. DENEME İÇİN YAZDIM.
+ const Listitems = [   // BU ŞEKİLDE LOKALDE DE YAPABİLİRİZ.
   {
     Firma: 'ASDASDSA',
     GirisZamani: '2022-04-01T00:00-0000',
